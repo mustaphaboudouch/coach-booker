@@ -1,7 +1,9 @@
+import { AppLayout } from '../components/layout/app-layout';
+
 export const Dashboard = () => {
 	return (
-		<div>
+		<AppLayout>
 			<h1>Dashboard</h1>
-		</div>
+		</AppLayout>
 	);
 };
