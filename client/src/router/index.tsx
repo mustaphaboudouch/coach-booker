@@ -8,6 +8,7 @@ import {
 	Profile,
 	SignIn,
 	SignUp,
+	SignUpCoach,
 } from '../pages';
 
 const routes = [
@@ -30,6 +31,10 @@ const routes = [
 	{
 		path: '/sign-up',
 		component: SignUp,
+	},
+	{
+		path: '/sign-up-coach',
+		component: SignUpCoach,
 	},
 	{
 		path: '/password-forget',

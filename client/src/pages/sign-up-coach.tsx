@@ -1,23 +1,32 @@
-import { IconAt, IconLock } from '@tabler/icons-react';
-import { AuthLayout } from '../components/layout/auth-layout';
 import {
 	Anchor,
 	Button,
+	Group,
 	Input,
 	PasswordInput,
 	Stack,
 	Title,
 } from '@mantine/core';
+import { AuthLayout } from '../components/layout/auth-layout';
+import { IconAt, IconLock } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
-export const SignIn = () => {
+export const SignUpCoach = () => {
 	return (
 		<AuthLayout>
 			<Title order={1} size='2rem' mb='lg'>
-				Se connecter
+				S'inscrire
 			</Title>
 
 			<Stack>
+				<Group grow>
+					<Input.Wrapper label='Prénom'>
+						<Input placeholder='Prénom' leftSection={<IconAt size='1rem' />} />
+					</Input.Wrapper>
+					<Input.Wrapper label='Nom'>
+						<Input placeholder='Nom' leftSection={<IconAt size='1rem' />} />
+					</Input.Wrapper>
+				</Group>
 				<Input.Wrapper label='Adresse e-mail'>
 					<Input
 						placeholder='Adresse e-mail'
@@ -29,24 +38,15 @@ export const SignIn = () => {
 					placeholder='Mot de passe'
 					leftSection={<IconLock size='1rem' />}
 				/>
+				<Button mt='xs'>S'inscrire</Button>
 				<Anchor
 					component={Link}
-					to='/password-forget'
-					underline='always'
-					size='sm'
-					style={{ textAlign: 'right' }}
-				>
-					Mot de passe oublié ?
-				</Anchor>
-				<Button mt='xs'>Se connecter</Button>
-				<Anchor
-					component={Link}
-					to='/sign-up'
+					to='/sign-in'
 					underline='always'
 					size='sm'
 					style={{ textAlign: 'center' }}
 				>
-					Créer un nouveau compte
+					J'ai déjà un compte
 				</Anchor>
 			</Stack>
 		</AuthLayout>

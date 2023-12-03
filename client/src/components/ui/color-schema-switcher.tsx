@@ -8,7 +8,7 @@ export const ColorSchemaSwitcher = () => {
 
 	return (
 		<ActionIcon
-			variant='default'
+			variant='subtle'
 			size='lg'
 			aria-label='Toggle color schema'
 			onClick={toggleColorScheme}
