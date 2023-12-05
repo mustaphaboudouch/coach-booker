@@ -24,9 +24,11 @@ export const Sidebar = () => {
 	const location = useLocation();
 
 	return (
-		<Stack gap={10}>
+		<Stack gap={0}>
 			{links.map((link) => (
 				<NavLink
+					px='lg'
+					py='xs'
 					component={Link}
 					active={location.pathname === link.path}
 					label={link.label}

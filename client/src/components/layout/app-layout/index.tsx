@@ -20,7 +20,7 @@ export const AppLayout = ({ title, children }: AppLayoutProps) => {
 			<AppShell.Header>
 				<Navbar isOpen={opened} onToggle={toggle} />
 			</AppShell.Header>
-			<AppShell.Navbar p='md' style={{ overflowY: 'auto' }}>
+			<AppShell.Navbar py='lg' style={{ overflowY: 'auto' }}>
 				<Sidebar />
 			</AppShell.Navbar>
 			<AppShell.Main>
