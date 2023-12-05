@@ -1,7 +1,6 @@
 import { Button, Flex } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { ColorSchemaSwitcher } from '../ui/color-schema-switcher';
-import { IconBarbell } from '@tabler/icons-react';
 
 export const AuthNavbar = () => {
 	return (
@@ -15,16 +14,11 @@ export const AuthNavbar = () => {
 				<Link to='/'>Coach Booker</Link>
 			</Flex>
 			<Flex align='center' gap={16}>
-				<Button
-					variant='filled'
-					component={Link}
-					to='/sign-up-coach'
-					leftSection={<IconBarbell size='1rem' />}
-				>
-					Je suis un coach
-				</Button>
-				<Button variant='outline' component={Link} to='/sign-in'>
+				<Button variant='filled' component={Link} to='/sign-in'>
 					Se connecter
+				</Button>
+				<Button variant='outline' component={Link} to='/sign-up'>
+					S'inscrire
 				</Button>
 				<ColorSchemaSwitcher />
 			</Flex>

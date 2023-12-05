@@ -1,14 +1,6 @@
-import {
-	Anchor,
-	Button,
-	Group,
-	Input,
-	PasswordInput,
-	Stack,
-	Title,
-} from '@mantine/core';
+import { Button, Stack, Title } from '@mantine/core';
 import { AuthLayout } from '../components/layout/auth-layout';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { IconBarbell, IconStretching } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 export const SignUp = () => {
@@ -19,35 +11,24 @@ export const SignUp = () => {
 			</Title>
 
 			<Stack>
-				<Group grow>
-					<Input.Wrapper label='Prénom'>
-						<Input placeholder='Prénom' leftSection={<IconAt size='1rem' />} />
-					</Input.Wrapper>
-					<Input.Wrapper label='Nom'>
-						<Input placeholder='Nom' leftSection={<IconAt size='1rem' />} />
-					</Input.Wrapper>
-				</Group>
-				<Input.Wrapper label='Adresse e-mail'>
-					<Input
-						placeholder='Adresse e-mail'
-						leftSection={<IconAt size='1rem' />}
-					/>
-				</Input.Wrapper>
-				<PasswordInput
-					label='Mot de passe'
-					placeholder='Mot de passe'
-					leftSection={<IconLock size='1rem' />}
-				/>
-				<Button mt='xs'>S'inscrire</Button>
-				<Anchor
+				<Button
+					variant='filled'
+					size='md'
 					component={Link}
-					to='/sign-in'
-					underline='always'
-					size='sm'
-					style={{ textAlign: 'center' }}
+					to='/sign-up-coach'
+					leftSection={<IconBarbell size='1.5rem' />}
 				>
-					J'ai déjà un compte
-				</Anchor>
+					Je suis un coach
+				</Button>
+				<Button
+					variant='filled'
+					size='md'
+					component={Link}
+					to='/sign-up-client'
+					leftSection={<IconStretching size='1.5rem' />}
+				>
+					Je suis un client
+				</Button>
 			</Stack>
 		</AuthLayout>
 	);

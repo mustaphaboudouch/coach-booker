@@ -8,6 +8,7 @@ import {
 	Profile,
 	SignIn,
 	SignUp,
+	SignUpClient,
 	SignUpCoach,
 } from '../pages';
 
@@ -31,6 +32,10 @@ const routes = [
 	{
 		path: '/sign-up',
 		component: SignUp,
+	},
+	{
+		path: '/sign-up-client',
+		component: SignUpClient,
 	},
 	{
 		path: '/sign-up-coach',

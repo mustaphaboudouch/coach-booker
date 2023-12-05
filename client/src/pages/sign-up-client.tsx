@@ -11,11 +11,11 @@ import { AuthLayout } from '../components/layout/auth-layout';
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
-export const SignUpCoach = () => {
+export const SignUpClient = () => {
 	return (
 		<AuthLayout>
 			<Title order={1} size='2rem' mb='lg'>
-				S'inscrire comme coach
+				S'inscrire comme client
 			</Title>
 
 			<Stack>
