@@ -5,19 +5,14 @@ import {
 	Input,
 	PasswordInput,
 	Stack,
-	Title,
 } from '@mantine/core';
-import { AuthLayout } from '../components/layout/auth-layout';
+import { AuthLayout } from '../components/layout';
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 export const SignUpClient = () => {
 	return (
-		<AuthLayout>
-			<Title order={1} size='2rem' mb='lg'>
-				S'inscrire comme client
-			</Title>
-
+		<AuthLayout title="S'inscrire comme client">
 			<Stack>
 				<Group grow>
 					<Input.Wrapper label='Prénom'>

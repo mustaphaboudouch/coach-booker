@@ -1,5 +1,5 @@
 import { NavLink, Stack } from '@mantine/core';
-import { IconHome2, IconUser } from '@tabler/icons-react';
+import { IconBuilding, IconHome2, IconUser } from '@tabler/icons-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const links = [
@@ -9,7 +9,12 @@ const links = [
 		icon: <IconHome2 size='1rem' stroke={2} />,
 	},
 	{
-		label: 'Profile',
+		label: 'Organisations',
+		path: '/organisations',
+		icon: <IconBuilding size='1rem' stroke={2} />,
+	},
+	{
+		label: 'Profil',
 		path: '/profile',
 		icon: <IconUser size='1rem' stroke={2} />,
 	},

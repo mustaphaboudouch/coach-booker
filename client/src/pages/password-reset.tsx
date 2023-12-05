@@ -1,14 +1,10 @@
-import { Button, PasswordInput, Stack, Title } from '@mantine/core';
-import { AuthLayout } from '../components/layout/auth-layout';
+import { Button, PasswordInput, Stack } from '@mantine/core';
+import { AuthLayout } from '../components/layout';
 import { IconLock } from '@tabler/icons-react';
 
 export const PasswordReset = () => {
 	return (
-		<AuthLayout>
-			<Title order={1} size='2rem' mb='lg'>
-				Réinitialiser le mot de passe
-			</Title>
-
+		<AuthLayout title='Réinitialiser le mot de passe'>
 			<Stack>
 				<PasswordInput
 					label='Mot de passe'

@@ -5,19 +5,14 @@ import {
 	Input,
 	PasswordInput,
 	Stack,
-	Title,
 } from '@mantine/core';
-import { AuthLayout } from '../components/layout/auth-layout';
+import { AuthLayout } from '../components/layout';
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 export const SignUpCoach = () => {
 	return (
-		<AuthLayout>
-			<Title order={1} size='2rem' mb='lg'>
-				S'inscrire comme coach
-			</Title>
-
+		<AuthLayout title="S'inscrire comme coach">
 			<Stack>
 				<Group grow>
 					<Input.Wrapper label='Prénom'>

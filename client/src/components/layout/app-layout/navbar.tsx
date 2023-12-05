@@ -1,13 +1,13 @@
 import { Avatar, Burger, Flex } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { ColorSchemaSwitcher } from '../ui/color-schema-switcher';
+import { ColorSchemaSwitcher } from '../../ui/color-schema-switcher';
 
-type AppNavbarProps = {
+type NavbarProps = {
 	isOpen: boolean;
 	onToggle: () => void;
 };
 
-export const AppNavbar = ({ isOpen, onToggle }: AppNavbarProps) => {
+export const Navbar = ({ isOpen, onToggle }: NavbarProps) => {
 	return (
 		<Flex
 			align='center'

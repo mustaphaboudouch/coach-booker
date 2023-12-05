@@ -3,6 +3,8 @@ import {
 	Dashboard,
 	Home,
 	NotFound,
+	OrganisationList,
+	OrganisationSingle,
 	PasswordForget,
 	PasswordReset,
 	Profile,
@@ -22,6 +24,14 @@ const routes = [
 		component: Dashboard,
 	},
 	{
+		path: '/organisations',
+		component: OrganisationList,
+	},
+	{
+		path: '/organisations/:id',
+		component: OrganisationSingle,
+	},
+	{
 		path: '/profile',
 		component: Profile,
 	},
@@ -34,11 +44,11 @@ const routes = [
 		component: SignUp,
 	},
 	{
-		path: '/sign-up-client',
+		path: '/sign-up/client',
 		component: SignUpClient,
 	},
 	{
-		path: '/sign-up-coach',
+		path: '/sign-up/coach',
 		component: SignUpCoach,
 	},
 	{

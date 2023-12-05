@@ -1,5 +1,7 @@
 export { Home } from './home';
 export { Dashboard } from './dashboard';
+export { OrganisationList } from './organisation-list';
+export { OrganisationSingle } from './organisation-single';
 export { Profile } from './profile';
 export { SignIn } from './sign-in';
 export { SignUp } from './sign-up';

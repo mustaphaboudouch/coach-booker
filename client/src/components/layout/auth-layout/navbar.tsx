@@ -1,8 +1,8 @@
 import { Button, Flex } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { ColorSchemaSwitcher } from '../ui/color-schema-switcher';
+import { ColorSchemaSwitcher } from '../../ui/color-schema-switcher';
 
-export const AuthNavbar = () => {
+export const Navbar = () => {
 	return (
 		<Flex
 			align='center'

@@ -1,14 +1,10 @@
-import { Button, Input, Stack, Text, Title } from '@mantine/core';
-import { AuthLayout } from '../components/layout/auth-layout';
+import { Button, Input, Stack, Text } from '@mantine/core';
+import { AuthLayout } from '../components/layout';
 import { IconAt } from '@tabler/icons-react';
 
 export const PasswordForget = () => {
 	return (
-		<AuthLayout>
-			<Title order={1} size='2rem' mb='lg'>
-				Mot de passe oublié ?
-			</Title>
-
+		<AuthLayout title='Mot de passe oublié ?'>
 			<Text size='sm' mb='lg'>
 				Entrez votre adresse e-mail et nous vous enverrons un lien pour
 				réinitialiser votre mot de passe.
