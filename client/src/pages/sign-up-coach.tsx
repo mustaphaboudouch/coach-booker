@@ -24,6 +24,7 @@ export const SignUpCoach = () => {
 				</Group>
 				<Input.Wrapper label='Adresse e-mail'>
 					<Input
+						type='email'
 						placeholder='Adresse e-mail'
 						leftSection={<IconAt size='1rem' />}
 					/>

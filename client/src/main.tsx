@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import { Router } from './router';
 
 import '@mantine/core/styles.css';
+import '@mantine/dropzone/styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
