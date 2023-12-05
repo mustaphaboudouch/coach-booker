@@ -69,8 +69,8 @@ export const Router = () => {
 	return (
 		<BrowserRouter>
 			<Switch>
-				{routes.map((route) => (
-					<Route exact path={route.path}>
+				{routes.map((route, index) => (
+					<Route key={index} exact path={route.path}>
 						<route.component />
 					</Route>
 				))}

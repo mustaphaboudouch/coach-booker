@@ -1,4 +1,4 @@
-import { Button, Input, Stack, Text } from '@mantine/core';
+import { Button, Stack, Text, TextInput } from '@mantine/core';
 import { AuthLayout } from '../components/layout';
 import { IconAt } from '@tabler/icons-react';
 
@@ -11,13 +11,12 @@ export const PasswordForget = () => {
 			</Text>
 
 			<Stack>
-				<Input.Wrapper label='Adresse e-mail'>
-					<Input
-						type='email'
-						placeholder='Adresse e-mail'
-						leftSection={<IconAt size='1rem' />}
-					/>
-				</Input.Wrapper>
+				<TextInput
+					type='email'
+					label='Adresse e-mail'
+					placeholder='Adresse e-mail'
+					leftSection={<IconAt size='1rem' />}
+				/>
 				<Button mt='xs'>Envoyer</Button>
 			</Stack>
 		</AuthLayout>

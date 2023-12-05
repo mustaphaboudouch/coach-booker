@@ -13,7 +13,7 @@ export const ColorSchemaSwitcher = () => {
 			aria-label='Toggle color schema'
 			onClick={toggleColorScheme}
 		>
-			<IconComponent style={{ width: '60%', height: '60%' }} stroke={1.5} />
+			<IconComponent size='1.3rem' stroke={1.5} />
 		</ActionIcon>
 	);
 };

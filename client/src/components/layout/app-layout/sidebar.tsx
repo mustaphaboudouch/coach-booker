@@ -25,8 +25,9 @@ export const Sidebar = () => {
 
 	return (
 		<Stack gap={0}>
-			{links.map((link) => (
+			{links.map((link, index) => (
 				<NavLink
+					key={index}
 					px='lg'
 					py='xs'
 					component={Link}

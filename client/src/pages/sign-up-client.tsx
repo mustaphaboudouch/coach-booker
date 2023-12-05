@@ -2,9 +2,9 @@ import {
 	Anchor,
 	Button,
 	Group,
-	Input,
 	PasswordInput,
 	Stack,
+	TextInput,
 } from '@mantine/core';
 import { AuthLayout } from '../components/layout';
 import { IconAt, IconLock } from '@tabler/icons-react';
@@ -15,20 +15,15 @@ export const SignUpClient = () => {
 		<AuthLayout title="S'inscrire comme client">
 			<Stack>
 				<Group grow>
-					<Input.Wrapper label='Prénom'>
-						<Input placeholder='Prénom' />
-					</Input.Wrapper>
-					<Input.Wrapper label='Nom'>
-						<Input placeholder='Nom' />
-					</Input.Wrapper>
+					<TextInput label='Prénom' placeholder='Prénom' />
+					<TextInput label='Nom' placeholder='Nom' />
 				</Group>
-				<Input.Wrapper label='Adresse e-mail'>
-					<Input
-						type='email'
-						placeholder='Adresse e-mail'
-						leftSection={<IconAt size='1rem' />}
-					/>
-				</Input.Wrapper>
+				<TextInput
+					type='email'
+					label='Adresse e-mail'
+					placeholder='Adresse e-mail'
+					leftSection={<IconAt size='1rem' />}
+				/>
 				<PasswordInput
 					label='Mot de passe'
 					placeholder='Mot de passe'

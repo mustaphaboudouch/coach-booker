@@ -1,9 +1,9 @@
 import { Button, PasswordInput, Stack, Tabs } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
 
-export const PassowordTab = () => {
+export const SecurityTab = () => {
 	return (
-		<Tabs.Panel value='password' py='lg'>
+		<Tabs.Panel value='security' py='xl'>
 			<Stack>
 				<PasswordInput
 					label='Ancien mot de passe'

@@ -1,19 +1,18 @@
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { AuthLayout } from '../components/layout';
-import { Anchor, Button, Input, PasswordInput, Stack } from '@mantine/core';
+import { Anchor, Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 export const SignIn = () => {
 	return (
 		<AuthLayout title='Se connecter'>
 			<Stack>
-				<Input.Wrapper label='Adresse e-mail'>
-					<Input
-						type='email'
-						placeholder='Adresse e-mail'
-						leftSection={<IconAt size='1rem' />}
-					/>
-				</Input.Wrapper>
+				<TextInput
+					type='email'
+					label='Adresse e-mail'
+					placeholder='Adresse e-mail'
+					leftSection={<IconAt size='1rem' />}
+				/>
 				<PasswordInput
 					label='Mot de passe'
 					placeholder='Mot de passe'

@@ -1,5 +1,4 @@
 import { Avatar, Burger, Flex } from '@mantine/core';
-import { Link } from 'react-router-dom';
 import { ColorSchemaSwitcher } from '../../ui/color-schema-switcher';
 import { Logo } from '../../ui/logo';
 
