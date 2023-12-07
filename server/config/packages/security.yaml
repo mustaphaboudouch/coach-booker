@@ -1,8 +1,6 @@
 security:
-  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
     # used to reload user from session & other features (e.g. switch_user)
     app_user_provider:
@@ -15,6 +13,7 @@ security:
       security: false
     main:
       lazy: true
+      stateless: true
       provider: app_user_provider
       json_login:
         check_path: /sign-in
