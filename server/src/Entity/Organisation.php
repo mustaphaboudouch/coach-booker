@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 #[ApiResource]
@@ -22,15 +23,23 @@ class Organisation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^([A-Z]{3})\d{5}$/',
+        message: 'The KBIS must be a 3 capital letters followed by a 5 digit number'
+    )]
     private ?string $kbis = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE'])]
     private ?string $status = null;
 
     #[ORM\OneToOne(inversedBy: 'organisation', cascade: ['persist', 'remove'])]

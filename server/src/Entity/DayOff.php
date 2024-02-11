@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\DayOffRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DayOffRepository::class)]
 #[ApiResource]
@@ -20,6 +21,7 @@ class DayOff
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan(propertyPath: 'start_date')]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\ManyToOne(inversedBy: 'daysOff')]

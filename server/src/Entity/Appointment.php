@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 #[ApiResource]
@@ -28,9 +29,12 @@ class Appointment
     private ?\DateTimeInterface $start_time = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\GreaterThan(propertyPath: 'start_time')]
     private ?\DateTimeInterface $end_time = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['PENDING_CLIENT', 'PENDING_COACH', 'ACCEPTED', 'REJECTED_CLIENT', 'REJECTED_COACH', 'CANCELED_CLIENT', 'CANCELED_COACH', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

@@ -7,6 +7,7 @@ use App\Repository\FeedbackRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 #[ApiResource]
@@ -20,18 +21,23 @@ class Feedback
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_expertise = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_availability = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_communication = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_experience = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_motivation = null;
 
     #[ORM\Column(type: Types::TEXT)]

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 #[ApiResource]
@@ -16,15 +17,23 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^\d{5}$/',
+        message: 'The zip code must be a 5 digit number'
+    )]
     private ?string $zip_code = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
