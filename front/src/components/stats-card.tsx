@@ -2,22 +2,24 @@ import { ActionIcon, Box, Flex, Text } from '@mantine/core';
 import { IconExternalLink } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 
-type StatCardProps = {
+type StatsCardProps = {
 	label: string;
 	value: number;
-	path: string;
+	path?: string;
 };
 
-const StatCard = ({ label, value, path }: StatCardProps) => {
+const StatsCard = ({ label, value, path }: StatsCardProps) => {
 	return (
 		<Box flex={1}>
 			<Flex justify='space-between'>
 				<Text size='sm' c='dimmed'>
 					{label}
 				</Text>
-				<ActionIcon variant='light' size='sm' component={Link} to={path}>
-					<IconExternalLink size='1rem' />
-				</ActionIcon>
+				{path && (
+					<ActionIcon variant='light' size='sm' component={Link} to={path}>
+						<IconExternalLink size='1rem' />
+					</ActionIcon>
+				)}
 			</Flex>
 			<Text size='xl' fw={700}>
 				{value}
@@ -26,4 +28,4 @@ const StatCard = ({ label, value, path }: StatCardProps) => {
 	);
 };
 
-export { StatCard };
+export { StatsCard, type StatsCardProps };
