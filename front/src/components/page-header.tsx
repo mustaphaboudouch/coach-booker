@@ -1,16 +1,18 @@
-import { Box, Title } from '@mantine/core';
+import { Flex, Title } from '@mantine/core';
 
 type PageHeaderProps = {
 	title: string;
+	rightSection?: React.ReactNode;
 };
 
-const PageHeader = ({ title }: PageHeaderProps) => {
+const PageHeader = ({ title, rightSection }: PageHeaderProps) => {
 	return (
-		<Box component='header' mb='xl'>
-			<Title order={1} size='1.5rem'>
+		<Flex align='center' justify='space-between' component='header' mb='xl'>
+			<Title order={1} size='1.5rem' lh='md'>
 				{title}
 			</Title>
-		</Box>
+			{rightSection}
+		</Flex>
 	);
 };
 

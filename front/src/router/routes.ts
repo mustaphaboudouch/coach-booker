@@ -2,11 +2,11 @@ import { AppLayoutRoute } from '../layouts/app-layout';
 import { RootLayoutRoute } from '../layouts/root-layout';
 import { AppointmentsRoute } from '../pages/appointments';
 import { DashboardRoute } from '../pages/dashboard';
+import { DaysOffRoute } from '../pages/days-off';
 import { HomeRoute } from '../pages/home';
 import { OrganisationsRoute } from '../pages/organisations';
 import { ProfileRoute } from '../pages/profile';
 import { ServicesRoute } from '../pages/services';
-import { SettingsRoute } from '../pages/settings';
 import { UsersRoute } from '../pages/users';
 
 const routes = RootLayoutRoute.addChildren([
@@ -17,7 +17,7 @@ const routes = RootLayoutRoute.addChildren([
 		OrganisationsRoute,
 		ServicesRoute,
 		AppointmentsRoute,
-		SettingsRoute,
+		DaysOffRoute,
 		ProfileRoute,
 	]),
 ]);

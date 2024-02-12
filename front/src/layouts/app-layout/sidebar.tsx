@@ -2,8 +2,8 @@ import { NavLink, Stack } from '@mantine/core';
 import {
 	IconBuilding,
 	IconCalendar,
+	IconCalendarOff,
 	IconHome2,
-	IconSettings,
 	IconTags,
 	IconUser,
 	IconUsers,
@@ -32,14 +32,14 @@ const links = [
 		icon: <IconTags size='1rem' stroke={2} />,
 	},
 	{
+		label: 'Jours de congés',
+		path: '/days-off',
+		icon: <IconCalendarOff size='1rem' stroke={2} />,
+	},
+	{
 		label: 'Rendez-vous',
 		path: '/appointments',
 		icon: <IconCalendar size='1rem' stroke={2} />,
-	},
-	{
-		label: 'Paramètres',
-		path: '/settings',
-		icon: <IconSettings size='1rem' stroke={2} />,
 	},
 	{
 		label: 'Profil',

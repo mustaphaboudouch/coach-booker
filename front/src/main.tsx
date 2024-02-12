@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import { RouterProvider, router } from './router';
 
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 declare module '@tanstack/react-router' {
 	interface Register {
