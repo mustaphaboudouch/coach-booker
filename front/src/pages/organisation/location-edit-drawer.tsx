@@ -3,7 +3,7 @@ import {
 	Button,
 	Drawer,
 	Flex,
-	NumberInput,
+	Group,
 	Stack,
 	TextInput,
 	Textarea,
@@ -11,7 +11,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconEdit } from '@tabler/icons-react';
 
-const EditDrawer = () => {
+const LocationEditDrawer = () => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onSave = () => {
@@ -24,26 +24,26 @@ const EditDrawer = () => {
 				position='right'
 				opened={opened}
 				onClose={close}
-				title='Modifier le service'
+				title='Modifier le local'
 			>
 				<Stack gap='sm'>
-					<TextInput label='Nom' placeholder='Nom du service' withAsterisk />
-					<NumberInput
-						label='Durée (min)'
-						placeholder='Durée du service'
-						withAsterisk
-					/>
-					<NumberInput
-						label='Prix (€)'
-						placeholder='Prix du service'
-						withAsterisk
-					/>
+					<TextInput label='Nom' placeholder='Nom' withAsterisk />
 					<Textarea
 						label='Description'
-						placeholder='Description du service'
+						placeholder='Description'
 						rows={5}
 						withAsterisk
 					/>
+					<Group grow>
+						<TextInput label='Pays' placeholder='Pays' withAsterisk />
+						<TextInput label='Ville' placeholder='Ville' withAsterisk />
+					</Group>
+					<TextInput
+						label='Code postal'
+						placeholder='Code postal'
+						withAsterisk
+					/>
+					<TextInput label='Adresse' placeholder='Adresse' withAsterisk />
 					<Flex gap='sm' justify='flex-end' mt='md'>
 						<Button variant='default' onClick={close}>
 							Annuler
@@ -60,4 +60,4 @@ const EditDrawer = () => {
 	);
 };
 
-export { EditDrawer };
+export { LocationEditDrawer };

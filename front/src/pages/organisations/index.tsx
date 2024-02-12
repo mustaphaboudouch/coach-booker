@@ -1,8 +1,16 @@
-import { createRoute } from '@tanstack/react-router';
+import { Link, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/page-header';
-import { Card, Flex, Group, Input, Select, Table } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import {
+	ActionIcon,
+	Card,
+	Flex,
+	Group,
+	Input,
+	Select,
+	Table,
+} from '@mantine/core';
+import { IconExternalLink, IconSearch } from '@tabler/icons-react';
 import { EditDrawer } from './edit-drawer';
 import { DeleteAlert } from './delete-alert';
 import { TableEmptyState } from '../../components/table-empty-state';
@@ -46,6 +54,16 @@ const Organisations = () => {
 								<Table.Td>element.symbol</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
+										<ActionIcon
+											variant='default'
+											size='md'
+											aria-label='Preview'
+											component={Link}
+											to='/organisations/1'
+											preload={false}
+										>
+											<IconExternalLink size='1rem' />
+										</ActionIcon>
 										<EditDrawer />
 										<DeleteAlert />
 									</Flex>

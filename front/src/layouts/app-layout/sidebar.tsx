@@ -3,7 +3,7 @@ import {
 	IconBuilding,
 	IconCalendar,
 	IconCalendarOff,
-	IconHome2,
+	IconChartDonut,
 	IconTags,
 	IconUser,
 	IconUsers,
@@ -14,7 +14,7 @@ const links = [
 	{
 		label: 'Dashboard',
 		path: '/dashboard',
-		icon: <IconHome2 size='1rem' stroke={2} />,
+		icon: <IconChartDonut size='1rem' stroke={2} />,
 	},
 	{
 		label: 'Utilisateurs',
@@ -24,6 +24,11 @@ const links = [
 	{
 		label: 'Organisations',
 		path: '/organisations',
+		icon: <IconBuilding size='1rem' stroke={2} />,
+	},
+	{
+		label: 'Mon organisation',
+		path: '/organisations/1',
 		icon: <IconBuilding size='1rem' stroke={2} />,
 	},
 	{

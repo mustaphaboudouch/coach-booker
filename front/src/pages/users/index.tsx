@@ -1,7 +1,8 @@
-import { createRoute } from '@tanstack/react-router';
+import { Link, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/page-header';
 import {
+	ActionIcon,
 	Badge,
 	Card,
 	Flex,
@@ -10,7 +11,7 @@ import {
 	Table,
 	TextInput,
 } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import { IconExternalLink, IconSearch } from '@tabler/icons-react';
 import { EditDrawer } from './edit-drawer';
 import { DeleteAlert } from './delete-alert';
 import { InviteDrawer } from './invite-drawer';
@@ -59,6 +60,16 @@ const Users = () => {
 								</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
+										<ActionIcon
+											variant='default'
+											size='md'
+											aria-label='Preview'
+											component={Link}
+											to='/users/1'
+											preload={false}
+										>
+											<IconExternalLink size='1rem' />
+										</ActionIcon>
 										<ValidateAlert />
 										<RejectAlert />
 										<EditDrawer />
