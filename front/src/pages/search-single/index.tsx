@@ -3,11 +3,9 @@ import { GuestLayoutRoute } from '../../layouts/guest-layout';
 import {
 	Accordion,
 	Avatar,
-	Button,
 	Card,
 	Center,
 	Container,
-	Flex,
 	Grid,
 	Group,
 	Image,
@@ -18,6 +16,7 @@ import {
 } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { IconMapPin } from '@tabler/icons-react';
+import { BookingDrawer } from './booking-drawer';
 
 const SearchSingle = () => {
 	// const { locationId } = SearchSingleRoute.useParams();
@@ -226,7 +225,7 @@ const SearchSingle = () => {
 										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
 											100 € • 15 min
 										</Text>
-										<Button size='xs'>Choisir</Button>
+										<BookingDrawer />
 									</Group>
 								</Center>
 								<Accordion.Panel>
@@ -246,7 +245,7 @@ const SearchSingle = () => {
 										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
 											100 € • 15 min
 										</Text>
-										<Button size='xs'>Choisir</Button>
+										<BookingDrawer />
 									</Group>
 								</Center>
 								<Accordion.Panel>
@@ -266,7 +265,7 @@ const SearchSingle = () => {
 										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
 											100 € • 15 min
 										</Text>
-										<Button size='xs'>Choisir</Button>
+										<BookingDrawer />
 									</Group>
 								</Center>
 								<Accordion.Panel>
@@ -286,8 +285,7 @@ const SearchSingle = () => {
 						<Title order={2} size='1.5rem'>
 							Où se situe le local ?
 						</Title>
-
-						<Flex w='100%' h={300} bg='rgba(255,0,0,0.3)'></Flex>
+						<Card radius='md' w='100%' h={300} bg='rgba(255,0,0,0.3)'></Card>
 					</Stack>
 				</Card>
 			</Container>
