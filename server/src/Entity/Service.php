@@ -31,22 +31,22 @@ class Service
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?string $description = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 5, max: 1440)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?int $duration = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 0)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'services')]

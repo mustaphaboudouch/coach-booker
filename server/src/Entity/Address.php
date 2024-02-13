@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Post(),
         new Get(),
-
     ]
 )]
 class Address
@@ -29,21 +28,21 @@ class Address
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:update'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:update'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:update'])]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:update'])]
     #[Assert\NotBlank]
     #[Assert\Regex(
         pattern: '/^\d{5}$/',

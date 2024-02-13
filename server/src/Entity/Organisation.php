@@ -22,22 +22,23 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['organisation:read']],
     operations: [
         new Post(),
-        new Get(),
-        new GetCollection(
+        new Get(
             security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+                or (is_granted('ROLE_ORG_ADMIN') and object == user.getOrganisation())",
+        ),
+        new GetCollection(
+            security: "is_granted('ROLE_ADMIN')"
         ),
         new Patch(
-            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object.getId() == user.getId())
-            or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
-            securityMessage: "Operation not permitted",
-            denormalizationContext: ['groups' => 'user:update'],
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object == user.getOrganisation())",
+            denormalizationContext: ['groups' => 'organisation:update'],
         ),
         new Patch(
             security: "is_granted('ROLE_ADMIN')",
-            securityMessage: "Operation not permitted",
-            denormalizationContext: ['groups' => 'user:update:admin'],
+            denormalizationContext: ['groups' => 'organisation:update:admin'],
         ),
+
     ],
 )]
 class Organisation
@@ -52,7 +53,7 @@ class Organisation
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['organisation:create', 'organisation:read'])]
+    #[Groups(['organisation:create', 'organisation:read', 'organisation:update'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -71,7 +72,7 @@ class Organisation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE'])]
-    #[Groups(['organisation:update', 'organisation:read'])]
+    #[Groups(['organisation:update:admin', 'organisation:read'])]
     private ?string $status = 'INACTIVE';
 
     #[ORM\OneToOne(inversedBy: 'organisation', cascade: ['persist', 'remove'])]

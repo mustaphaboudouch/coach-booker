@@ -109,7 +109,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[Groups(['user:read', 'user:update', 'organisation:read'])]
+    #[Groups(['user:read', 'user:update'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
