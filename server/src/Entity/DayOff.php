@@ -18,15 +18,24 @@ class DayOff
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $start_date = null;
+    private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\GreaterThan(propertyPath: 'start_date')]
-    private ?\DateTimeInterface $end_date = null;
+    private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['PENDING', 'APPROVED', 'REJECTED', 'DELETED'])]
+    private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'daysOff')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->status = 'PENDING';
+    }
 
     public function getId(): ?int
     {
@@ -35,24 +44,36 @@ class DayOff
 
     public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $start_date): static
+    public function setStartDate(\DateTimeInterface $startDate): static
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $end_date): static
+    public function setEndDate(\DateTimeInterface $endDate): static
     {
-        $this->end_date = $end_date;
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

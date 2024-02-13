@@ -3,16 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\ServiceRepository;
+use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ServiceRepository::class)]
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
 #[ApiResource]
-class Service
+class Location
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,30 +27,25 @@ class Service
     #[Assert\NotBlank]
     private ?string $description = null;
 
-    #[ORM\Column]
-    #[Assert\Range(min: 5, max: 1440)]
-    private ?int $duration = null;
-
-    #[ORM\Column]
-    #[Assert\Range(min: 0)]
-    private ?int $price = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'DELETED'])]
     private ?string $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'services')]
+    #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisation $organisation = null;
 
-    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Appointment::class, orphanRemoval: true)]
-    private Collection $appointments;
+    #[ORM\OneToOne(inversedBy: 'location', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Address $address = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'locations')]
+    private Collection $users;
 
     public function __construct()
     {
-        $this->appointments = new ArrayCollection();
-        $this->status = 'ACTIVE';
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,30 +77,6 @@ class Service
         return $this;
     }
 
-    public function getDuration(): ?int
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(int $duration): static
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getStatus(): ?string
     {
         return $this->status;
@@ -130,31 +101,40 @@ class Service
         return $this;
     }
 
-    /**
-     * @return Collection<int, Appointment>
-     */
-    public function getAppointments(): Collection
+    public function getAddress(): ?Address
     {
-        return $this->appointments;
+        return $this->address;
     }
 
-    public function addAppointment(Appointment $appointment): static
+    public function setAddress(Address $address): static
     {
-        if (!$this->appointments->contains($appointment)) {
-            $this->appointments->add($appointment);
-            $appointment->setService($this);
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addLocation($this);
         }
 
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): static
+    public function removeUser(User $user): static
     {
-        if ($this->appointments->removeElement($appointment)) {
-            // set the owning side to null (unless already changed)
-            if ($appointment->getService() === $this) {
-                $appointment->setService(null);
-            }
+        if ($this->users->removeElement($user)) {
+            $user->removeLocation($this);
         }
 
         return $this;

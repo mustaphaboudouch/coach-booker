@@ -26,15 +26,14 @@ class Appointment
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $start_time = null;
+    private ?\DateTimeInterface $startTime = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
-    #[Assert\GreaterThan(propertyPath: 'start_time')]
-    private ?\DateTimeInterface $end_time = null;
+    private ?\DateTimeInterface $endTime = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Choice(choices: ['PENDING_CLIENT', 'PENDING_COACH', 'ACCEPTED', 'REJECTED_CLIENT', 'REJECTED_COACH', 'CANCELED_CLIENT', 'CANCELED_COACH', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
+    #[Assert\Choice(choices: ['PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -61,6 +60,7 @@ class Appointment
     public function __construct()
     {
         $this->feedbacks = new ArrayCollection();
+        $this->status = 'PENDING';
     }
 
     public function getId(): ?int
@@ -82,24 +82,24 @@ class Appointment
 
     public function getStartTime(): ?\DateTimeInterface
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $start_time): static
+    public function setStartTime(\DateTimeInterface $startTime): static
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
     public function getEndTime(): ?\DateTimeInterface
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $end_time): static
+    public function setEndTime(\DateTimeInterface $endTime): static
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }

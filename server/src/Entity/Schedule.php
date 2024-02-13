@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ScheduleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
 #[ApiResource]
@@ -15,26 +18,36 @@ class Schedule
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private array $planning = [];
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'])]
+    private ?string $day = null;
 
-    #[ORM\OneToOne(inversedBy: 'schedule', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'schedules')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'schedule', targetEntity: Period::class, orphanRemoval: true)]
+    private Collection $periods;
+
+    public function __construct()
+    {
+        $this->periods = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPlanning(): array
+    public function getDay(): ?string
     {
-        return $this->planning;
+        return $this->day;
     }
 
-    public function setPlanning(array $planning): static
+    public function setDay(string $day): static
     {
-        $this->planning = $planning;
+        $this->day = $day;
 
         return $this;
     }
@@ -44,9 +57,39 @@ class Schedule
         return $this->user;
     }
 
-    public function setUser(User $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Period>
+     */
+    public function getPeriods(): Collection
+    {
+        return $this->periods;
+    }
+
+    public function addPeriod(Period $period): static
+    {
+        if (!$this->periods->contains($period)) {
+            $this->periods->add($period);
+            $period->setSchedule($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeriod(Period $period): static
+    {
+        if ($this->periods->removeElement($period)) {
+            // set the owning side to null (unless already changed)
+            if ($period->getSchedule() === $this) {
+                $period->setSchedule(null);
+            }
+        }
 
         return $this;
     }
