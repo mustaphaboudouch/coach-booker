@@ -52,11 +52,10 @@ class Address
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
     #[Groups(['user:read', 'user:create', 'user:update'])]
-    private ?Organisation $organisation = null;
+    private ?User $user = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:create', 'user:update'])]
-    private ?User $user = null;
+    private ?Location $location = null;
 
     public function getId(): ?int
     {
@@ -111,27 +110,6 @@ class Address
         return $this;
     }
 
-    public function getOrganisation(): ?Organisation
-    {
-        return $this->organisation;
-    }
-
-    public function setOrganisation(?Organisation $organisation): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($organisation === null && $this->organisation !== null) {
-            $this->organisation->setAddress(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($organisation !== null && $organisation->getAddress() !== $this) {
-            $organisation->setAddress($this);
-        }
-
-        $this->organisation = $organisation;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -151,6 +129,23 @@ class Address
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(Location $location): static
+    {
+        // set the owning side of the relation if necessary
+        if ($location->getAddress() !== $this) {
+            $location->setAddress($this);
+        }
+
+        $this->location = $location;
 
         return $this;
     }

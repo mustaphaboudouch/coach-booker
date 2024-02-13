@@ -136,6 +136,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $clientFeedbacks;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Location $location = null;
+
     public function __construct()
     {
         $this->daysOff = new ArrayCollection();
@@ -449,6 +452,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $clientFeedback->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

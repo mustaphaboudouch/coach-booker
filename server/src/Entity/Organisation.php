@@ -75,10 +75,6 @@ class Organisation
     #[Groups(['organisation:update:admin', 'organisation:read'])]
     private ?string $status = 'INACTIVE';
 
-    #[ORM\OneToOne(inversedBy: 'organisation', cascade: ['persist', 'remove'])]
-    #[Groups(['organisation:read', 'organisation:update'])]
-    private ?Address $address = null;
-
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Service::class, orphanRemoval: true)]
     #[Groups(['organisation:read', 'organisation:update'])]
     private Collection $services;
@@ -87,10 +83,15 @@ class Organisation
     #[Groups(['organisation:read', 'organisation:update'])]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Location::class)]
+    #[Groups(['organisation:read', 'organisation:update'])]
+    private Collection $locations;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->locations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,17 +147,6 @@ class Organisation
         return $this;
     }
 
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Service>
@@ -212,6 +202,36 @@ class Organisation
             // set the owning side to null (unless already changed)
             if ($user->getOrganisation() === $this) {
                 $user->setOrganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Location>
+     */
+    public function getLocations(): Collection
+    {
+        return $this->locations;
+    }
+
+    public function addLocation(Location $location): static
+    {
+        if (!$this->locations->contains($location)) {
+            $this->locations->add($location);
+            $location->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocation(Location $location): static
+    {
+        if ($this->locations->removeElement($location)) {
+            // set the owning side to null (unless already changed)
+            if ($location->getOrganisation() === $this) {
+                $location->setOrganisation(null);
             }
         }
 
