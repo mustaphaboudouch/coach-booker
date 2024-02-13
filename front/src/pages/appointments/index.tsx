@@ -72,11 +72,11 @@ const Appointments = () => {
 										>
 											<IconExternalLink size='1rem' />
 										</ActionIcon>
-										<ValidateAlert />
-										<RejectAlert />
-										<CancelAlert />
+										<ValidateAlert appointmentId='1' />
+										<RejectAlert appointmentId='1' />
+										<CancelAlert appointmentId='1' />
 										<EditDrawer />
-										<DeleteAlert />
+										<DeleteAlert appointmentId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

@@ -19,18 +19,6 @@ const PreviewDrawer = () => {
 							<tr>
 								<td valign='top'>
 									<Text size='sm' fw={500}>
-										Nom
-									</Text>
-								</td>
-								<td valign='top'>
-									<Text size='sm' c='dimmed'>
-										Nom du service
-									</Text>
-								</td>
-							</tr>
-							<tr>
-								<td valign='top'>
-									<Text size='sm' fw={500}>
 										Durée
 									</Text>
 								</td>

@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
+import { DAY_OFF_STATUSES } from '../../constants/day-off';
 
-const RejectAlert = () => {
+type RejectAlertProps = {
+	dayOffId: string;
+};
+
+const RejectAlert = ({ dayOffId }: RejectAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onReject = () => {
-		console.log('REJECT');
+		console.log('VALUES :', { dayOffId, status: DAY_OFF_STATUSES.REJECTED });
 	};
 
 	return (

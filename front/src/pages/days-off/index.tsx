@@ -59,10 +59,10 @@ const DaysOff = () => {
 								</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
-										<ValidateAlert />
-										<RejectAlert />
+										<ValidateAlert dayOffId='1' />
+										<RejectAlert dayOffId='1' />
 										<PreviewDrawer />
-										<DeleteAlert />
+										<DeleteAlert dayOffId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

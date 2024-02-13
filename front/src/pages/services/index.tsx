@@ -50,7 +50,7 @@ const Services = () => {
 									<Flex gap='xs' justify='flex-end'>
 										<PreviewDrawer />
 										<EditDrawer />
-										<DeleteAlert />
+										<DeleteAlert serviceId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

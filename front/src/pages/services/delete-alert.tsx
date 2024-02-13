@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
+import { SERVICE_STATUSES } from '../../constants/service';
 
-const DeleteAlert = () => {
+type DeleteAlertProps = {
+	serviceId: string;
+};
+
+const DeleteAlert = ({ serviceId }: DeleteAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onDelete = () => {
-		console.log('DELETE');
+		console.log('VALUES :', { serviceId, status: SERVICE_STATUSES.DELETED });
 	};
 
 	return (

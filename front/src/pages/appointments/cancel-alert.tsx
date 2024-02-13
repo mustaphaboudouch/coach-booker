@@ -1,12 +1,20 @@
 import { ActionIcon, Button, Flex, Modal, Textarea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCalendarX } from '@tabler/icons-react';
+import { APPOINTMENT_STATUSES } from '../../constants/appointment';
 
-const CancelAlert = () => {
+type CancelAlertProps = {
+	appointmentId: string;
+};
+
+const CancelAlert = ({ appointmentId }: CancelAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onCancel = () => {
-		console.log('CANCEL');
+		console.log('VALUES :', {
+			appointmentId,
+			status: APPOINTMENT_STATUSES.CANCELED,
+		});
 	};
 
 	return (

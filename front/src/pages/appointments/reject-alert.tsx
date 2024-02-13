@@ -1,12 +1,20 @@
 import { ActionIcon, Button, Flex, Modal, Textarea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
+import { APPOINTMENT_STATUSES } from '../../constants/appointment';
 
-const RejectAlert = () => {
+type RejectAlertProps = {
+	appointmentId: string;
+};
+
+const RejectAlert = ({ appointmentId }: RejectAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onReject = () => {
-		console.log('REJECT');
+		console.log('VALUES :', {
+			appointmentId,
+			status: APPOINTMENT_STATUSES.REJECTED,
+		});
 	};
 
 	return (

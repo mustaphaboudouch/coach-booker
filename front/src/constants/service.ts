@@ -1,0 +1,6 @@
+const SERVICE_STATUSES = {
+	ACTIVE: 'ACTIVE',
+	DELETED: 'DELETED',
+};
+
+export { SERVICE_STATUSES };

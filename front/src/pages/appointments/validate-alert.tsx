@@ -1,12 +1,20 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChecks } from '@tabler/icons-react';
+import { APPOINTMENT_STATUSES } from '../../constants/appointment';
 
-const ValidateAlert = () => {
+type ValidateAlertProps = {
+	appointmentId: string;
+};
+
+const ValidateAlert = ({ appointmentId }: ValidateAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onValidate = () => {
-		console.log('VALIDATE');
+		console.log('VALUES :', {
+			appointmentId,
+			status: APPOINTMENT_STATUSES.APPROVED,
+		});
 	};
 
 	return (

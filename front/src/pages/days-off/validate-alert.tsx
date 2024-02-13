@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChecks } from '@tabler/icons-react';
+import { DAY_OFF_STATUSES } from '../../constants/day-off';
 
-const ValidateAlert = () => {
+type ValidateAlertProps = {
+	dayOffId: string;
+};
+
+const ValidateAlert = ({ dayOffId }: ValidateAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onValidate = () => {
-		console.log('VALIDATE');
+		console.log('VALUES :', { dayOffId, status: DAY_OFF_STATUSES.APPROVED });
 	};
 
 	return (

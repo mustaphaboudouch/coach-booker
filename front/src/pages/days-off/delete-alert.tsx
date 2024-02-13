@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
+import { DAY_OFF_STATUSES } from '../../constants/day-off';
 
-const DeleteAlert = () => {
+type DeleteAlertProps = {
+	dayOffId: string;
+};
+
+const DeleteAlert = ({ dayOffId }: DeleteAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onDelete = () => {
-		console.log('DELETE');
+		console.log('VALUES :', { dayOffId, status: DAY_OFF_STATUSES.DELETED });
 	};
 
 	return (
