@@ -3,6 +3,7 @@ import {
 	Button,
 	Drawer,
 	Flex,
+	Group,
 	Stack,
 	TextInput,
 	Textarea,
@@ -23,24 +24,26 @@ const EditDrawer = () => {
 				position='right'
 				opened={opened}
 				onClose={close}
-				title="Modifier l'organisation"
+				title='Modifier le local'
 			>
 				<Stack gap='sm'>
-					<TextInput
-						label='Nom'
-						placeholder="Nom de l'organisation"
-						withAsterisk
-					/>
-					<TextInput
-						label='KBIS'
-						placeholder="KBIS de l'organisation"
-						withAsterisk
-					/>
+					<TextInput label='Nom' placeholder='Nom' withAsterisk />
 					<Textarea
 						label='Description'
-						placeholder="Description de l'organisation"
+						placeholder='Description'
 						rows={5}
+						withAsterisk
 					/>
+					<Group grow>
+						<TextInput label='Pays' placeholder='Pays' withAsterisk />
+						<TextInput label='Ville' placeholder='Ville' withAsterisk />
+					</Group>
+					<TextInput
+						label='Code postal'
+						placeholder='Code postal'
+						withAsterisk
+					/>
+					<TextInput label='Adresse' placeholder='Adresse' withAsterisk />
 					<Flex gap='sm' justify='flex-end' mt='md'>
 						<Button variant='default' onClick={close}>
 							Annuler

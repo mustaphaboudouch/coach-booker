@@ -4,6 +4,7 @@ import {
 	IconCalendar,
 	IconCalendarOff,
 	IconChartDonut,
+	IconMap,
 	IconTags,
 	IconUser,
 	IconUsers,
@@ -30,6 +31,11 @@ const links = [
 		label: 'Mon organisation',
 		path: '/organisations/1',
 		icon: <IconBuilding size='1rem' stroke={2} />,
+	},
+	{
+		label: 'Locaux',
+		path: '/locations',
+		icon: <IconMap size='1rem' stroke={2} />,
 	},
 	{
 		label: 'Services',

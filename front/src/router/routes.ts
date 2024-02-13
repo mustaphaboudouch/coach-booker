@@ -5,6 +5,7 @@ import { AppointmentsRoute } from '../pages/appointments';
 import { DashboardRoute } from '../pages/dashboard';
 import { DaysOffRoute } from '../pages/days-off';
 import { HomeRoute } from '../pages/home';
+import { LocationsRoute } from '../pages/locations';
 import { OrganisationRoute } from '../pages/organisation';
 import { OrganisationsRoute } from '../pages/organisations';
 import { ProfileRoute } from '../pages/profile';
@@ -23,6 +24,7 @@ const routes = RootLayoutRoute.addChildren([
 		ServicesRoute,
 		AppointmentsRoute,
 		AppointmentRoute,
+		LocationsRoute,
 		DaysOffRoute,
 		ProfileRoute,
 	]),
