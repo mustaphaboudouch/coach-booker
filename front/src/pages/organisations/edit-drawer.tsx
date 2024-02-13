@@ -5,7 +5,6 @@ import {
 	Flex,
 	Stack,
 	TextInput,
-	Textarea,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
@@ -15,7 +14,6 @@ import { z } from 'zod';
 const schema = z.object({
 	name: z.string().min(1),
 	kbis: z.string().min(1),
-	description: z.string().nullish(),
 });
 
 const EditDrawer = () => {
@@ -24,7 +22,6 @@ const EditDrawer = () => {
 		initialValues: {
 			name: '',
 			kbis: '',
-			description: undefined,
 		},
 		validate: zodResolver(schema),
 	});
@@ -57,12 +54,6 @@ const EditDrawer = () => {
 						placeholder='KBIS'
 						{...form.getInputProps('kbis')}
 						withAsterisk
-					/>
-					<Textarea
-						label='Description'
-						placeholder='Description'
-						{...form.getInputProps('description')}
-						rows={5}
 					/>
 					<Flex gap='sm' justify='flex-end' mt='md'>
 						<Button variant='default' onClick={close}>

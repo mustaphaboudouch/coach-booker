@@ -42,8 +42,8 @@ const Organisations = () => {
 						<Table.Thead>
 							<Table.Tr>
 								<Table.Th>Nom</Table.Th>
-								<Table.Th>Nbr de membres</Table.Th>
 								<Table.Th>KBIS</Table.Th>
+								<Table.Th>Nbr d'employés</Table.Th>
 								<Table.Th />
 							</Table.Tr>
 						</Table.Thead>
