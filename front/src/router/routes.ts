@@ -1,4 +1,5 @@
 import { AppLayoutRoute } from '../layouts/app-layout';
+import { GuestLayoutRoute } from '../layouts/guest-layout';
 import { RootLayoutRoute } from '../layouts/root-layout';
 import { AppointmentRoute } from '../pages/appointment';
 import { AppointmentsRoute } from '../pages/appointments';
@@ -9,12 +10,14 @@ import { LocationsRoute } from '../pages/locations';
 import { OrganisationRoute } from '../pages/organisation';
 import { OrganisationsRoute } from '../pages/organisations';
 import { ProfileRoute } from '../pages/profile';
+import { SearchRoute } from '../pages/search';
+import { SearchSingleRoute } from '../pages/search-single';
 import { ServicesRoute } from '../pages/services';
 import { UserRoute } from '../pages/user';
 import { UsersRoute } from '../pages/users';
 
 const routes = RootLayoutRoute.addChildren([
-	HomeRoute,
+	GuestLayoutRoute.addChildren([HomeRoute, SearchRoute, SearchSingleRoute]),
 	AppLayoutRoute.addChildren([
 		DashboardRoute,
 		UsersRoute,
