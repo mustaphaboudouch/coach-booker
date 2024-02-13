@@ -32,31 +32,31 @@ class Feedback
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?int $rating_expertise = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?int $rating_availability = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?int $rating_communication = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?int $rating_experience = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?int $rating_motivation = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read', 'user:update'])]
     private ?string $comment = null;
 
     #[ORM\ManyToOne(inversedBy: 'feedbacks')]

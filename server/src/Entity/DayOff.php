@@ -28,12 +28,12 @@ class DayOff
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['dayOff:read', 'organisation:read'])]
+    #[Groups(['dayOff:read', 'organisation:read', 'user:read'])]
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: 'start_date')]
-    #[Groups(['dayOff:read', 'organisation:read'])]
+    #[Groups(['dayOff:read', 'organisation:read', 'user:read'])]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\ManyToOne(inversedBy: 'daysOff')]

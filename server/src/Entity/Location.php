@@ -29,16 +29,16 @@ class Location
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update', 'user:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update', 'user:read'])]
     private ?string $description = null;
 
     #[ORM\OneToOne(inversedBy: 'location', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'organisation:update', 'user:read'])]
     private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'locations')]

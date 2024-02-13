@@ -51,10 +51,7 @@ class Address
     private ?string $zip_code = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:create', 'user:update'])]
-    private ?User $user = null;
-
-    #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
+    #[Groups(['organisation:update'])]
     private ?Location $location = null;
 
     public function getId(): ?int
@@ -106,29 +103,6 @@ class Address
     public function setZipCode(string $zip_code): static
     {
         $this->zip_code = $zip_code;
-
-        return $this;
-    }
-
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setAddress(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user !== null && $user->getAddress() !== $this) {
-            $user->setAddress($this);
-        }
-
-        $this->user = $user;
 
         return $this;
     }

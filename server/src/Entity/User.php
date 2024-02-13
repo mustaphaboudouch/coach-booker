@@ -49,10 +49,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             securityMessage: "Operation not permitted",
             denormalizationContext: ['groups' => 'user:update:admin'],
         ),
-        new Delete(
-            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
-            securityMessage: "Operation not permitted",
-        )
     ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -93,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     #[ORM\Column]
-    #[Groups(['user:create', 'user:update', 'organisation:read'])]
+    #[Groups(['user:create', 'user:update:admin', 'organisation:read'])]
     private ?string $status = 'INVITED';
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -103,10 +99,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?string $phone_number = null;
-
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:update'])]
-    private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[Groups(['user:read', 'user:update'])]
@@ -137,6 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $clientFeedbacks;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?Location $location = null;
 
     public function __construct()
@@ -252,18 +245,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoneNumber(?string $phone_number): static
     {
         $this->phone_number = $phone_number;
-
-        return $this;
-    }
-
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address): static
-    {
-        $this->address = $address;
 
         return $this;
     }

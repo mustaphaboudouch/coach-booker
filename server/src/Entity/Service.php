@@ -31,7 +31,7 @@ class Service
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['organisation:read', 'organisation:update'])]
+    #[Groups(['organisation:read', 'organisation:update', 'user:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]

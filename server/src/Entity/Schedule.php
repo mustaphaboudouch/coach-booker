@@ -26,7 +26,7 @@ class Schedule
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private array $planning = [];
 
     #[ORM\OneToOne(inversedBy: 'schedule', cascade: ['persist', 'remove'])]

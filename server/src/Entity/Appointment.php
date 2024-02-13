@@ -56,48 +56,49 @@ class Appointment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?\DateTimeInterface $start_time = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: 'start_time')]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?\DateTimeInterface $end_time = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?string $status = "PENDING";
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?string $reject_reason = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?string $cancel_reason = null;
 
     #[ORM\ManyToOne(inversedBy: 'coachAppointments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['user:read'])]
     private ?User $coach = null;
 
     #[ORM\ManyToOne(inversedBy: 'clientAppointments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?User $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private ?Service $service = null;
 
     #[ORM\OneToMany(mappedBy: 'appointment', targetEntity: Feedback::class, orphanRemoval: true)]
-    #[Groups(['organisation:read'])]
+    #[Groups(['organisation:read', 'user:read'])]
     private Collection $feedbacks;
 
     public function __construct()
