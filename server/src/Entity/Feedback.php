@@ -3,14 +3,24 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\FeedbackRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['feedback:read']],
+    operations: [
+        new Post(),
+        new Get(),
+
+    ]
+)]
 class Feedback
 {
     use TimestampableEntity;
@@ -22,25 +32,31 @@ class Feedback
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
+    #[Groups(['organisation:read'])]
     private ?int $rating_expertise = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
+    #[Groups(['organisation:read'])]
     private ?int $rating_availability = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
+    #[Groups(['organisation:read'])]
     private ?int $rating_communication = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
+    #[Groups(['organisation:read'])]
     private ?int $rating_experience = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
+    #[Groups(['organisation:read'])]
     private ?int $rating_motivation = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['organisation:read'])]
     private ?string $comment = null;
 
     #[ORM\ManyToOne(inversedBy: 'feedbacks')]

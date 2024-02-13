@@ -3,13 +3,23 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\DayOffRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DayOffRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['dayOff:read']],
+    operations: [
+        new Post(),
+        new Get(),
+
+    ]
+)]
 class DayOff
 {
     #[ORM\Id]
@@ -18,14 +28,17 @@ class DayOff
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['dayOff:read', 'organisation:read'])]
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: 'start_date')]
+    #[Groups(['dayOff:read', 'organisation:read'])]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\ManyToOne(inversedBy: 'daysOff')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['dayOff:read'])]
     private ?User $user = null;
 
     public function getId(): ?int

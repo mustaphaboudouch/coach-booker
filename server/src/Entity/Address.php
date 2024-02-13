@@ -24,26 +24,26 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read'])]
     #[Assert\NotBlank]
     #[Assert\Regex(
         pattern: '/^\d{5}$/',
@@ -52,11 +52,11 @@ class Address
     private ?string $zip_code = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     private ?User $user = null;
 
     public function getId(): ?int

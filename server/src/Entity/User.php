@@ -62,15 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:create', 'user:read', 'user:update', 'organisation:read'])]
     #[Assert\NotBlank]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:create', 'user:read', 'user:update', 'organisation:read'])]
     #[Assert\NotBlank]
     private ?string $lastname = null;
 
@@ -81,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['user:create', 'user:read', 'user:update:admin'])]
+    #[Groups(['user:create', 'user:read', 'user:update:admin', 'organisation:read'])]
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column]
@@ -92,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     #[ORM\Column]
-    #[Groups(['user:create', 'user:update'])]
+    #[Groups(['user:create', 'user:update', 'organisation:read'])]
     private ?string $status = 'INVITED';
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -100,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: '/^0[1-9]\d{8}$/',
         message: 'The phone number must be a 10 digit number starting with 0'
     )]
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?string $phone_number = null;
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
@@ -108,18 +109,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     private ?Schedule $schedule = null;
 
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DayOff::class, orphanRemoval: true)]
     private Collection $daysOff;
 
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $coachAppointments;
 
@@ -127,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $clientAppointments;
 
-    #[Groups(['user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update', 'organisation:read'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $coachFeedbacks;
 
@@ -181,6 +182,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

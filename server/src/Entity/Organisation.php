@@ -3,16 +3,43 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['organisation:create']],
+    normalizationContext: ['groups' => ['organisation:read']],
+    operations: [
+        new Post(),
+        new Get(),
+        new GetCollection(
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+        ),
+        new Patch(
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object.getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+            securityMessage: "Operation not permitted",
+            denormalizationContext: ['groups' => 'user:update'],
+        ),
+        new Patch(
+            security: "is_granted('ROLE_ADMIN')",
+            securityMessage: "Operation not permitted",
+            denormalizationContext: ['groups' => 'user:update:admin'],
+        ),
+    ],
+)]
 class Organisation
 {
     use TimestampableEntity;
@@ -20,13 +47,16 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['organisation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['organisation:create', 'organisation:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -35,20 +65,25 @@ class Organisation
         pattern: '/^([A-Z]{3})\d{5}$/',
         message: 'The KBIS must be a 3 capital letters followed by a 5 digit number'
     )]
+    #[Groups(['organisation:create'])]
     private ?string $kbis = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE'])]
-    private ?string $status = null;
+    #[Groups(['organisation:update', 'organisation:read'])]
+    private ?string $status = 'INACTIVE';
 
     #[ORM\OneToOne(inversedBy: 'organisation', cascade: ['persist', 'remove'])]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private ?Address $address = null;
 
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Service::class, orphanRemoval: true)]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private Collection $services;
 
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: User::class)]
+    #[Groups(['organisation:read', 'organisation:update'])]
     private Collection $users;
 
     public function __construct()

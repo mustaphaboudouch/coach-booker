@@ -56,24 +56,30 @@ class Appointment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['organisation:read'])]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Groups(['organisation:read'])]
     private ?\DateTimeInterface $start_time = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: 'start_time')]
+    #[Groups(['organisation:read'])]
     private ?\DateTimeInterface $end_time = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
+    #[Groups(['organisation:read'])]
     private ?string $status = "PENDING";
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['organisation:read'])]
     private ?string $reject_reason = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['organisation:read'])]
     private ?string $cancel_reason = null;
 
     #[ORM\ManyToOne(inversedBy: 'coachAppointments')]
@@ -82,13 +88,16 @@ class Appointment
 
     #[ORM\ManyToOne(inversedBy: 'clientAppointments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['organisation:read'])]
     private ?User $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['organisation:read'])]
     private ?Service $service = null;
 
     #[ORM\OneToMany(mappedBy: 'appointment', targetEntity: Feedback::class, orphanRemoval: true)]
+    #[Groups(['organisation:read'])]
     private Collection $feedbacks;
 
     public function __construct()

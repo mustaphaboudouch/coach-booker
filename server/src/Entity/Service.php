@@ -3,15 +3,25 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['service:create']],
+    normalizationContext: ['groups' => ['service:read']],
+    operations: [
+        new Post(),
+        new Get(),
+    ]
+)]
 class Service
 {
     #[ORM\Id]
@@ -21,18 +31,22 @@ class Service
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['organisation:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
+    #[Groups(['organisation:read'])]
     private ?string $description = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 5, max: 1440)]
+    #[Groups(['organisation:read'])]
     private ?int $duration = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 0)]
+    #[Groups(['organisation:read'])]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'services')]

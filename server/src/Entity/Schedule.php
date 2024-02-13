@@ -3,11 +3,21 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\ScheduleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['schedule:read']],
+    operations: [
+        new Post(),
+        new Get(),
+
+    ]
+)]
 class Schedule
 {
     #[ORM\Id]
@@ -16,6 +26,7 @@ class Schedule
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['organisation:read'])]
     private array $planning = [];
 
     #[ORM\OneToOne(inversedBy: 'schedule', cascade: ['persist', 'remove'])]
