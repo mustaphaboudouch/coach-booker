@@ -85,48 +85,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column]
+    #[Groups(['user:create', 'user:update'])]
     private ?string $password = null;
 
     #[Groups(['user:create', 'user:update'])]
     private ?string $plainPassword = null;
+
+    #[ORM\Column]
+    #[Groups(['user:create', 'user:update'])]
+    private ?string $status = 'INVITED';
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Regex(
         pattern: '/^0[1-9]\d{8}$/',
         message: 'The phone number must be a 10 digit number starting with 0'
     )]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     private ?string $phone_number = null;
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     private ?Schedule $schedule = null;
 
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DayOff::class, orphanRemoval: true)]
     private Collection $daysOff;
 
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $coachAppointments;
 
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $clientAppointments;
 
-    #[Groups(['user:create', 'user:read', 'user:update'])]
+    #[Groups(['user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $coachFeedbacks;
 
-    #[Groups(['user:create', 'user:read'])]
+    #[Groups(['user:read'])]
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $clientFeedbacks;
 
