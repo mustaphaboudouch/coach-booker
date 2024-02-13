@@ -1,6 +1,6 @@
 const LOCATION_STATUSES = {
-	ACTIVE: 'active',
-	DELETED: 'deleted',
+	ACTIVE: 'ACTIVE',
+	DELETED: 'DELETED',
 };
 
 export { LOCATION_STATUSES };
