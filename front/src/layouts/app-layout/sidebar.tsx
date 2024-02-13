@@ -13,7 +13,7 @@ import { Link } from '@tanstack/react-router';
 
 const links = [
 	{
-		label: 'Dashboard',
+		label: 'Tableau de bord',
 		path: '/dashboard',
 		icon: <IconChartDonut size='1rem' stroke={2} />,
 	},

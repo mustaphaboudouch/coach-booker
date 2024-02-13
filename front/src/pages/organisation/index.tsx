@@ -19,7 +19,7 @@ const Organisation = () => {
 						value='dashboard'
 						leftSection={<IconChartDonut size='1rem' />}
 					>
-						Dashboard
+						Tableau de bord
 					</Tabs.Tab>
 					<Tabs.Tab value='locations' leftSection={<IconMap size='1rem' />}>
 						Locaux

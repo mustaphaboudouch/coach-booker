@@ -12,7 +12,6 @@ import {
 	Text,
 	TextInput,
 	Title,
-	em,
 } from '@mantine/core';
 import {
 	Icon24Hours,
@@ -22,22 +21,12 @@ import {
 	IconSearch,
 	IconTag,
 } from '@tabler/icons-react';
-import { useMediaQuery } from '@mantine/hooks';
 
 const Home = () => {
-	const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-
 	return (
 		<Flex h='100%'>
-			<Container size='lg' flex={1}>
-				<Stack
-					gap='xl'
-					h='100%'
-					justify='center'
-					maw={isMobile ? '100%' : '70%'}
-					ta={isMobile ? 'center' : 'left'}
-					mt={-60}
-				>
+			<Container size='md' flex={1}>
+				<Stack gap='xl' h='100%' justify='center' ta='center' mt={-60}>
 					<Title order={1}>Réserver en ligne un RDV avec un coach.</Title>
 
 					<Text c='dimmed'>
@@ -71,7 +60,7 @@ const Home = () => {
 						</Flex>
 					</Card>
 
-					<Group gap='lg' justify={isMobile ? 'center' : 'flex-start'}>
+					<Group gap='lg' justify='center'>
 						<Group gap='xs'>
 							<IconMoodHappy size='1rem' color='gray' />
 							<Text size='sm' c='dimmed'>
