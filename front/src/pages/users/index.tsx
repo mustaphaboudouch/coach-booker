@@ -70,10 +70,10 @@ const Users = () => {
 										>
 											<IconExternalLink size='1rem' />
 										</ActionIcon>
-										<ValidateAlert />
-										<RejectAlert />
+										<ValidateAlert userId='1' />
+										<RejectAlert userId='1' />
 										<EditDrawer />
-										<DeleteAlert />
+										<DeleteAlert userId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

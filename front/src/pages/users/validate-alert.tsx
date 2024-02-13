@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChecks } from '@tabler/icons-react';
+import { USER_STATUSES } from '../../constants/user';
 
-const ValidateAlert = () => {
+type ValidateAlertProps = {
+	userId: string;
+};
+
+const ValidateAlert = ({ userId }: ValidateAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onValidate = () => {
-		console.log('VALIDATE');
+		console.log('VALUES :', { userId, status: USER_STATUSES.ACTIVE });
 	};
 
 	return (

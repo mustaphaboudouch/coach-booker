@@ -5,7 +5,7 @@ import { Tabs } from '@mantine/core';
 import { IconCalendarClock, IconLock, IconUser } from '@tabler/icons-react';
 import { PersonalInfoTab } from './personal-info-tab';
 import { PasswordTab } from './password-tab';
-import { ScheduleTab } from './schedule';
+import { ScheduleTab } from './schedule-tab';
 
 const Profile = () => {
 	return (

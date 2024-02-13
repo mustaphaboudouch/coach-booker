@@ -4,7 +4,7 @@ import { AppLayoutRoute } from '../../layouts/app-layout';
 import { Tabs } from '@mantine/core';
 import { IconCalendarClock, IconLock, IconUser } from '@tabler/icons-react';
 import { PersonalInfoTab } from './personal-info-tab';
-import { ScheduleTab } from './schedule';
+import { ScheduleTab } from './schedule-tab';
 import { PasswordTab } from './password-tab';
 
 const User = () => {

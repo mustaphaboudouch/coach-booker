@@ -1,12 +1,17 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
+import { USER_STATUSES } from '../../constants/user';
 
-const RejectAlert = () => {
+type RejectAlertProps = {
+	userId: string;
+};
+
+const RejectAlert = ({ userId }: RejectAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const onReject = () => {
-		console.log('REJECT');
+		console.log('VALUES :', { userId, status: USER_STATUSES.REJECTED });
 	};
 
 	return (

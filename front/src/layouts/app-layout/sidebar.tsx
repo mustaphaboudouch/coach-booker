@@ -63,21 +63,19 @@ const Sidebar = () => {
 	return (
 		<Stack gap={0}>
 			{links.map(({ label, path, icon }, index) => (
-				<>
-					<NavLink
-						key={index}
-						px='lg'
-						py='xs'
-						component={Link}
-						label={label}
-						leftSection={icon}
-						to={path}
-						// active={location.pathname === link.path}
-						// activeProps={{
-						// 	active: true,
-						// }}
-					/>
-				</>
+				<NavLink
+					key={index}
+					px='lg'
+					py='xs'
+					component={Link}
+					label={label}
+					leftSection={icon}
+					to={path}
+					// active={location.pathname === link.path}
+					// activeProps={{
+					// 	active: true,
+					// }}
+				/>
 			))}
 		</Stack>
 	);

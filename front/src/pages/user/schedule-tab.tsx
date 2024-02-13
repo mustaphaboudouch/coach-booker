@@ -8,10 +8,49 @@ import {
 	Text,
 } from '@mantine/core';
 import { DAY_NAMES, DAY_NAMES_WORDING } from '../../constants/date';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { TimeInput } from '@mantine/dates';
 import { IconCalendarX, IconPlus, IconTrash } from '@tabler/icons-react';
+import { z } from 'zod';
 
+const schema = z.object({
+	MONDAY: z.array(
+		z
+			.object({
+				startTime: z
+					.string()
+					.regex(/^\d{2}:\d{2}$/)
+					.refine(
+						(time) => {
+							const [hours, minutes] = time.split(':').map(Number);
+							return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
+						},
+						{ message: 'Invalid time format' },
+					),
+				endTime: z
+					.string()
+					.regex(/^\d{2}:\d{2}$/)
+					.refine(
+						(time) => {
+							const [hours, minutes] = time.split(':').map(Number);
+							return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
+						},
+						{ message: 'Invalid time format' },
+					),
+			})
+			.refine(
+				(data) => {
+					const start = Number(data.startTime.replace(':', ''));
+					const end = Number(data.endTime.replace(':', ''));
+					return start < end;
+				},
+				{
+					message: 'End time should be greater than start time',
+					path: ['endTime'],
+				},
+			),
+	),
+});
 const ScheduleTab = () => {
 	const form = useForm({
 		initialValues: {
@@ -23,10 +62,14 @@ const ScheduleTab = () => {
 			[DAY_NAMES.SATURDAY]: [],
 			[DAY_NAMES.SUNDAY]: [],
 		},
+		validate: zodResolver(schema),
 	});
 
 	const onSave = () => {
-		console.log(form.values);
+		const validation = form.validate();
+		if (!validation.hasErrors) {
+			console.log('VALUES :', form.values);
+		}
 	};
 
 	return (
@@ -85,8 +128,8 @@ const ScheduleTab = () => {
 										size='xs'
 										onClick={() =>
 											form.insertListItem(dayName, {
-												startTime: null,
-												endTime: null,
+												startTime: '',
+												endTime: '',
 											})
 										}
 									>
