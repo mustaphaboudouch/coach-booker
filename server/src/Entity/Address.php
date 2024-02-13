@@ -5,30 +5,45 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['organization:read', 'service:read', 'employee:read']],
+    operations: [
+        new Post(),
+        new Get(),
+
+    ]
+)]
 class Address
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     #[Assert\NotBlank]
     #[Assert\Regex(
         pattern: '/^\d{5}$/',
@@ -37,9 +52,11 @@ class Address
     private ?string $zip_code = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
+    #[Groups(['user:read', 'user:create', 'user:update', 'organisation:read', 'organisation:create', 'organisation:update'])]
     private ?User $user = null;
 
     public function getId(): ?int

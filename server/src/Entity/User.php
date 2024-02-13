@@ -2,8 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,8 +23,36 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     denormalizationContext: ['groups' => ['user:create']],
+    normalizationContext: ['groups' => ['user:read']],
     operations: [
         new Post(processor: PasswordHasher::class),
+        new Get(
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
+                or (is_granted('ROLE_USER') and object.getId() == user.getId())
+            ",
+        ),
+        new GetCollection(
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+        ),
+        new Patch(
+            processor: PasswordHasher::class,
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object.getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+            securityMessage: "Operation not permitted",
+            denormalizationContext: ['groups' => 'user:update'],
+        ),
+        new Patch(
+            processor: PasswordHasher::class,
+            security: "is_granted('ROLE_ADMIN')",
+            securityMessage: "Operation not permitted",
+            denormalizationContext: ['groups' => 'user:update:admin'],
+        ),
+        new Delete(
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+            securityMessage: "Operation not permitted",
+        )
     ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -32,28 +65,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[Assert\NotBlank]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[Assert\NotBlank]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[Assert\NotBlank]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:read', 'user:update:admin'])]
     private array $roles = [];
 
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Groups(['user:create'])]
+    #[Groups(['user:create', 'user:update'])]
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -61,29 +94,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: '/^0[1-9]\d{8}$/',
         message: 'The phone number must be a 10 digit number starting with 0'
     )]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     private ?string $phone_number = null;
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     private ?Schedule $schedule = null;
 
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DayOff::class, orphanRemoval: true)]
     private Collection $daysOff;
 
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $coachAppointments;
 
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $clientAppointments;
 
+    #[Groups(['user:create', 'user:read', 'user:update'])]
     #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $coachFeedbacks;
 
+    #[Groups(['user:create', 'user:read'])]
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $clientFeedbacks;
 

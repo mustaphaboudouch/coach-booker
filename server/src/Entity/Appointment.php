@@ -3,16 +3,48 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\AppointmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['appointment:read']],
+    operations: [
+        new Get(),
+        new Post(
+            denormalizationContext: ['groups' => 'appointment:create'],
+            normalizationContext: ['groups' => 'appointment:response'],
+        ),
+        new Patch(
+            security: "
+                is_granted('ROLE_ADMIN') 
+                or (is_granted('ROLE_USER') and object.getUser().getId() == user.getId())
+            ",
+            securityMessage: "Operation not permitted",
+            inputFormats: ["json"],
+            denormalizationContext: ['groups' => 'slot:update'],
+            normalizationContext: ['groups' => 'slot:response'],
+        ),
+        new Delete(
+            security: "
+                is_granted('ROLE_ADMIN') 
+                or (is_granted('ROLE_EMPLOYEE') and object.getService().getEmployee().getId() == user.getId())
+                or (is_granted('ROLE_USER') and object.getUser().getId() == user.getId())
+            ",
+            securityMessage: "Operation not permitted",
+        )
+    ]
+)]
 class Appointment
 {
     use TimestampableEntity;
@@ -20,6 +52,7 @@ class Appointment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['appointment:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -34,8 +67,8 @@ class Appointment
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Choice(choices: ['PENDING_CLIENT', 'PENDING_COACH', 'ACCEPTED', 'REJECTED_CLIENT', 'REJECTED_COACH', 'CANCELED_CLIENT', 'CANCELED_COACH', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
-    private ?string $status = null;
+    #[Assert\Choice(choices: ['PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
+    private ?string $status = "PENDING";
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $reject_reason = null;
