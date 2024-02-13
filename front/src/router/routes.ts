@@ -1,5 +1,6 @@
 import { AppLayoutRoute } from '../layouts/app-layout';
 import { RootLayoutRoute } from '../layouts/root-layout';
+import { AppointmentRoute } from '../pages/appointment';
 import { AppointmentsRoute } from '../pages/appointments';
 import { DashboardRoute } from '../pages/dashboard';
 import { DaysOffRoute } from '../pages/days-off';
@@ -21,6 +22,7 @@ const routes = RootLayoutRoute.addChildren([
 		OrganisationRoute,
 		ServicesRoute,
 		AppointmentsRoute,
+		AppointmentRoute,
 		DaysOffRoute,
 		ProfileRoute,
 	]),

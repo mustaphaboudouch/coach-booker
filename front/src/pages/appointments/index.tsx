@@ -1,8 +1,16 @@
-import { createRoute } from '@tanstack/react-router';
+import { Link, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/page-header';
-import { Card, Flex, Group, Select, Table, TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import {
+	ActionIcon,
+	Card,
+	Flex,
+	Group,
+	Select,
+	Table,
+	TextInput,
+} from '@mantine/core';
+import { IconExternalLink, IconSearch } from '@tabler/icons-react';
 import { DeleteAlert } from './delete-alert';
 import { EditDrawer } from './edit-drawer';
 import { ValidateAlert } from './validate-alert';
@@ -54,6 +62,16 @@ const Appointments = () => {
 								<Table.Td>element.email</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
+										<ActionIcon
+											variant='default'
+											size='md'
+											aria-label='Preview'
+											component={Link}
+											to='/appointments/1'
+											preload={false}
+										>
+											<IconExternalLink size='1rem' />
+										</ActionIcon>
 										<ValidateAlert />
 										<RejectAlert />
 										<CancelAlert />
