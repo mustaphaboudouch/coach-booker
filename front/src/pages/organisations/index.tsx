@@ -65,7 +65,7 @@ const Organisations = () => {
 											<IconExternalLink size='1rem' />
 										</ActionIcon>
 										<EditDrawer />
-										<DeleteAlert />
+										<DeleteAlert organisationId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

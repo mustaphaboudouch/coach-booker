@@ -48,7 +48,7 @@ const Locations = () => {
 									<Flex gap='xs' justify='flex-end'>
 										<EditDrawer />
 										<UsersDrawer />
-										<DeleteAlert />
+										<DeleteAlert locationId='1' />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

@@ -1,7 +1,14 @@
 import { ActionIcon, Button, Drawer, Flex, Select, Stack } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus, IconTrash, IconUsersPlus } from '@tabler/icons-react';
+import { z } from 'zod';
+
+const schema = z.object({
+	users: z.array(
+		z.string().refine((value) => value !== '', { message: 'Required' }),
+	),
+});
 
 const UsersDrawer = () => {
 	const [opened, { open, close }] = useDisclosure(false);
@@ -9,10 +16,14 @@ const UsersDrawer = () => {
 		initialValues: {
 			users: [],
 		},
+		validate: zodResolver(schema),
 	});
 
 	const onSave = () => {
-		console.log(form.values);
+		const validation = form.validate();
+		if (!validation.hasErrors) {
+			console.log('VALUES :', form.values);
+		}
 	};
 
 	return (
@@ -63,7 +74,7 @@ const UsersDrawer = () => {
 							variant='default'
 							leftSection={<IconPlus size='1rem' />}
 							size='xs'
-							onClick={() => form.insertListItem('users', null)}
+							onClick={() => form.insertListItem('users', '')}
 						>
 							Ajouter
 						</Button>
