@@ -57,6 +57,10 @@ class Appointment
     #[ORM\OneToMany(mappedBy: 'appointment', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $feedbacks;
 
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Location $location = null;
+
     public function __construct()
     {
         $this->feedbacks = new ArrayCollection();
@@ -202,6 +206,18 @@ class Appointment
                 $feedback->setAppointment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

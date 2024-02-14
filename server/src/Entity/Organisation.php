@@ -69,8 +69,8 @@ class Organisation
     {
         $this->services = new ArrayCollection();
         $this->users = new ArrayCollection();
-        $this->status = 'ACTIVE';
         $this->locations = new ArrayCollection();
+        $this->status = 'ACTIVE';
     }
 
     public function getId(): ?int

@@ -65,10 +65,14 @@ class Location
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'locations')]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Appointment::class, orphanRemoval: true)]
+    private Collection $appointments;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->status = 'ACTIVE';
+        $this->appointments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +162,36 @@ class Location
     {
         if ($this->users->removeElement($user)) {
             $user->removeLocation($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): static
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): static
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getLocation() === $this) {
+                $appointment->setLocation(null);
+            }
         }
 
         return $this;
