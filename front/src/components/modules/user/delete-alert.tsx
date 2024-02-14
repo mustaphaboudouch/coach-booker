@@ -1,42 +1,39 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { ORGANISATION_STATUS } from '../../../constants/organisation';
+import { USER_STATUSES } from '../../../constants/user';
+import { UsersRoute } from '../../../pages/users';
 import { useMutation } from '@tanstack/react-query';
-import { OrganisationsRoute } from '../../../pages/organisations';
 import axios from 'axios';
 
 type DeleteAlertProps = {
-	organisationId: string;
+	userId: string;
 };
 
-const DeleteAlert = ({ organisationId }: DeleteAlertProps) => {
+const DeleteAlert = ({ userId }: DeleteAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
-	const { queryClient } = OrganisationsRoute.useRouteContext();
+	const { queryClient } = UsersRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
-			return axios.patch(
-				`http://127.0.0.1:8000/api/organisations/${organisationId}`,
-				data,
-			);
+			return axios.patch(`http://127.0.0.1:8000/api/users/${userId}`, data);
 		},
 		onError: (error) => {
 			console.error(error);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['organisations'] });
+			queryClient.invalidateQueries({ queryKey: ['users'] });
 			close();
 		},
 	});
 
 	const onDelete = () => {
-		mutation.mutate({ status: ORGANISATION_STATUS.DELETED });
+		mutation.mutate({ status: USER_STATUSES.DELETED });
 	};
 
 	return (
 		<>
-			<Modal opened={opened} onClose={close} title="Supprimer l'organisation">
+			<Modal opened={opened} onClose={close} title="Supprimer l'utilisateur">
 				<Text c='dimmed' size='sm'>
 					Êtes-vous sûr de vouloir supprimer cet élément ?
 				</Text>
