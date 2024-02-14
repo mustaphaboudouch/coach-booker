@@ -3,6 +3,9 @@ api_platform:
   version: 1.0.0
   formats:
     jsonld: ['application/ld+json']
+    json: ['application/json']
+  patch_formats:
+    json: ['application/json']
   docs_formats:
     jsonld: ['application/ld+json']
     jsonopenapi: ['application/vnd.openapi+json']

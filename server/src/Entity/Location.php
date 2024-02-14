@@ -3,39 +3,61 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['location:get:collection']]
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['location:post']]
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['location:patch']]
+        ),
+    ],
+)]
 class Location
 {
+    #[Groups(['location:get:collection'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private ?string $description = null;
 
+    #[Groups(['location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'DELETED'])]
     private ?string $status = null;
 
+    #[Groups(['location:post'])]
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisation $organisation = null;
 
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\OneToOne(inversedBy: 'location', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Address $address = null;
@@ -46,6 +68,7 @@ class Location
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->status = 'ACTIVE';
     }
 
     public function getId(): ?int

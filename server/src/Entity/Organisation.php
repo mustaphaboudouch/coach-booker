@@ -3,28 +3,45 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['organisation:get:collection']]
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['organisation:patch']]
+        ),
+        new Post()
+    ],
+)]
 class Organisation
 {
     use TimestampableEntity;
 
+    #[Groups(['organisation:get:collection'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['organisation:get:collection', 'organisation:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
+    #[Groups(['organisation:get:collection', 'organisation:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
@@ -33,6 +50,7 @@ class Organisation
     )]
     private ?string $kbis = null;
 
+    #[Groups(['organisation:get:collection', 'organisation:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'DELETED'])]

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
@@ -16,25 +17,29 @@ class Address
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $country = null;
 
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $city = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    private ?string $street = null;
-
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
         pattern: '/^\d{5}$/',
         message: 'The zip code must be a 5 digit number'
     )]
-    private ?string $zip_code = null;
+    private ?string $zipCode = null;
+
+    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $address = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
     private ?User $user = null;
@@ -71,26 +76,26 @@ class Address
         return $this;
     }
 
-    public function getStreet(): ?string
+    public function getAddress(): ?string
     {
-        return $this->street;
+        return $this->address;
     }
 
-    public function setStreet(string $street): static
+    public function setAddress(string $address): static
     {
-        $this->street = $street;
+        $this->address = $address;
 
         return $this;
     }
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): static
+    public function setZipCode(string $zipCode): static
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
