@@ -8,7 +8,7 @@ import {
 	TextInput,
 } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { TableEmptyState } from '../../components/ui/table-empty-state';
 import { LocationCreateDrawer } from './location-create-drawer';
 import { LocationEditDrawer } from './location-edit-drawer';
 import { LocationDeleteAlert } from './location-delete-alert';

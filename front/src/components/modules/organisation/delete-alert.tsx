@@ -1,7 +1,10 @@
 import { ActionIcon, Button, Flex, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconTrash } from '@tabler/icons-react';
-import { ORGANISATION_STATUS } from '../../constants/organisation';
+import { ORGANISATION_STATUS } from '../../../constants/organisation';
+import { useMutation } from '@tanstack/react-query';
+import { OrganisationsRoute } from '../../../pages/organisations';
+import axios from 'axios';
 
 type DeleteAlertProps = {
 	organisationId: string;
@@ -10,11 +13,25 @@ type DeleteAlertProps = {
 const DeleteAlert = ({ organisationId }: DeleteAlertProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
 
+	const { queryClient } = OrganisationsRoute.useRouteContext();
+	const mutation = useMutation({
+		mutationFn: (data: { status: string }) => {
+			return axios.patch(
+				`http://127.0.0.1:8000/api/organisations/${organisationId}`,
+				data,
+			);
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['organisations'] });
+			close();
+		},
+	});
+
 	const onDelete = () => {
-		console.log('VALUES : ', {
-			organisationId,
-			status: ORGANISATION_STATUS.DELETED,
-		});
+		mutation.mutate({ status: ORGANISATION_STATUS.DELETED });
 	};
 
 	return (

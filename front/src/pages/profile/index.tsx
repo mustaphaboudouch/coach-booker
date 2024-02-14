@@ -1,6 +1,6 @@
 import { createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import { Tabs } from '@mantine/core';
 import { IconCalendarClock, IconLock, IconUser } from '@tabler/icons-react';
 import { PersonalInfoTab } from './personal-info-tab';

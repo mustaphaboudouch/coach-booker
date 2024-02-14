@@ -1,6 +1,6 @@
 import { createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import {
 	Badge,
 	Card,
@@ -16,7 +16,7 @@ import { CreateDrawer } from './create-drawer';
 import { ValidateAlert } from './validate-alert';
 import { RejectAlert } from './reject-alert';
 import { PreviewDrawer } from './preview-drawer';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { TableEmptyState } from '../../components/ui/table-empty-state';
 
 const DaysOff = () => {
 	return (

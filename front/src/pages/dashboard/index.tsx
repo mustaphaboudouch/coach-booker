@@ -1,7 +1,7 @@
 import { createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
-import { StatsGrid } from '../../components/stats-grid';
+import { PageHeader } from '../../components/ui/page-header';
+import { StatsGrid } from '../../components/ui/stats-grid';
 
 const Dashboard = () => {
 	return (

@@ -1,12 +1,12 @@
 import { createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import { Card, Flex, Group, Select, Table, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { EditDrawer } from './edit-drawer';
 import { DeleteAlert } from './delete-alert';
 import { CreateDrawer } from './create-drawer';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { TableEmptyState } from '../../components/ui/table-empty-state';
 import { UsersDrawer } from './users-drawer';
 
 const Locations = () => {

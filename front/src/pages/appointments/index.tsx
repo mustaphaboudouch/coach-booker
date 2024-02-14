@@ -1,6 +1,6 @@
 import { Link, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import {
 	ActionIcon,
 	Card,
@@ -16,7 +16,7 @@ import { EditDrawer } from './edit-drawer';
 import { ValidateAlert } from './validate-alert';
 import { RejectAlert } from './reject-alert';
 import { CancelAlert } from './cancel-alert';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { TableEmptyState } from '../../components/ui/table-empty-state';
 
 const Appointments = () => {
 	return (

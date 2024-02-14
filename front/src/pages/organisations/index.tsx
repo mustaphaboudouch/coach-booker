@@ -1,21 +1,31 @@
-import { Link, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
-import {
-	ActionIcon,
-	Card,
-	Flex,
-	Group,
-	Input,
-	Select,
-	Table,
-} from '@mantine/core';
-import { IconExternalLink, IconSearch } from '@tabler/icons-react';
-import { EditDrawer } from './edit-drawer';
-import { DeleteAlert } from './delete-alert';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { PageHeader } from '../../components/ui/page-header';
+import { Group, Input, Loader, Select } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { List } from '../../components/modules/organisation/list';
 
 const Organisations = () => {
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['organisations'],
+		queryFn: async () => {
+			const { data } = await axios.get(
+				'http://127.0.0.1:8000/api/organisations',
+			);
+			return data['hydra:member'];
+		},
+	});
+
+	if (isLoading) {
+		return <Loader />;
+	}
+
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
+
 	return (
 		<div>
 			<PageHeader title='Organisations' />
@@ -36,44 +46,7 @@ const Organisations = () => {
 				/>
 			</Group>
 
-			<Card padding={0} radius='md' withBorder>
-				<Table.ScrollContainer minWidth={500}>
-					<Table verticalSpacing='sm' horizontalSpacing='md'>
-						<Table.Thead>
-							<Table.Tr>
-								<Table.Th>Nom</Table.Th>
-								<Table.Th>KBIS</Table.Th>
-								<Table.Th>Nbr d'employés</Table.Th>
-								<Table.Th />
-							</Table.Tr>
-						</Table.Thead>
-						<Table.Tbody>
-							<Table.Tr>
-								<Table.Td>element.position</Table.Td>
-								<Table.Td>element.name</Table.Td>
-								<Table.Td>element.symbol</Table.Td>
-								<Table.Td>
-									<Flex gap='xs' justify='flex-end'>
-										<ActionIcon
-											variant='default'
-											size='md'
-											aria-label='Preview'
-											component={Link}
-											to='/organisations/1'
-											preload={false}
-										>
-											<IconExternalLink size='1rem' />
-										</ActionIcon>
-										<EditDrawer />
-										<DeleteAlert organisationId='1' />
-									</Flex>
-								</Table.Td>
-							</Table.Tr>
-							<TableEmptyState>Aucune organisation.</TableEmptyState>
-						</Table.Tbody>
-					</Table>
-				</Table.ScrollContainer>
-			</Card>
+			<List organisations={data} />
 		</div>
 	);
 };

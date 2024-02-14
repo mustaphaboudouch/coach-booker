@@ -1,5 +1,5 @@
 import { Card, Flex, Rating, Table, Tabs } from '@mantine/core';
-import { TableEmptyState } from '../../components/table-empty-state';
+import { TableEmptyState } from '../../components/ui/table-empty-state';
 import { FeedbacksPreviewDrawer } from './feedbacks-preview-drawer';
 import { FeedbacksDeleteAlert } from './feedbacks-delete-alert';
 

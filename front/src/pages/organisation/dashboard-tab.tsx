@@ -1,5 +1,5 @@
 import { Tabs } from '@mantine/core';
-import { StatsGrid } from '../../components/stats-grid';
+import { StatsGrid } from '../../components/ui/stats-grid';
 
 const DashboardTab = () => {
 	return (

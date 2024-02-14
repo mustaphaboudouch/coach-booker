@@ -1,5 +1,5 @@
 import { createRoute } from '@tanstack/react-router';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { Tabs } from '@mantine/core';
 import { IconStar } from '@tabler/icons-react';

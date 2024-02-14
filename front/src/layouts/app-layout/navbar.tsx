@@ -1,5 +1,5 @@
 import { Avatar, Burger, Flex } from '@mantine/core';
-import { ColorSchemaSwitcher } from '../../components/color-schema-switcher';
+import { ColorSchemaSwitcher } from '../../components/ui/color-schema-switcher';
 
 type NavbarProps = {
 	isOpen: boolean;
