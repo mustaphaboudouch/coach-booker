@@ -36,7 +36,7 @@ class Service
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['service:get:collection', 'service:post', 'service:patch'])]
+    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'appointment:get:collection', 'appointment:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;

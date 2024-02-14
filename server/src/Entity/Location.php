@@ -36,7 +36,7 @@ class Location
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['location:get:collection', 'location:post', 'location:patch', 'appointment:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
