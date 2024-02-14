@@ -7,17 +7,20 @@ use App\Repository\ScheduleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
 #[ApiResource]
 class Schedule
 {
+    #[Groups(['user:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'])]
@@ -27,7 +30,8 @@ class Schedule
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'schedule', targetEntity: Period::class, orphanRemoval: true)]
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
+    #[ORM\OneToMany(mappedBy: 'schedule', cascade: ['persist'], targetEntity: Period::class, orphanRemoval: true)]
     private Collection $periods;
 
     public function __construct()

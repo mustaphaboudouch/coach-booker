@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,6 +21,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(
             normalizationContext: ['groups' => ['organisation:get:collection']]
         ),
+        new Get(
+            normalizationContext: ['groups' => ['organisation:get']]
+        ),
         new Patch(
             denormalizationContext: ['groups' => ['organisation:patch']]
         ),
@@ -30,18 +34,18 @@ class Organisation
 {
     use TimestampableEntity;
 
-    #[Groups(['organisation:get:collection'])]
+    #[Groups(['organisation:get:collection', 'organisation:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['organisation:get:collection', 'organisation:patch'])]
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch', 'user:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[Groups(['organisation:get:collection', 'organisation:patch'])]
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch', 'user:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
@@ -50,7 +54,7 @@ class Organisation
     )]
     private ?string $kbis = null;
 
-    #[Groups(['organisation:get:collection', 'organisation:patch'])]
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'DELETED'])]

@@ -48,12 +48,14 @@ class Appointment
     private ?\DateTimeInterface $date = null;
 
     #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post', 'appointment:patch'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $startTime = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $startTime = null;
 
     #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post', 'appointment:patch'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $endTime = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $endTime = null;
 
     #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:patch'])]
     #[ORM\Column(length: 255)]
@@ -115,24 +117,24 @@ class Appointment
         return $this;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getStartTime(): ?string
     {
         return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $startTime): static
+    public function setStartTime(string $startTime): static
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): ?\DateTimeInterface
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $endTime): static
+    public function setEndTime(string $endTime): static
     {
         $this->endTime = $endTime;
 

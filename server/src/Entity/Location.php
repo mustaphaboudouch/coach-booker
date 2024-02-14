@@ -26,6 +26,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             denormalizationContext: ['groups' => ['location:patch']]
         ),
+        new Patch(
+            uriTemplate: '/locations/{id}/users-update',
+            denormalizationContext: ['groups' => ['location:patch:user']]
+        ),
     ],
 )]
 class Location
@@ -62,7 +66,8 @@ class Location
     #[ORM\JoinColumn(nullable: false)]
     private ?Address $address = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'locations')]
+    #[Groups(['location:get:collection', 'location:patch:user'])]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'locations', cascade: ['persist'])]
     private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Appointment::class, orphanRemoval: true)]
@@ -70,8 +75,8 @@ class Location
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->status = 'ACTIVE';
+        $this->users = new ArrayCollection();
         $this->appointments = new ArrayCollection();
     }
 

@@ -4,23 +4,29 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PeriodRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PeriodRepository::class)]
 #[ApiResource]
 class Period
 {
+    #[Groups(['user:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $startTime = null;
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $startTime = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $endTime = null;
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $endTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'periods')]
     #[ORM\JoinColumn(nullable: false)]
@@ -31,24 +37,24 @@ class Period
         return $this->id;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getStartTime(): ?string
     {
         return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $startTime): static
+    public function setStartTime(string $startTime): static
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): ?\DateTimeInterface
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $endTime): static
+    public function setEndTime(string $endTime): static
     {
         $this->endTime = $endTime;
 

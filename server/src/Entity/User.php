@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,58 +20,82 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
-    denormalizationContext: ['groups' => ['user:create']],
     operations: [
-        new Post(processor: PasswordHasher::class),
+        new GetCollection(
+            normalizationContext: ['groups' => ['user:get:collection']],
+        ),
+        new GetCollection(
+            uriTemplate: '/users-basic',
+            normalizationContext: ['groups' => ['user:get:collection:basic']],
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['user:get']],
+        ),
+        new Post(
+            processor: PasswordHasher::class,
+            denormalizationContext: ['groups' => ['user:post']],
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['user:patch']],
+        ),
+        new Patch(
+            uriTemplate: '/users/{id}/schedule-update',
+            denormalizationContext: ['groups' => ['user:patch:schedule:update']],
+        ),
     ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'location:get:collection'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['user:create', 'dayoff:get:collection', 'appointment:get'])]
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $firstname = null;
 
-    #[Groups(['user:create', 'dayoff:get:collection', 'appointment:get'])]
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $lastname = null;
 
-    #[Groups(['user:create'])]
+    #[Groups(['user:get:collection', 'user:get', 'user:post'])]
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
 
-    #[Groups(['user:create'])]
+    #[Groups(['user:get:collection', 'user:get', 'user:post'])]
     #[ORM\Column]
     private array $roles = [];
 
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Groups(['user:create'])]
+    #[Groups(['user:post'])]
     private ?string $plainPassword = null;
 
+    #[Groups(['user:get', 'user:patch'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phoneNumber = null;
 
+    #[Groups(['user:get:collection', 'user:get', 'user:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'INVITED', 'REJECTED', 'DELETED'])]
     private ?string $status = null;
 
+    #[Groups(['user:get', 'user:patch'])]
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Address $address = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['user:post'])]
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ['persist'])]
     private ?Organisation $organisation = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DayOff::class, orphanRemoval: true)]
@@ -80,7 +107,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $clientAppointments;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Schedule::class, orphanRemoval: true)]
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
+    #[ORM\OneToMany(mappedBy: 'user', cascade: ['persist'], targetEntity: Schedule::class, orphanRemoval: true)]
     private Collection $schedules;
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'users')]
@@ -92,8 +120,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->daysOff = new ArrayCollection();
         $this->coachAppointments = new ArrayCollection();
         $this->clientAppointments = new ArrayCollection();
-        $this->schedules = new ArrayCollection();
         $this->locations = new ArrayCollection();
+
+        // Create empty schedules for each day of the week
+        $this->schedules = new ArrayCollection();
+        foreach (['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'] as $day) {
+            $schedule = new Schedule();
+            $schedule->setUser($this);
+            $schedule->setDay($day);
+            $this->schedules->add($schedule);
+        }
     }
 
     public function getId(): ?int
@@ -354,6 +390,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $schedule->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function clearSchedules(): static
+    {
+        $this->schedules->clear();
 
         return $this;
     }

@@ -17,17 +17,17 @@ class Address
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['user:get', 'user:patch', 'location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $country = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['user:get', 'user:patch', 'location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $city = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['user:get', 'user:patch', 'location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
@@ -36,7 +36,7 @@ class Address
     )]
     private ?string $zipCode = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['user:get', 'user:patch', 'location:get:collection', 'location:post', 'location:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $address = null;
