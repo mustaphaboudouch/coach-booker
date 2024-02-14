@@ -3,57 +3,93 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\AppointmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['appointment:get:collection']]
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['appointment:get']]
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['appointment:post']]
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['appointment:patch']]
+        ),
+    ],
+)]
 class Appointment
 {
     use TimestampableEntity;
 
+    #[Groups(['appointment:get:collection', 'appointment:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post', 'appointment:patch'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $start_time = null;
-
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    #[Assert\GreaterThan(propertyPath: 'start_time')]
-    private ?\DateTimeInterface $end_time = null;
-
+    #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post', 'appointment:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Choice(choices: ['PENDING_CLIENT', 'PENDING_COACH', 'ACCEPTED', 'REJECTED_CLIENT', 'REJECTED_COACH', 'CANCELED_CLIENT', 'CANCELED_COACH', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
+    private ?string $startTime = null;
+
+    #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post', 'appointment:patch'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $endTime = null;
+
+    #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:patch'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['PENDING', 'APPROVED', 'REJECTED', 'CANCELED', 'DONE_WITHOUT_FEEDBACK', 'DONE'])]
     private ?string $status = null;
 
+    #[Groups(['appointment:get', 'appointment:patch'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $reject_reason = null;
+    private ?string $rejectReason = null;
 
+    #[Groups(['appointment:get', 'appointment:patch'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $cancel_reason = null;
+    private ?string $cancelReason = null;
 
+    #[Groups(['appointment:get', 'appointment:post'])]
     #[ORM\ManyToOne(inversedBy: 'coachAppointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $coach = null;
 
+    #[Groups(['appointment:get', 'appointment:post'])]
     #[ORM\ManyToOne(inversedBy: 'clientAppointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client = null;
 
+    #[Groups(['appointment:get:collection', 'appointment:get', 'appointment:post'])]
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
+
+    #[Groups(['appointment:get', 'appointment:post'])]
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Location $location = null;
 
     #[ORM\OneToMany(mappedBy: 'appointment', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $feedbacks;
@@ -61,6 +97,7 @@ class Appointment
     public function __construct()
     {
         $this->feedbacks = new ArrayCollection();
+        $this->status = 'PENDING';
     }
 
     public function getId(): ?int
@@ -80,26 +117,26 @@ class Appointment
         return $this;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getStartTime(): ?string
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $start_time): static
+    public function setStartTime(string $startTime): static
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): ?\DateTimeInterface
+    public function getEndTime(): ?string
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $end_time): static
+    public function setEndTime(string $endTime): static
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }
@@ -118,24 +155,24 @@ class Appointment
 
     public function getRejectReason(): ?string
     {
-        return $this->reject_reason;
+        return $this->rejectReason;
     }
 
-    public function setRejectReason(?string $reject_reason): static
+    public function setRejectReason(?string $rejectReason): static
     {
-        $this->reject_reason = $reject_reason;
+        $this->rejectReason = $rejectReason;
 
         return $this;
     }
 
     public function getCancelReason(): ?string
     {
-        return $this->cancel_reason;
+        return $this->cancelReason;
     }
 
-    public function setCancelReason(?string $cancel_reason): static
+    public function setCancelReason(?string $cancelReason): static
     {
-        $this->cancel_reason = $cancel_reason;
+        $this->cancelReason = $cancelReason;
 
         return $this;
     }
@@ -172,6 +209,18 @@ class Appointment
     public function setService(?Service $service): static
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

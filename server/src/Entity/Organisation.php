@@ -3,32 +3,49 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['organisation:get:collection']]
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['organisation:get']]
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['organisation:patch']]
+        ),
+        new Post()
+    ],
+)]
 class Organisation
 {
     use TimestampableEntity;
 
+    #[Groups(['organisation:get:collection', 'organisation:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch', 'user:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
-
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch', 'user:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
@@ -37,13 +54,11 @@ class Organisation
     )]
     private ?string $kbis = null;
 
+    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE'])]
+    #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'DELETED'])]
     private ?string $status = null;
-
-    #[ORM\OneToOne(inversedBy: 'organisation', cascade: ['persist', 'remove'])]
-    private ?Address $address = null;
 
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Service::class, orphanRemoval: true)]
     private Collection $services;
@@ -51,10 +66,15 @@ class Organisation
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Location::class, orphanRemoval: true)]
+    private Collection $locations;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->locations = new ArrayCollection();
+        $this->status = 'ACTIVE';
     }
 
     public function getId(): ?int
@@ -70,18 +90,6 @@ class Organisation
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -106,18 +114,6 @@ class Organisation
     public function setStatus(string $status): static
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address): static
-    {
-        $this->address = $address;
 
         return $this;
     }
@@ -176,6 +172,36 @@ class Organisation
             // set the owning side to null (unless already changed)
             if ($user->getOrganisation() === $this) {
                 $user->setOrganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Location>
+     */
+    public function getLocations(): Collection
+    {
+        return $this->locations;
+    }
+
+    public function addLocation(Location $location): static
+    {
+        if (!$this->locations->contains($location)) {
+            $this->locations->add($location);
+            $location->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocation(Location $location): static
+    {
+        if ($this->locations->removeElement($location)) {
+            // set the owning side to null (unless already changed)
+            if ($location->getOrganisation() === $this) {
+                $location->setOrganisation(null);
             }
         }
 

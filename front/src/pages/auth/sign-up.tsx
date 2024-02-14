@@ -1,7 +1,7 @@
 import { Button, Card, Group, Image, Stack } from '@mantine/core';
 import { Link, createRoute } from '@tanstack/react-router';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 
 type SignUpCardProps = {
 	buttonLabel: string;

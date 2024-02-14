@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,60 +20,83 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
-    denormalizationContext: ['groups' => ['user:create']],
     operations: [
-        new Post(processor: PasswordHasher::class),
+        new GetCollection(
+            normalizationContext: ['groups' => ['user:get:collection']],
+        ),
+        new GetCollection(
+            uriTemplate: '/users-basic',
+            normalizationContext: ['groups' => ['user:get:collection:basic']],
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['user:get']],
+        ),
+        new Post(
+            processor: PasswordHasher::class,
+            denormalizationContext: ['groups' => ['user:post']],
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['user:patch']],
+        ),
+        new Patch(
+            uriTemplate: '/users/{id}/schedule-update',
+            denormalizationContext: ['groups' => ['user:patch:schedule:update']],
+        ),
     ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'location:get:collection'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
     #[Assert\NotBlank]
     private ?string $firstname = null;
 
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create'])]
     #[Assert\NotBlank]
     private ?string $lastname = null;
 
+    #[Groups(['user:get:collection', 'user:get', 'user:post'])]
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:create'])]
     #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
 
+    #[Groups(['user:get:collection', 'user:get', 'user:post'])]
     #[ORM\Column]
-    #[Groups(['user:create'])]
     private array $roles = [];
 
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Groups(['user:create'])]
+    #[Groups(['user:post'])]
     private ?string $plainPassword = null;
 
+    #[Groups(['user:get', 'user:patch'])]
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Regex(
-        pattern: '/^0[1-9]\d{8}$/',
-        message: 'The phone number must be a 10 digit number starting with 0'
-    )]
-    private ?string $phone_number = null;
+    private ?string $phoneNumber = null;
 
+    #[Groups(['user:get:collection', 'user:get', 'user:patch'])]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'INVITED', 'REJECTED', 'DELETED'])]
+    private ?string $status = null;
+
+    #[Groups(['user:get', 'user:patch'])]
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Address $address = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['user:post'])]
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ['persist'])]
     private ?Organisation $organisation = null;
-
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Schedule $schedule = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DayOff::class, orphanRemoval: true)]
     private Collection $daysOff;
@@ -81,19 +107,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $clientAppointments;
 
-    #[ORM\OneToMany(mappedBy: 'coach', targetEntity: Feedback::class, orphanRemoval: true)]
-    private Collection $coachFeedbacks;
+    #[Groups(['user:get', 'user:patch:schedule:update'])]
+    #[ORM\OneToMany(mappedBy: 'user', cascade: ['persist'], targetEntity: Schedule::class, orphanRemoval: true)]
+    private Collection $schedules;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Feedback::class, orphanRemoval: true)]
-    private Collection $clientFeedbacks;
+    #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'users')]
+    private Collection $locations;
 
     public function __construct()
     {
+        $this->status = 'INVITED';
         $this->daysOff = new ArrayCollection();
         $this->coachAppointments = new ArrayCollection();
         $this->clientAppointments = new ArrayCollection();
-        $this->coachFeedbacks = new ArrayCollection();
-        $this->clientFeedbacks = new ArrayCollection();
+        $this->locations = new ArrayCollection();
+
+        // Create empty schedules for each day of the week
+        $this->schedules = new ArrayCollection();
+        foreach (['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'] as $day) {
+            $schedule = new Schedule();
+            $schedule->setUser($this);
+            $schedule->setDay($day);
+            $this->schedules->add($schedule);
+        }
     }
 
     public function getId(): ?int
@@ -183,12 +219,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?string $phone_number): static
+    public function setPhoneNumber(?string $phoneNumber): static
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -213,23 +261,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setOrganisation(?Organisation $organisation): static
     {
         $this->organisation = $organisation;
-
-        return $this;
-    }
-
-    public function getSchedule(): ?Schedule
-    {
-        return $this->schedule;
-    }
-
-    public function setSchedule(Schedule $schedule): static
-    {
-        // set the owning side of the relation if necessary
-        if ($schedule->getUser() !== $this) {
-            $schedule->setUser($this);
-        }
-
-        $this->schedule = $schedule;
 
         return $this;
     }
@@ -334,61 +365,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Feedback>
+     * @return Collection<int, Schedule>
      */
-    public function getCoachFeedbacks(): Collection
+    public function getSchedules(): Collection
     {
-        return $this->coachFeedbacks;
+        return $this->schedules;
     }
 
-    public function addCoachFeedback(Feedback $coachFeedback): static
+    public function addSchedule(Schedule $schedule): static
     {
-        if (!$this->coachFeedbacks->contains($coachFeedback)) {
-            $this->coachFeedbacks->add($coachFeedback);
-            $coachFeedback->setCoach($this);
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules->add($schedule);
+            $schedule->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCoachFeedback(Feedback $coachFeedback): static
+    public function removeSchedule(Schedule $schedule): static
     {
-        if ($this->coachFeedbacks->removeElement($coachFeedback)) {
+        if ($this->schedules->removeElement($schedule)) {
             // set the owning side to null (unless already changed)
-            if ($coachFeedback->getCoach() === $this) {
-                $coachFeedback->setCoach(null);
+            if ($schedule->getUser() === $this) {
+                $schedule->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function clearSchedules(): static
+    {
+        $this->schedules->clear();
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Feedback>
+     * @return Collection<int, Location>
      */
-    public function getClientFeedbacks(): Collection
+    public function getLocations(): Collection
     {
-        return $this->clientFeedbacks;
+        return $this->locations;
     }
 
-    public function addClientFeedback(Feedback $clientFeedback): static
+    public function addLocation(Location $location): static
     {
-        if (!$this->clientFeedbacks->contains($clientFeedback)) {
-            $this->clientFeedbacks->add($clientFeedback);
-            $clientFeedback->setClient($this);
+        if (!$this->locations->contains($location)) {
+            $this->locations->add($location);
         }
 
         return $this;
     }
 
-    public function removeClientFeedback(Feedback $clientFeedback): static
+    public function removeLocation(Location $location): static
     {
-        if ($this->clientFeedbacks->removeElement($clientFeedback)) {
-            // set the owning side to null (unless already changed)
-            if ($clientFeedback->getClient() === $this) {
-                $clientFeedback->setClient(null);
-            }
-        }
+        $this->locations->removeElement($location);
 
         return $this;
     }

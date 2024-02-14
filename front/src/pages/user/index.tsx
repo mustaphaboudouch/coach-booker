@@ -1,14 +1,67 @@
-import { createRoute } from '@tanstack/react-router';
-import { PageHeader } from '../../components/page-header';
+import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { PageHeader } from '../../components/ui/page-header';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { Tabs } from '@mantine/core';
+import { Loader, Tabs } from '@mantine/core';
 import { IconCalendarClock, IconLock, IconUser } from '@tabler/icons-react';
-import { PersonalInfoTab } from './personal-info-tab';
-import { ScheduleTab } from './schedule-tab';
-import { PasswordTab } from './password-tab';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { PersonalInfoTab } from '../../components/modules/user/personal-info-tab';
+import { ScheduleTab } from '../../components/modules/user/schedule-tab';
+import { PasswordTab } from '../../components/modules/user/password-tab';
+import { USER_ROLES, USER_STATUSES } from '../../constants/user';
+import { DAY_NAMES } from '../../constants/date';
+
+type Address = {
+	country: string;
+	city: string;
+	zipCode: string;
+	address: string;
+};
+
+type Period = {
+	startTime: string;
+	endTime: string;
+};
+
+type Schedule = {
+	day: keyof typeof DAY_NAMES;
+	periods: Period[];
+};
+
+type User = {
+	id: string;
+	firstname: string;
+	lastname: string;
+	phoneNumber: string | null;
+	status: keyof typeof USER_STATUSES;
+	roles: (keyof typeof USER_ROLES)[];
+	address: Address;
+	schedules: Schedule[];
+};
 
 const User = () => {
-	// const { userId } = UserRoute.useParams();
+	const queryClient = UserRoute.useRouteContext();
+	const { userId } = UserRoute.useParams();
+
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['users', userId],
+		queryFn: async () => {
+			const { data } = await axios.get(
+				`http://127.0.0.1:8000/api/users/${userId}`,
+			);
+			return data;
+		},
+	});
+
+	if (isLoading) {
+		return <Loader size='sm' />;
+	}
+
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
+
+	const user: User = data;
 
 	return (
 		<div>
@@ -33,8 +86,12 @@ const User = () => {
 					</Tabs.Tab>
 				</Tabs.List>
 
-				<PersonalInfoTab />
-				<ScheduleTab />
+				{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+				{/* @ts-ignore */}
+				<PersonalInfoTab user={user} queryClient={queryClient} />
+				{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+				{/* @ts-ignore */}
+				<ScheduleTab user={user} queryClient={queryClient} />
 				<PasswordTab />
 			</Tabs>
 		</div>

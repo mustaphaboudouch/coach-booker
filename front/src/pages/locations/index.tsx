@@ -1,15 +1,30 @@
-import { createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
-import { PageHeader } from '../../components/page-header';
-import { Card, Flex, Group, Select, Table, TextInput } from '@mantine/core';
+import { PageHeader } from '../../components/ui/page-header';
+import { Group, Loader, Select, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { EditDrawer } from './edit-drawer';
-import { DeleteAlert } from './delete-alert';
-import { CreateDrawer } from './create-drawer';
-import { TableEmptyState } from '../../components/table-empty-state';
-import { UsersDrawer } from './users-drawer';
+import { List } from '../../components/modules/location/list';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { CreateDrawer } from '../../components/modules/location/create-drawer';
 
 const Locations = () => {
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['locations'],
+		queryFn: async () => {
+			const { data } = await axios.get('http://127.0.0.1:8000/api/locations');
+			return data['hydra:member'];
+		},
+	});
+
+	if (isLoading) {
+		return <Loader />;
+	}
+
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
+
 	return (
 		<div>
 			<PageHeader title='Locaux' rightSection={<CreateDrawer />} />
@@ -30,33 +45,7 @@ const Locations = () => {
 				/>
 			</Group>
 
-			<Card padding={0} radius='md' withBorder>
-				<Table.ScrollContainer minWidth={500}>
-					<Table verticalSpacing='sm' horizontalSpacing='md'>
-						<Table.Thead>
-							<Table.Tr>
-								<Table.Th>Nom</Table.Th>
-								<Table.Th>Adresse</Table.Th>
-								<Table.Th />
-							</Table.Tr>
-						</Table.Thead>
-						<Table.Tbody>
-							<Table.Tr>
-								<Table.Td>element.position</Table.Td>
-								<Table.Td>element.name</Table.Td>
-								<Table.Td>
-									<Flex gap='xs' justify='flex-end'>
-										<EditDrawer />
-										<UsersDrawer />
-										<DeleteAlert locationId='1' />
-									</Flex>
-								</Table.Td>
-							</Table.Tr>
-							<TableEmptyState>Aucun local.</TableEmptyState>
-						</Table.Tbody>
-					</Table>
-				</Table.ScrollContainer>
-			</Card>
+			<List locations={data} />
 		</div>
 	);
 };

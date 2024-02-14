@@ -20,6 +20,10 @@ class Feedback
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    private ?string $comment = null;
+
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_expertise = null;
@@ -40,24 +44,35 @@ class Feedback
     #[Assert\Range(min: 1, max: 5)]
     private ?int $rating_motivation = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $comment = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['ACTIVE', 'DELETED'])]
+    private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'feedbacks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Appointment $appointment = null;
 
-    #[ORM\ManyToOne(inversedBy: 'coachFeedbacks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $coach = null;
-
-    #[ORM\ManyToOne(inversedBy: 'clientFeedbacks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $client = null;
+    public function __construct()
+    {
+        $this->status = 'ACTIVE';
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(string $comment): static
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 
     public function getRatingExpertise(): ?int
@@ -120,14 +135,14 @@ class Feedback
         return $this;
     }
 
-    public function getComment(): ?string
+    public function getStatus(): ?string
     {
-        return $this->comment;
+        return $this->status;
     }
 
-    public function setComment(string $comment): static
+    public function setStatus(string $status): static
     {
-        $this->comment = $comment;
+        $this->status = $status;
 
         return $this;
     }
@@ -140,30 +155,6 @@ class Feedback
     public function setAppointment(?Appointment $appointment): static
     {
         $this->appointment = $appointment;
-
-        return $this;
-    }
-
-    public function getCoach(): ?User
-    {
-        return $this->coach;
-    }
-
-    public function setCoach(?User $coach): static
-    {
-        $this->coach = $coach;
-
-        return $this;
-    }
-
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): static
-    {
-        $this->client = $client;
 
         return $this;
     }

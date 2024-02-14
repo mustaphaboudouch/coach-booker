@@ -2,7 +2,7 @@ import { Button, Stack, Text, TextInput } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
 import { createRoute } from '@tanstack/react-router';
-import { PageHeader } from '../../components/page-header';
+import { PageHeader } from '../../components/ui/page-header';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 

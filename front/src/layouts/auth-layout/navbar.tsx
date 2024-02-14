@@ -1,6 +1,6 @@
 import { Button, Flex } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { ColorSchemaSwitcher } from '../../components/color-schema-switcher';
+import { ColorSchemaSwitcher } from '../../components/ui/color-schema-switcher';
 
 export const Navbar = () => {
 	return (
