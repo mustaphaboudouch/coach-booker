@@ -4,8 +4,6 @@ import { GuestLayoutRoute } from '../layouts/guest-layout';
 import { RootLayoutRoute } from '../layouts/root-layout';
 import { AppointmentRoute } from '../pages/appointment';
 import { AppointmentsRoute } from '../pages/appointments';
-import { PasswordForgetRoute } from '../pages/auth/password-forget';
-import { PasswordResetRoute } from '../pages/auth/password-reset';
 import { SignInRoute } from '../pages/auth/sign-in';
 import { SignUpRoute } from '../pages/auth/sign-up';
 import { SignUpClientRoute } from '../pages/auth/sign-up-client';
@@ -43,8 +41,6 @@ const routes = RootLayoutRoute.addChildren([
 		SignUpRoute,
 		SignUpClientRoute,
 		SignUpCoachRoute,
-		PasswordForgetRoute,
-		PasswordResetRoute,
 	]),
 ]);
 

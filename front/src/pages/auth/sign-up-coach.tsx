@@ -7,36 +7,40 @@ import {
 	TextInput,
 } from '@mantine/core';
 import { IconAt, IconLock } from '@tabler/icons-react';
-import { Link, createRoute } from '@tanstack/react-router';
+import { Link, createRoute, useNavigate } from '@tanstack/react-router';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
+import { USER_ROLES } from '../../constants/user';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const schema = z
 	.object({
 		firstname: z.string().min(1),
 		lastname: z.string().min(1),
 		email: z.string().email(),
-		password: z.string().min(6),
+		plainPassword: z.string().min(6),
 		passwordConfirm: z.string().min(6),
 		organisation: z.object({
 			name: z.string().min(1),
 			kbis: z.string().min(1),
 		}),
 	})
-	.refine((data) => data.password === data.passwordConfirm, {
+	.refine((data) => data.plainPassword === data.passwordConfirm, {
 		message: 'Les mots de passe ne correspondent pas',
 		path: ['passwordConfirm'],
 	});
 
 const SignUpCoach = () => {
+	const navigate = useNavigate();
 	const form = useForm({
 		initialValues: {
 			firstname: '',
 			lastname: '',
 			email: '',
-			password: '',
+			plainPassword: '',
 			passwordConfirm: '',
 			organisation: {
 				name: '',
@@ -46,10 +50,24 @@ const SignUpCoach = () => {
 		validate: zodResolver(schema),
 	});
 
+	const { queryClient } = SignUpCoachRoute.useRouteContext();
+	const mutation = useMutation({
+		mutationFn: (data: unknown) => {
+			return axios.post('http://127.0.0.1:8000/api/users', data);
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['users'] });
+			navigate({ to: '/sign-in' });
+		},
+	});
+
 	const onSave = () => {
 		const validation = form.validate();
 		if (!validation.hasErrors) {
-			console.log('VALUES :', form.values);
+			mutation.mutate({ ...form.values, roles: [USER_ROLES.ROLE_ORG_ADMIN] });
 		}
 	};
 
@@ -92,7 +110,7 @@ const SignUpCoach = () => {
 				label='Mot de passe'
 				placeholder='Mot de passe'
 				leftSection={<IconLock size='1rem' />}
-				{...form.getInputProps('password')}
+				{...form.getInputProps('plainPassword')}
 			/>
 			<PasswordInput
 				label='Confirmer le mot de passe'
@@ -100,7 +118,7 @@ const SignUpCoach = () => {
 				leftSection={<IconLock size='1rem' />}
 				{...form.getInputProps('passwordConfirm')}
 			/>
-			<Button mt='xs' onClick={onSave}>
+			<Button mt='xs' onClick={onSave} loading={mutation.isPending}>
 				S'inscrire
 			</Button>
 			<Anchor

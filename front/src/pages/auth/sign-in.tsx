@@ -44,16 +44,6 @@ const SignIn = () => {
 				leftSection={<IconLock size='1rem' />}
 				{...form.getInputProps('password')}
 			/>
-			<Anchor
-				component={Link}
-				preload={false}
-				to='/password-forget'
-				underline='always'
-				size='sm'
-				style={{ textAlign: 'right' }}
-			>
-				Mot de passe oublié ?
-			</Anchor>
 			<Button mt='xs' onClick={onSave}>
 				Se connecter
 			</Button>
