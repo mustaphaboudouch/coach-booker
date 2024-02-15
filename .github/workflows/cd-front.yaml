@@ -1,0 +1,23 @@
+name: Deploy front with vercel
+
+on:
+  workflow_call:
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        working-directory: ./front
+        run: npm install --global vercel@latest
+      - name: Deploy Project to Vercel
+        run: |
+          cd front
+          vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Notify Discord on Success
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+              -d '{"username": "GitHub Actions", "content": "Frontend deployment successful! 🚀"}' \
+              ${{ secrets.DISCORD_WEBHOOK_URL }}

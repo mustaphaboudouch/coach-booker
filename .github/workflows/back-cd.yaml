@@ -1,0 +1,22 @@
+name: Deploy Backend to Heroku
+
+on:
+  push:
+    branches:
+      - 'backcd' # Changer apres tests
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "coachbookerbackend"
+          heroku_email: "dacunha.jason@gmail.com"
+          usedocker: false
+          appdir: "server"
