@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Create JWT folder
+        run: mkdir -p ./server/config/jwt
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 
         with:
