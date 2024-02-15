@@ -21,5 +21,9 @@ jobs:
           heroku_email: "dacunha.jason@gmail.com"
           usedocker: false
           appdir: "server"
-
+      - name: Generate JWT Keypair
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku run "php bin/console lexik:jwt:generate-keypair --overwrite --quiet --env prod" --app deployback
 
