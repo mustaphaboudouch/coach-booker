@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Controller\DashboardStatisticController;
 use App\Controller\UserUploadImageController;
+use App\Controller\UserAvailabilitiesController;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -42,6 +43,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             controller: DashboardStatisticController::class,
             denormalizationContext: ['groups' => ['user:statistic']],
         ),
+        new Get(
+            name: 'availabilities',
+            uriTemplate: '/api/users/{id}/availabilities/{serviceId}',
+            controller: UserAvailabilitiesController::class,
+        ),
         new Post(
             processor: PasswordHasher::class,
             denormalizationContext: ['groups' => ['user:post']],
@@ -66,18 +72,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
-    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'location:get:collection'])]
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'location:get:collection', 'location:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection', 'location:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $firstname = null;
 
-    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection'])]
+    #[Groups(['user:get:collection', 'user:get:collection:basic', 'user:get', 'user:post', 'user:patch', 'dayoff:get:collection', 'appointment:get', 'location:get:collection', 'location:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $lastname = null;

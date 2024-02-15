@@ -10,7 +10,7 @@ import {
 	em,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IconArrowRight, IconCalendarX, IconMapPin } from '@tabler/icons-react';
+import { IconArrowRight, IconMapPin } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 
 const LocationCard = () => {
@@ -42,56 +42,6 @@ const LocationCard = () => {
 							Paris Archives, 9 Rue des Archives, 75004 Paris
 						</Text>
 					</Group>
-
-					<Stack gap='xs' mt='md'>
-						<Group>
-							<Text size='sm' c='dimmed' w={100}>
-								Aujourd'hui
-							</Text>
-							<Group gap='xs'>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-							</Group>
-						</Group>
-						<Group>
-							<Text size='sm' c='dimmed' w={100}>
-								Demain
-							</Text>
-							<Group gap='xs'>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-								<Button variant='default' size='xs'>
-									10:00
-								</Button>
-							</Group>
-						</Group>
-					</Stack>
-
-					<Card withBorder radius='md' mt='md' py='lg'>
-						<Group justify='center' gap='xs'>
-							<IconCalendarX size='0.9rem' color='gray' />
-							<Text size='xs' c='dimmed'>
-								Aucune disponibilité
-							</Text>
-						</Group>
-					</Card>
 				</Stack>
 			</Flex>
 

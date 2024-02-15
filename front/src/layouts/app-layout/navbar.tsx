@@ -1,5 +1,6 @@
 import { Avatar, Burger, Flex } from '@mantine/core';
 import { ColorSchemaSwitcher } from '../../components/ui/color-schema-switcher';
+import { Logo } from '../../components/ui/logo';
 
 type NavbarProps = {
 	isOpen: boolean;
@@ -16,7 +17,7 @@ const Navbar = ({ isOpen, onToggle }: NavbarProps) => {
 		>
 			<Flex align='center' gap={16}>
 				<Burger opened={isOpen} onClick={onToggle} hiddenFrom='sm' size='sm' />
-				<h3>Coach Booker</h3>
+				<Logo />
 			</Flex>
 			<Flex align='center' gap={16}>
 				<ColorSchemaSwitcher />

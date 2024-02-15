@@ -1,4 +1,4 @@
-import { Link, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute } from '@tanstack/react-router';
 import { GuestLayoutRoute } from '../../layouts/guest-layout';
 import {
 	Accordion,
@@ -9,6 +9,7 @@ import {
 	Grid,
 	Group,
 	Image,
+	Loader,
 	ScrollArea,
 	Stack,
 	Text,
@@ -17,24 +18,83 @@ import {
 import { Carousel } from '@mantine/carousel';
 import { IconMapPin } from '@tabler/icons-react';
 import { BookingDrawer } from './booking-drawer';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
+type User = {
+	id: string;
+	firstname: string;
+	lastname: string;
+};
+
+type Address = {
+	id: string;
+	country: string;
+	city: string;
+	zipCode: string;
+	address: string;
+};
+
+type Service = {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	duration: number;
+};
+
+type Organisation = {
+	id: string;
+	name: string;
+	services: Service[];
+};
+
+type Location = {
+	id: string;
+	name: string;
+	description: string;
+	address: Address;
+	organisation: Organisation;
+	users: User[];
+};
 
 const SearchSingle = () => {
-	// const { locationId } = SearchSingleRoute.useParams();
+	const { locationId } = SearchSingleRoute.useParams();
+
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['locations', locationId],
+		queryFn: async () => {
+			const { data } = await axios.get(
+				`http://127.0.0.1:8000/api/locations/${locationId}`,
+			);
+			return data;
+		},
+	});
+
+	if (isLoading) {
+		return <Loader size='sm' />;
+	}
+
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
+
+	const location: Location = data;
 
 	return (
 		<ScrollArea flex={1} h='calc(100vh - 60px)'>
 			<Container size='lg' py='xl'>
 				<Stack gap={6} mb='xl'>
 					<Text size='sm' c='dimmed' tt='uppercase' fw={600}>
-						Organisation
+						{location.organisation.name}
 					</Text>
 					<Title order={1} size='2rem'>
-						The location name here
+						{location.name}
 					</Title>
 					<Group gap='xs'>
 						<IconMapPin size='1.1rem' color='gray' />
 						<Text c='dimmed'>
-							Paris Archives, 9 Rue des Archives, 75004 Paris
+							{`${location.address.address} ${location.address.city}, ${location.address.zipCode} ${location.address.country}`}
 						</Text>
 					</Group>
 				</Stack>
@@ -103,18 +163,7 @@ const SearchSingle = () => {
 							À propos
 						</Title>
 						<Text size='sm' c='dimmed'>
-							Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-							Recusandae accusantium excepturi possimus ad dolor, id architecto
-							nesciunt cum obcaecati quae beatae dicta. Nemo sequi aliquam iusto
-							modi, earum aut enim non debitis doloribus aspernatur ut dicta
-							fugit sapiente qui natus quasi. Tempora alias recusandae sapiente
-							repudiandae totam placeat enim quo animi aliquam tempore
-							asperiores vitae nostrum, corporis maiores consequatur quas
-							suscipit, ex sit, libero quod. Aliquam consectetur pariatur
-							expedita optio porro dolor asperiores iure, quis distinctio quam
-							dignissimos beatae, recusandae sed quas nobis corrupti aperiam
-							quisquam fugit! Quidem, cumque minus aut odit aspernatur, saepe
-							facilis consequatur possimus totam asperiores impedit.
+							{location.description}
 						</Text>
 					</Stack>
 				</Card>
@@ -125,86 +174,18 @@ const SearchSingle = () => {
 							Coachs
 						</Title>
 						<Grid>
-							<Grid.Col span={{ base: 4, sm: 3, lg: 2 }}>
-								<Card
-									withBorder
-									radius='md'
-									component={Link}
-									to='/coachs/1'
-									preload={false}
-								>
-									<Stack align='center' gap='xs'>
-										<Avatar size='md' />
-										<Text size='sm' c='dimmed' fw={600}>
-											Prénom Nom
-										</Text>
-									</Stack>
-								</Card>
-							</Grid.Col>
-							<Grid.Col span={{ base: 4, sm: 3, lg: 2 }}>
-								<Card
-									withBorder
-									radius='md'
-									component={Link}
-									to='/coachs/1'
-									preload={false}
-								>
-									<Stack align='center' gap='xs'>
-										<Avatar size='md' />
-										<Text size='sm' c='dimmed' fw={600}>
-											Prénom Nom
-										</Text>
-									</Stack>
-								</Card>
-							</Grid.Col>
-							<Grid.Col span={{ base: 4, sm: 3, lg: 2 }}>
-								<Card
-									withBorder
-									radius='md'
-									component={Link}
-									to='/coachs/1'
-									preload={false}
-								>
-									<Stack align='center' gap='xs'>
-										<Avatar size='md' />
-										<Text size='sm' c='dimmed' fw={600}>
-											Prénom Nom
-										</Text>
-									</Stack>
-								</Card>
-							</Grid.Col>
-							<Grid.Col span={{ base: 4, sm: 3, lg: 2 }}>
-								<Card
-									withBorder
-									radius='md'
-									component={Link}
-									to='/coachs/1'
-									preload={false}
-								>
-									<Stack align='center' gap='xs'>
-										<Avatar size='md' />
-										<Text size='sm' c='dimmed' fw={600}>
-											Prénom Nom
-										</Text>
-									</Stack>
-								</Card>
-							</Grid.Col>
-							<Grid.Col span={{ base: 4, sm: 3, lg: 2 }}>
-								<Card
-									withBorder
-									radius='md'
-									component={Link}
-									to='/coachs/1'
-									preload={false}
-								>
-									<Stack align='center' gap='xs'>
-										<Avatar size='md' />
-										<Text size='sm' c='dimmed' fw={600}>
-											Prénom Nom
-										</Text>
-									</Stack>
-								</Card>
-							</Grid.Col>
+							{location.users.map((user) => (
+								<Grid.Col span={{ base: 4, sm: 3, lg: 2 }} key={user.id}>
+									<Card withBorder radius='md'>
+										<Stack align='center' gap='xs'>
+											<Avatar size='md' />
+											<Text size='sm' c='dimmed' fw={600}>
+												{user.firstname} {user.lastname}
+											</Text>
+										</Stack>
+									</Card>
+								</Grid.Col>
+							))}
 						</Grid>
 					</Stack>
 				</Card>
@@ -216,66 +197,34 @@ const SearchSingle = () => {
 						</Title>
 
 						<Accordion chevronPosition='left' variant='contained' radius='md'>
-							<Accordion.Item value='service-1'>
-								<Center>
-									<Accordion.Control>
-										<Text size='sm'>Service name 1</Text>
-									</Accordion.Control>
-									<Group px='md' wrap='nowrap'>
-										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
-											100 € • 15 min
+							{location.organisation.services.map((service) => (
+								<Accordion.Item key={service.id} value={service.id.toString()}>
+									<Center>
+										<Accordion.Control>
+											<Text size='sm'>{service.name}</Text>
+										</Accordion.Control>
+										<Group px='md' wrap='nowrap'>
+											<Text
+												size='sm'
+												c='dimmed'
+												style={{ whiteSpace: 'nowrap' }}
+											>
+												{service.price} € • {service.duration} min
+											</Text>
+											<BookingDrawer
+												serviceId={service.id}
+												users={location.users}
+												locationId={location.id}
+											/>
+										</Group>
+									</Center>
+									<Accordion.Panel>
+										<Text size='sm' c='dimmed'>
+											{service.description}
 										</Text>
-										<BookingDrawer />
-									</Group>
-								</Center>
-								<Accordion.Panel>
-									<Text size='sm' c='dimmed'>
-										Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-										Vitae reprehenderit exercitationem repellendus accusamus
-										repellat voluptas rem adipisci dolor autem iure!
-									</Text>
-								</Accordion.Panel>
-							</Accordion.Item>
-							<Accordion.Item value='service-2'>
-								<Center>
-									<Accordion.Control>
-										<Text size='sm'>Service name 2</Text>
-									</Accordion.Control>
-									<Group px='md' wrap='nowrap'>
-										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
-											100 € • 15 min
-										</Text>
-										<BookingDrawer />
-									</Group>
-								</Center>
-								<Accordion.Panel>
-									<Text size='sm' c='dimmed'>
-										Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-										Vitae reprehenderit exercitationem repellendus accusamus
-										repellat voluptas rem adipisci dolor autem iure!
-									</Text>
-								</Accordion.Panel>
-							</Accordion.Item>
-							<Accordion.Item value='service-3'>
-								<Center>
-									<Accordion.Control>
-										<Text size='sm'>Service name 3</Text>
-									</Accordion.Control>
-									<Group px='md' wrap='nowrap'>
-										<Text size='sm' c='dimmed' style={{ whiteSpace: 'nowrap' }}>
-											100 € • 15 min
-										</Text>
-										<BookingDrawer />
-									</Group>
-								</Center>
-								<Accordion.Panel>
-									<Text size='sm' c='dimmed'>
-										Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-										Vitae reprehenderit exercitationem repellendus accusamus
-										repellat voluptas rem adipisci dolor autem iure!
-									</Text>
-								</Accordion.Panel>
-							</Accordion.Item>
+									</Accordion.Panel>
+								</Accordion.Item>
+							))}
 						</Accordion>
 					</Stack>
 				</Card>
