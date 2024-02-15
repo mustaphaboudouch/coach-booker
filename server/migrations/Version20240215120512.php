@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240215095047 extends AbstractMigration
+final class Version20240215120512 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,15 @@ final class Version20240215095047 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP SEQUENCE client_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE coach_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE organization_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE user_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE user_location_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE user_service_id_seq CASCADE');
+        $this->addSql('CREATE SEQUENCE address_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE appointment_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE day_off_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE feedback_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE location_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE organisation_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE period_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE schedule_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE service_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE users_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE address (id INT NOT NULL, country VARCHAR(255) NOT NULL, city VARCHAR(255) NOT NULL, zip_code VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE appointment (id INT NOT NULL, coach_id INT NOT NULL, client_id INT NOT NULL, service_id INT NOT NULL, location_id INT NOT NULL, date DATE NOT NULL, start_time VARCHAR(255) NOT NULL, end_time VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, reject_reason TEXT DEFAULT NULL, cancel_reason TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
@@ -77,15 +78,16 @@ final class Version20240215095047 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
+        $this->addSql('DROP SEQUENCE address_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE appointment_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE day_off_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE feedback_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE location_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE organisation_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE period_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE schedule_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE service_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE users_id_seq CASCADE');
-        $this->addSql('CREATE SEQUENCE client_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE coach_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE organization_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE user_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE user_location_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE user_service_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F8443C105691');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F84419EB6921');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F844ED5CA9E6');
