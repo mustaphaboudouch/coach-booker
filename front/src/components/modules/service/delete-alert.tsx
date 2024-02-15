@@ -17,7 +17,7 @@ const DeleteAlert = ({ serviceId }: DeleteAlertProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
 			return axios.patch(
-				`http://127.0.0.1:8000/api/services/${serviceId}`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/services/${serviceId}`,
 				data,
 			);
 		},

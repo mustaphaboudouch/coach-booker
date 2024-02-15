@@ -46,7 +46,7 @@ const User = () => {
 		queryKey: ['users', userId],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`http://127.0.0.1:8000/api/users/${userId}`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/users/${userId}`,
 			);
 			return data;
 		},

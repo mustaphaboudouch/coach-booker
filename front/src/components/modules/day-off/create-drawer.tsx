@@ -35,7 +35,7 @@ const CreateDrawer = () => {
 	const { queryClient } = DaysOffRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
-			return axios.post('http://127.0.0.1:8000/api/day_offs', data);
+			return axios.post('https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/day_offs', data);
 		},
 		onError: (error) => {
 			console.error(error);

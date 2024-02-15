@@ -13,7 +13,7 @@ const Organisations = () => {
 		queryKey: ['organisations'],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				'http://127.0.0.1:8000/api/organisations',
+				'https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/organisations',
 			);
 			return data['hydra:member'];
 		},

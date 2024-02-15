@@ -16,7 +16,7 @@ const ValidateAlert = ({ userId }: ValidateAlertProps) => {
 	const { queryClient } = UsersRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
-			return axios.patch(`http://127.0.0.1:8000/api/users/${userId}`, data);
+			return axios.patch(`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/users/${userId}`, data);
 		},
 		onError: (error) => {
 			console.error(error);

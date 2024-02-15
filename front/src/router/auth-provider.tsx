@@ -24,7 +24,7 @@ const AuthProvider = () => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['me'],
 		queryFn: async () => {
-			const { data } = await axios.get(`http://127.0.0.1:8000/api/me`, {
+			const { data } = await axios.get(`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/me`, {
 				headers: {
 					Authorization: 'Bearer ' + value,
 				},

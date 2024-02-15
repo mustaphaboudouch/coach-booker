@@ -59,7 +59,7 @@ const UsersDrawer = ({ location }: UsersDrawerProps) => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['users-basic'],
 		queryFn: async () => {
-			const { data } = await axios.get('http://127.0.0.1:8000/api/users-basic');
+			const { data } = await axios.get('https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/users-basic');
 			return data['hydra:member'];
 		},
 	});
@@ -68,7 +68,7 @@ const UsersDrawer = ({ location }: UsersDrawerProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`http://127.0.0.1:8000/api/locations/${location.id}/users-update`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/locations/${location.id}/users-update`,
 				data,
 			);
 		},

@@ -39,7 +39,7 @@ const EditForm = ({
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`http://127.0.0.1:8000/api/organisations/${organisation.id}`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/organisations/${organisation.id}`,
 				data,
 			);
 		},

@@ -29,7 +29,7 @@ const CancelAlert = ({ appointmentId }: CancelAlertProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
 			return axios.patch(
-				`http://127.0.0.1:8000/api/appointments/${appointmentId}`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/appointments/${appointmentId}`,
 				data,
 			);
 		},

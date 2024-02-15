@@ -73,7 +73,7 @@ const EditDrawer = ({ appointment }: EditDrawerProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`http://127.0.0.1:8000/api/appointments/${appointment.id}`,
+				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/appointments/${appointment.id}`,
 				data,
 			);
 		},
