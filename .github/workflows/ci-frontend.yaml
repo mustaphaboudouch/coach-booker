@@ -27,7 +27,7 @@ jobs:
       working-directory: ./front
 
   deploy-prod:
-    if: github.ref_name == 'develop' ## A changer après les tests
+    if: github.ref_name == 'main'
     needs: build-and-test
     uses: ./.github/workflows/cd-frontend.yaml
     secrets: inherit
