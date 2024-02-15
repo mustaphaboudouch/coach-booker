@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { PersonalInfoTab } from '../../components/modules/user/personal-info-tab';
 import { ScheduleTab } from '../../components/modules/user/schedule-tab';
-import { PasswordTab } from '../../components/modules/user/password-tab';
 import { USER_ROLES, USER_STATUSES } from '../../constants/user';
 import { DAY_NAMES } from '../../constants/date';
 
@@ -92,7 +91,7 @@ const User = () => {
 				{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
 				{/* @ts-ignore */}
 				<ScheduleTab user={user} queryClient={queryClient} />
-				<PasswordTab />
+				{/* <PasswordTab /> */}
 			</Tabs>
 		</div>
 	);
