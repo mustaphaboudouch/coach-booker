@@ -1,10 +1,11 @@
-import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute, redirect } from '@tanstack/react-router';
 import { PageHeader } from '../../components/ui/page-header';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { EditForm } from '../../components/modules/organisation/edit-form';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Loader } from '@mantine/core';
+import { USER_ROLES } from '../../constants/user';
 
 type Organisation = {
 	id: string;
@@ -48,6 +49,17 @@ const OrganisationRoute = createRoute({
 	getParentRoute: () => AppLayoutRoute,
 	path: 'organisations/$organisationId',
 	component: Organisation,
+	beforeLoad: ({ context }) => {
+		if (
+			!context.user ||
+			(!!context.user &&
+				![USER_ROLES.ROLE_ORG_ADMIN].includes(context.user.role))
+		) {
+			throw redirect({
+				to: '/sign-in',
+			});
+		}
+	},
 });
 
 export { OrganisationRoute };

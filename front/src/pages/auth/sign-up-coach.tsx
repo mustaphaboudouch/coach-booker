@@ -50,7 +50,6 @@ const SignUpCoach = () => {
 		validate: zodResolver(schema),
 	});
 
-	const { queryClient } = SignUpCoachRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.post('http://127.0.0.1:8000/api/users', data);
@@ -59,7 +58,6 @@ const SignUpCoach = () => {
 			console.error(error);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['users'] });
 			navigate({ to: '/sign-in' });
 		},
 	});

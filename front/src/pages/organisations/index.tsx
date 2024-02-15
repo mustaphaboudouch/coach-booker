@@ -1,4 +1,4 @@
-import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute, redirect } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { Group, Input, Loader, Select } from '@mantine/core';
@@ -6,6 +6,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { List } from '../../components/modules/organisation/list';
+import { USER_ROLES } from '../../constants/user';
 
 const Organisations = () => {
 	const { data, error, isLoading } = useQuery({
@@ -55,6 +56,16 @@ const OrganisationsRoute = createRoute({
 	getParentRoute: () => AppLayoutRoute,
 	path: 'organisations',
 	component: Organisations,
+	beforeLoad: ({ context }) => {
+		if (
+			!context.user ||
+			(!!context.user && ![USER_ROLES.ROLE_ADMIN].includes(context.user.role))
+		) {
+			throw redirect({
+				to: '/sign-in',
+			});
+		}
+	},
 });
 
 export { OrganisationsRoute };

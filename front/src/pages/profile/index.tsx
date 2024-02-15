@@ -1,4 +1,4 @@
-import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute, redirect } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { Loader, Tabs } from '@mantine/core';
@@ -40,19 +40,17 @@ type User = {
 };
 
 const Profile = () => {
-	const queryClient = ProfileRoute.useRouteContext();
-
-	// TODO: to update
-	const userId = 1;
+	const { queryClient, user: me } = ProfileRoute.useRouteContext();
 
 	const { data, error, isLoading } = useQuery({
-		queryKey: ['users', userId],
+		queryKey: ['users', me?.id],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`http://127.0.0.1:8000/api/users/${userId}`,
+				`http://127.0.0.1:8000/api/users/${me?.id}`,
 			);
 			return data;
 		},
+		enabled: !!me,
 	});
 
 	if (isLoading) {
@@ -64,6 +62,11 @@ const Profile = () => {
 	}
 
 	const user: User = data;
+
+	if (!user) {
+		return <ErrorComponent error='User not found' />;
+	}
+
 	return (
 		<div>
 			<PageHeader title='Profil' />
@@ -103,6 +106,13 @@ const ProfileRoute = createRoute({
 	getParentRoute: () => AppLayoutRoute,
 	path: 'profile',
 	component: Profile,
+	beforeLoad: ({ context }) => {
+		if (!context.user) {
+			throw redirect({
+				to: '/sign-in',
+			});
+		}
+	},
 });
 
 export { ProfileRoute };

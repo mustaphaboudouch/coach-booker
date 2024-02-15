@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Controller\DashboardStatisticController;
 use App\Controller\UserUploadImageController;
+use App\Controller\LoggedUserController;
 use App\Controller\UserAvailabilitiesController;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
@@ -42,6 +43,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             uriTemplate: '/users/{id}/dashboard-statistic',
             controller: DashboardStatisticController::class,
             denormalizationContext: ['groups' => ['user:statistic']],
+        ),
+        new Get(
+            name: 'me',
+            uriTemplate: '/api/me',
+            controller: LoggedUserController::class,
+            normalizationContext: ['groups' => ['user:get']],
         ),
         new Get(
             name: 'availabilities',

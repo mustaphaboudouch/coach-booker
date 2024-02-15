@@ -1,4 +1,4 @@
-import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute, redirect } from '@tanstack/react-router';
 import { PageHeader } from '../../components/ui/page-header';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { Loader, Tabs } from '@mantine/core';
@@ -102,6 +102,19 @@ const UserRoute = createRoute({
 	getParentRoute: () => AppLayoutRoute,
 	path: 'users/$userId',
 	component: User,
+	beforeLoad: ({ context }) => {
+		if (
+			!context.user ||
+			(!!context.user &&
+				![USER_ROLES.ROLE_ADMIN, USER_ROLES.ROLE_ORG_ADMIN].includes(
+					context.user.role,
+				))
+		) {
+			throw redirect({
+				to: '/sign-in',
+			});
+		}
+	},
 });
 
 export { UserRoute };

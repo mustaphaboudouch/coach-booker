@@ -38,7 +38,7 @@ const BookingDrawer = ({
 		validate: zodResolver(schema),
 	});
 
-	const { queryClient } = SearchSingleRoute.useRouteContext();
+	const { queryClient, user: me } = SearchSingleRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.post('http://127.0.0.1:8000/api/appointments', data);
@@ -54,10 +54,10 @@ const BookingDrawer = ({
 
 	const onConfirm = () => {
 		const [date, startTime, endTime] = form.values.time.split('|');
+		if (!userId) return;
 
 		mutation.mutate({
-			// TODO: Replace with logged user id
-			client: `/api/users/${userId}`,
+			client: `/api/users/${me?.id}`,
 			coach: `/api/users/${userId}`,
 			service: `/api/services/${serviceId}`,
 			location: `/api/locations/${locationId}`,
@@ -100,7 +100,7 @@ const BookingDrawer = ({
 				</Stack>
 			</Drawer>
 
-			<Button size='xs' onClick={open}>
+			<Button size='xs' onClick={open} disabled={!me}>
 				Choisir
 			</Button>
 		</>

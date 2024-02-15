@@ -1,6 +1,7 @@
 import { Avatar, Burger, Flex } from '@mantine/core';
 import { ColorSchemaSwitcher } from '../../components/ui/color-schema-switcher';
 import { Logo } from '../../components/ui/logo';
+import { SignOutButton } from '../../components/modules/user/sign-out-button';
 
 type NavbarProps = {
 	isOpen: boolean;
@@ -27,6 +28,7 @@ const Navbar = ({ isOpen, onToggle }: NavbarProps) => {
 				>
 					Full Name
 				</Avatar>
+				<SignOutButton />
 			</Flex>
 		</Flex>
 	);
