@@ -5,8 +5,10 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Controller\LocationUploadImageController;
+use App\Controller\PublicLocationsController;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +25,14 @@ use Symfony\Component\HttpFoundation\File\File;
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => ['location:get:collection']]
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['location:get']]
+        ),
+        new Get(
+            name: 'public-locations',
+            uriTemplate: '/api/locations/{search}/{address}/{sort}',
+            controller: PublicLocationsController::class,
         ),
         new Post(
             denormalizationContext: ['groups' => ['location:post']]
@@ -45,18 +55,18 @@ use Symfony\Component\HttpFoundation\File\File;
 )]
 class Location
 {
-    #[Groups(['location:get:collection'])]
+    #[Groups(['location:get:collection', 'location:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch', 'appointment:get'])]
+    #[Groups(['location:get:collection', 'location:get', 'location:post', 'location:patch', 'appointment:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['location:get:collection', 'location:get', 'location:post', 'location:patch'])]
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private ?string $description = null;
@@ -67,17 +77,17 @@ class Location
     #[Assert\Choice(choices: ['ACTIVE', 'DELETED'])]
     private ?string $status = null;
 
-    #[Groups(['location:post'])]
+    #[Groups(['location:get', 'location:post'])]
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisation $organisation = null;
 
-    #[Groups(['location:get:collection', 'location:post', 'location:patch'])]
+    #[Groups(['location:get:collection', 'location:get', 'location:post', 'location:patch'])]
     #[ORM\OneToOne(inversedBy: 'location', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Address $address = null;
 
-    #[Groups(['location:get:collection', 'location:patch:user'])]
+    #[Groups(['location:get:collection', 'location:get', 'location:patch:user'])]
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'locations', cascade: ['persist'])]
     private Collection $users;
 

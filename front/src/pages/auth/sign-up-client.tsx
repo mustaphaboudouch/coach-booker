@@ -7,7 +7,12 @@ import {
 	TextInput,
 } from '@mantine/core';
 import { IconAt, IconLock } from '@tabler/icons-react';
-import { Link, createRoute, useNavigate } from '@tanstack/react-router';
+import {
+	Link,
+	createRoute,
+	redirect,
+	useNavigate,
+} from '@tanstack/react-router';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { useForm, zodResolver } from '@mantine/form';
@@ -43,7 +48,6 @@ const SignUpClient = () => {
 		validate: zodResolver(schema),
 	});
 
-	const { queryClient } = SignUpClientRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.post('http://127.0.0.1:8000/api/users', data);
@@ -52,7 +56,6 @@ const SignUpClient = () => {
 			console.error(error);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['users'] });
 			navigate({ to: '/sign-in' });
 		},
 	});
@@ -120,6 +123,13 @@ const SignUpClientRoute = createRoute({
 	getParentRoute: () => AuthLayoutRoute,
 	path: '/sign-up/client',
 	component: SignUpClient,
+	beforeLoad: ({ context }) => {
+		if (context.user) {
+			throw redirect({
+				to: '/dashboard',
+			});
+		}
+	},
 });
 
 export { SignUpClientRoute };

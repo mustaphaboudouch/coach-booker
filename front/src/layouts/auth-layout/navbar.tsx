@@ -1,6 +1,7 @@
 import { Button, Flex } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { ColorSchemaSwitcher } from '../../components/ui/color-schema-switcher';
+import { Logo } from '../../components/ui/logo';
 
 export const Navbar = () => {
 	return (
@@ -11,7 +12,7 @@ export const Navbar = () => {
 			style={{ height: '100%' }}
 		>
 			<Flex align='center'>
-				<h3>Coach Booker</h3>
+				<Logo />
 			</Flex>
 			<Flex align='center' gap={16}>
 				<ColorSchemaSwitcher />

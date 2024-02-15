@@ -1,10 +1,19 @@
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { Anchor, Button, PasswordInput, Stack, TextInput } from '@mantine/core';
-import { Link, createRoute } from '@tanstack/react-router';
+import {
+	Link,
+	createRoute,
+	redirect,
+	useNavigate,
+} from '@tanstack/react-router';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { useLocalStorage } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 
 const schema = z.object({
 	email: z.string().email(),
@@ -12,6 +21,11 @@ const schema = z.object({
 });
 
 const SignIn = () => {
+	const [value, setValue] = useLocalStorage({
+		key: 'jwt-token',
+	});
+
+	const navigate = useNavigate();
 	const form = useForm({
 		initialValues: {
 			email: '',
@@ -20,10 +34,30 @@ const SignIn = () => {
 		validate: zodResolver(schema),
 	});
 
+	const { queryClient } = SignInRoute.useRouteContext();
+	const mutation = useMutation({
+		mutationFn: (data: unknown) => {
+			return axios.post('http://127.0.0.1:8000/sign-in', data);
+		},
+		onError: (error) => {
+			console.error(error);
+			notifications.show({
+				title: 'Oooops! 🤯',
+				message: error.message,
+			});
+		},
+		onSuccess: (value) => {
+			setValue(value.data.token);
+			queryClient.invalidateQueries({ queryKey: ['me'] });
+			navigate({ to: '/dashboard' });
+			window.location.reload();
+		},
+	});
+
 	const onSave = () => {
 		const validation = form.validate();
 		if (!validation.hasErrors) {
-			console.log('VALUES :', form.values);
+			mutation.mutate(form.values);
 		}
 	};
 
@@ -44,7 +78,7 @@ const SignIn = () => {
 				leftSection={<IconLock size='1rem' />}
 				{...form.getInputProps('password')}
 			/>
-			<Button mt='xs' onClick={onSave}>
+			<Button mt='xs' onClick={onSave} loading={mutation.isPending}>
 				Se connecter
 			</Button>
 			<Anchor
@@ -65,6 +99,13 @@ const SignInRoute = createRoute({
 	getParentRoute: () => AuthLayoutRoute,
 	path: '/sign-in',
 	component: SignIn,
+	beforeLoad: ({ context }) => {
+		if (context.user) {
+			throw redirect({
+				to: '/dashboard',
+			});
+		}
+	},
 });
 
 export { SignInRoute };

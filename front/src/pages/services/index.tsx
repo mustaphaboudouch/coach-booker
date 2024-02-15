@@ -1,4 +1,4 @@
-import { ErrorComponent, createRoute } from '@tanstack/react-router';
+import { ErrorComponent, createRoute, redirect } from '@tanstack/react-router';
 import { AppLayoutRoute } from '../../layouts/app-layout';
 import { PageHeader } from '../../components/ui/page-header';
 import { Group, Loader, Select, TextInput } from '@mantine/core';
@@ -54,6 +54,13 @@ const ServicesRoute = createRoute({
 	getParentRoute: () => AppLayoutRoute,
 	path: 'services',
 	component: Services,
+	beforeLoad: ({ context }) => {
+		if (!context.user) {
+			throw redirect({
+				to: '/sign-in',
+			});
+		}
+	},
 });
 
 export { ServicesRoute };

@@ -1,22 +1,70 @@
-import {
-	Accordion,
-	Button,
-	Drawer,
-	Flex,
-	Grid,
-	Radio,
-	Select,
-	Stack,
-	Text,
-} from '@mantine/core';
+import { Button, Drawer, Flex, Select, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { DAY_NAMES } from '../../constants/date';
+import { AvailabilitiesList } from './availabilities-list';
+import { useState } from 'react';
+import { z } from 'zod';
+import { useForm, zodResolver } from '@mantine/form';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { SearchSingleRoute } from '.';
 
-const BookingDrawer = () => {
+type User = {
+	id: string;
+	firstname: string;
+	lastname: string;
+};
+
+type BookingDrawerProps = {
+	serviceId: string;
+	locationId: string;
+	users: User[];
+};
+
+const schema = z.object({
+	time: z.string().min(1),
+});
+
+const BookingDrawer = ({
+	serviceId,
+	locationId,
+	users,
+}: BookingDrawerProps) => {
 	const [opened, { open, close }] = useDisclosure(false);
+	const [userId, setUserId] = useState<string | null>(null);
+	const form = useForm({
+		initialValues: {
+			time: '',
+		},
+		validate: zodResolver(schema),
+	});
+
+	const { queryClient, user: me } = SearchSingleRoute.useRouteContext();
+	const mutation = useMutation({
+		mutationFn: (data: unknown) => {
+			return axios.post('http://127.0.0.1:8000/api/appointments', data);
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['appointments'] });
+			close();
+		},
+	});
 
 	const onConfirm = () => {
-		console.log('CONFIRM');
+		const [date, startTime, endTime] = form.values.time.split('|');
+		if (!userId) return;
+
+		mutation.mutate({
+			client: `/api/users/${me?.id}`,
+			coach: `/api/users/${userId}`,
+			service: `/api/services/${serviceId}`,
+			location: `/api/locations/${locationId}`,
+			date,
+			startTime,
+			endTime,
+		});
 	};
 
 	return (
@@ -27,76 +75,22 @@ const BookingDrawer = () => {
 						flex={1}
 						label='Coach'
 						placeholder='Coach'
-						data={[
-							{ value: '1', label: 'Coach 1' },
-							{ value: '2', label: 'Coach 2' },
-							{ value: '3', label: 'Coach 3' },
-						]}
+						data={users.map((user) => ({
+							label: `${user.firstname} ${user.lastname}`,
+							value: user.id.toString(),
+						}))}
+						onChange={(value) => setUserId(value)}
 						withAsterisk
 					/>
 
-					<Radio.Group label='Heure' withAsterisk>
-						<Accordion variant='contained'>
-							<Accordion.Item value={DAY_NAMES.MONDAY}>
-								<Accordion.Control>
-									<Text size='sm' c='dimmed'>
-										Lundi 13 Févr.
-									</Text>
-								</Accordion.Control>
-								<Accordion.Panel>
-									<Grid>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-									</Grid>
-								</Accordion.Panel>
-							</Accordion.Item>
-							<Accordion.Item value={DAY_NAMES.TUESDAY}>
-								<Accordion.Control>
-									<Text size='sm' c='dimmed'>
-										Mardi 14 Févr.
-									</Text>
-								</Accordion.Control>
-								<Accordion.Panel>
-									<Grid>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-										<Grid.Col span={{ base: 3 }}>
-											<Radio value='10:00' label='10:00' />
-										</Grid.Col>
-									</Grid>
-								</Accordion.Panel>
-							</Accordion.Item>
-						</Accordion>
-					</Radio.Group>
+					{userId && (
+						<AvailabilitiesList
+							serviceId={serviceId}
+							userId={userId}
+							form={form}
+						/>
+					)}
+
 					<Flex gap='sm' justify='flex-end' mt='md'>
 						<Button variant='default' onClick={close}>
 							Annuler
@@ -106,7 +100,7 @@ const BookingDrawer = () => {
 				</Stack>
 			</Drawer>
 
-			<Button size='xs' onClick={open}>
+			<Button size='xs' onClick={open} disabled={!me}>
 				Choisir
 			</Button>
 		</>

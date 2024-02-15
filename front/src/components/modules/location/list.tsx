@@ -3,6 +3,8 @@ import { EditDrawer } from './edit-drawer';
 import { DeleteAlert } from './delete-alert';
 import { UsersDrawer } from './users-drawer';
 import { TableEmptyState } from '../../ui/table-empty-state';
+import { ProtectedFragment } from '../../ui/protected-fragment';
+import { USER_ROLES } from '../../../constants/user';
 
 type Address = {
 	country: string;
@@ -55,9 +57,13 @@ const List = ({ locations }: ListProps) => {
 								<Table.Td>{formatAddress(location.address)}</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
-										<EditDrawer location={location} />
-										<UsersDrawer location={location} />
-										<DeleteAlert locationId={location.id} />
+										<ProtectedFragment
+											roles={[USER_ROLES.ROLE_ADMIN, USER_ROLES.ROLE_ORG_ADMIN]}
+										>
+											<EditDrawer location={location} />
+											<UsersDrawer location={location} />
+											<DeleteAlert locationId={location.id} />
+										</ProtectedFragment>
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

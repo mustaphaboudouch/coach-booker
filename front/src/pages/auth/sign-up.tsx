@@ -1,5 +1,5 @@
 import { Button, Card, Group, Image, Stack } from '@mantine/core';
-import { Link, createRoute } from '@tanstack/react-router';
+import { Link, createRoute, redirect } from '@tanstack/react-router';
 import { AuthLayoutRoute } from '../../layouts/auth-layout';
 import { PageHeader } from '../../components/ui/page-header';
 
@@ -47,6 +47,13 @@ const SignUpRoute = createRoute({
 	getParentRoute: () => AuthLayoutRoute,
 	path: '/sign-up',
 	component: SignUp,
+	beforeLoad: ({ context }) => {
+		if (context.user) {
+			throw redirect({
+				to: '/dashboard',
+			});
+		}
+	},
 });
 
 export { SignUpRoute };

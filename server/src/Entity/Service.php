@@ -30,28 +30,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Service
 {
-    #[Groups(['service:get:collection'])]
+    #[Groups(['service:get:collection', 'location:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'appointment:get:collection', 'appointment:get'])]
+    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'appointment:get:collection', 'appointment:get', 'location:get'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[Groups(['service:get:collection', 'service:post', 'service:patch'])]
+    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'location:get'])]
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private ?string $description = null;
 
-    #[Groups(['service:get:collection', 'service:post', 'service:patch'])]
+    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'location:get'])]
     #[ORM\Column]
     #[Assert\Range(min: 5, max: 1440)]
     private ?int $duration = null;
 
-    #[Groups(['service:get:collection', 'service:post', 'service:patch'])]
+    #[Groups(['service:get:collection', 'service:post', 'service:patch', 'location:get'])]
     #[ORM\Column]
     #[Assert\Range(min: 0)]
     private ?int $price = null;

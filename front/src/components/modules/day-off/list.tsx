@@ -5,6 +5,8 @@ import { RejectAlert } from './reject-alert';
 import { PreviewDrawer } from './preview-drawer';
 import { TableEmptyState } from '../../ui/table-empty-state';
 import { DAY_OFF_STATUSES } from '../../../constants/day-off';
+import { ProtectedFragment } from '../../ui/protected-fragment';
+import { USER_ROLES } from '../../../constants/user';
 
 type User = {
 	firstname: string;
@@ -52,10 +54,14 @@ const List = ({ daysOff }: ListProps) => {
 								</Table.Td>
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
-										<ValidateAlert dayOffId={dayOff.id} />
-										<RejectAlert dayOffId={dayOff.id} />
+										<ProtectedFragment
+											roles={[USER_ROLES.ROLE_ADMIN, USER_ROLES.ROLE_ORG_ADMIN]}
+										>
+											<ValidateAlert dayOffId={dayOff.id} />
+											<RejectAlert dayOffId={dayOff.id} />
+											<DeleteAlert dayOffId={dayOff.id} />
+										</ProtectedFragment>
 										<PreviewDrawer dayOff={dayOff} />
-										<DeleteAlert dayOffId={dayOff.id} />
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

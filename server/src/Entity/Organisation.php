@@ -45,13 +45,13 @@ class Organisation
 {
     use TimestampableEntity;
 
-    #[Groups(['organisation:get:collection', 'organisation:get'])]
+    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['organisation:get:collection', 'organisation:get', 'organisation:patch', 'user:post'])]
+    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get', 'organisation:patch', 'user:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
@@ -71,6 +71,7 @@ class Organisation
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'DELETED'])]
     private ?string $status = null;
 
+    #[Groups(['location:get'])]
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Service::class, orphanRemoval: true)]
     private Collection $services;
 

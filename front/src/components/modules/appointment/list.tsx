@@ -7,6 +7,8 @@ import { RejectAlert } from './reject-alert';
 import { CancelAlert } from './cancel-alert';
 import { TableEmptyState } from '../../../components/ui/table-empty-state';
 import { PreviewDrawer } from './preview-drawer';
+import { ProtectedFragment } from '../../ui/protected-fragment';
+import { USER_ROLES } from '../../../constants/user';
 
 type Service = {
 	name: string;
@@ -62,10 +64,35 @@ const List = ({ appointments }: ListProps) => {
 										>
 											<IconExternalLink size='1rem' />
 										</ActionIcon>
-										<ValidateAlert appointmentId={appointment.id} />
-										<RejectAlert appointmentId={appointment.id} />
-										<CancelAlert appointmentId={appointment.id} />
-										<EditDrawer appointment={appointment} />
+										<ProtectedFragment
+											roles={[
+												USER_ROLES.ROLE_ADMIN,
+												USER_ROLES.ROLE_ORG_ADMIN,
+												USER_ROLES.ROLE_ORG_COACH,
+											]}
+										>
+											<ValidateAlert appointmentId={appointment.id} />
+											<RejectAlert appointmentId={appointment.id} />
+										</ProtectedFragment>
+										<ProtectedFragment
+											roles={[
+												USER_ROLES.ROLE_ADMIN,
+												USER_ROLES.ROLE_ORG_ADMIN,
+												USER_ROLES.ROLE_ORG_COACH,
+												USER_ROLES.ROLE_CLIENT,
+											]}
+										>
+											<CancelAlert appointmentId={appointment.id} />
+										</ProtectedFragment>
+										<ProtectedFragment
+											roles={[
+												USER_ROLES.ROLE_ADMIN,
+												USER_ROLES.ROLE_ORG_ADMIN,
+												USER_ROLES.ROLE_ORG_COACH,
+											]}
+										>
+											<EditDrawer appointment={appointment} />
+										</ProtectedFragment>
 									</Flex>
 								</Table.Td>
 							</Table.Tr>

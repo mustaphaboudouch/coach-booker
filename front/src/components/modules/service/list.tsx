@@ -3,6 +3,8 @@ import { EditDrawer } from './edit-drawer';
 import { DeleteAlert } from './delete-alert';
 import { PreviewDrawer } from './preview-drawer';
 import { TableEmptyState } from '../../ui/table-empty-state';
+import { USER_ROLES } from '../../../constants/user';
+import { ProtectedFragment } from '../../ui/protected-fragment';
 
 type Service = {
 	id: string;
@@ -41,8 +43,12 @@ const List = ({ services }: ListProps) => {
 								<Table.Td>
 									<Flex gap='xs' justify='flex-end'>
 										<PreviewDrawer service={service} />
-										<EditDrawer service={service} />
-										<DeleteAlert serviceId={service.id} />
+										<ProtectedFragment
+											roles={[USER_ROLES.ROLE_ADMIN, USER_ROLES.ROLE_ORG_ADMIN]}
+										>
+											<EditDrawer service={service} />
+											<DeleteAlert serviceId={service.id} />
+										</ProtectedFragment>
 									</Flex>
 								</Table.Td>
 							</Table.Tr>
