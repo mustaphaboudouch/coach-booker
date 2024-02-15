@@ -1,2 +1,2 @@
-release: php bin/console doctrine:migrations:migrate --no-interaction && php bin/console lexik:jwt:generate-keypair
+release: php bin/console doctrine:migrations:migrate --no-interaction && php bin/console lexik:jwt:generate-keypair --overwrite --quiet --env prod
 web: vendor/bin/heroku-php-apache2 public/
