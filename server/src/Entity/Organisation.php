@@ -7,15 +7,19 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
+use App\Controller\OrganisationUploadImageController;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
+#[Vich\Uploadable]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -27,7 +31,14 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             denormalizationContext: ['groups' => ['organisation:patch']]
         ),
-        new Post()
+        new Post(),
+        new Post(
+            uriTemplate: '/organisations/{id}/upload-image',
+            controller: OrganisationUploadImageController::class,
+            denormalizationContext: ['groups' => ['organisation:upload:image']],
+            defaults: ['_api_receive' => false], // Prevent API Platform from trying to deserialize the request body
+            name: 'organisation_upload_image',
+        ),
     ],
 )]
 class Organisation
@@ -68,6 +79,13 @@ class Organisation
 
     #[ORM\OneToMany(mappedBy: 'organisation', targetEntity: Location::class, orphanRemoval: true)]
     private Collection $locations;
+
+    #[Groups(['organisation:upload:image'])]
+    #[Vich\UploadableField(mapping: 'booker_image', fileNameProperty: 'imagePath')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagePath = null;
 
     public function __construct()
     {
@@ -206,5 +224,27 @@ class Organisation
         }
 
         return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 }

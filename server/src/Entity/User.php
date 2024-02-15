@@ -7,18 +7,22 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\UserUploadImageController;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[Vich\Uploadable]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -41,6 +45,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             uriTemplate: '/users/{id}/schedule-update',
             denormalizationContext: ['groups' => ['user:patch:schedule:update']],
+        ),
+        new Post(
+            uriTemplate: '/users/{id}/upload-image',
+            controller: UserUploadImageController::class,
+            denormalizationContext: ['groups' => ['user:upload:image']],
+            defaults: ['_api_receive' => false], // Prevent API Platform from trying to deserialize the request body
+            name: 'user_upload_image',
         ),
     ],
 )]
@@ -90,6 +101,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Choice(choices: ['ACTIVE', 'INACTIVE', 'INVITED', 'REJECTED', 'DELETED'])]
     private ?string $status = null;
 
+    #[Groups(['user:upload:image'])]
+    #[Vich\UploadableField(mapping: 'booker_image', fileNameProperty: 'imagePath')]
+    private ?File $imageFile = null;
+
     #[Groups(['user:get', 'user:patch'])]
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Address $address = null;
@@ -113,6 +128,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'users')]
     private Collection $locations;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagePath = null;
 
     public function __construct()
     {
@@ -251,6 +269,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->address = $address;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 
     public function getOrganisation(): ?Organisation
@@ -421,6 +449,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeLocation(Location $location): static
     {
         $this->locations->removeElement($location);
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
 
         return $this;
     }

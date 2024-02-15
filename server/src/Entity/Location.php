@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\LocationUploadImageController;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,8 +14,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
+#[Vich\Uploadable]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -29,6 +33,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             uriTemplate: '/locations/{id}/users-update',
             denormalizationContext: ['groups' => ['location:patch:user']]
+        ),
+        new Post(
+            uriTemplate: '/locations/{id}/upload-image',
+            controller: LocationUploadImageController::class,
+            denormalizationContext: ['groups' => ['location:upload:image']],
+            defaults: ['_api_receive' => false], // Prevent API Platform from trying to deserialize the request body
+            name: 'location_upload_image',
         ),
     ],
 )]
@@ -72,6 +83,13 @@ class Location
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Appointment::class, orphanRemoval: true)]
     private Collection $appointments;
+
+    #[Groups(['location:upload:image'])]
+    #[Vich\UploadableField(mapping: 'booker_image', fileNameProperty: 'imagePath')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagePath = null;
 
     public function __construct()
     {
@@ -119,6 +137,16 @@ class Location
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 
     public function getOrganisation(): ?Organisation
@@ -198,6 +226,18 @@ class Location
                 $appointment->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
 
         return $this;
     }
