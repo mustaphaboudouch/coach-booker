@@ -144,7 +144,7 @@ const ScheduleTab = ({ user, queryClient }: ScheduleTabProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/users/${user.id}/schedule-update`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/users/${user.id}/schedule-update`,
 				data,
 			);
 		},

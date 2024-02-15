@@ -29,7 +29,7 @@ const RejectAlert = ({ appointmentId }: RejectAlertProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
 			return axios.patch(
-				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/appointments/${appointmentId}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/appointments/${appointmentId}`,
 				data,
 			);
 		},

@@ -13,7 +13,7 @@ const DaysOff = () => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['days_off'],
 		queryFn: async () => {
-			const { data } = await axios.get('https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/day_offs');
+			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com//api/day_offs');
 			return data['hydra:member'];
 		},
 	});

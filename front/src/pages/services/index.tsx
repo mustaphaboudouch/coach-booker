@@ -12,7 +12,7 @@ const Services = () => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['services'],
 		queryFn: async () => {
-			const { data } = await axios.get('https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/services');
+			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com//api/services');
 			return data['hydra:member'];
 		},
 	});

@@ -17,7 +17,7 @@ const DeleteAlert = ({ dayOffId }: DeleteAlertProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
 			return axios.patch(
-				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/day_offs/${dayOffId}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/day_offs/${dayOffId}`,
 				data,
 			);
 		},

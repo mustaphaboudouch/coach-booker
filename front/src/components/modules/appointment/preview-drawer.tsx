@@ -44,7 +44,7 @@ const PreviewDrawer = ({ appointmentId }: PreviewDrawerProps) => {
 		queryKey: ['appointments', appointmentId],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`https://thawing-inlet-59198-145d5518a749.herokuapp.com//api/appointments/${appointmentId}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/appointments/${appointmentId}`,
 			);
 			return data;
 		},
