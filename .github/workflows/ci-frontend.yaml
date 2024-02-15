@@ -25,3 +25,9 @@ jobs:
     - name: Build
       run: npm run build
       working-directory: ./front
+
+  deploy-prod:
+    if: github.ref_name == 'develop' ## A changer après les tests
+    needs: build-and-test
+    uses: ./.github/workflows/cd-frontend.yaml
+    secrets: inherit
