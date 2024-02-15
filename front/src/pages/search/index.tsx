@@ -19,23 +19,25 @@ import { Map } from './map';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-// function getGeolocation(address: string) {
-// 	setDefaults({
-// 		key: 'AIzaSyCiCpE2tG1KUk2Cx50tUG10EffjhsifFqQ',
-// 		language: 'fr',
-// 		region: 'fr',
-// 		outputFormat: OutputFormat.JSON,
-// 	});
+type Address = {
+	country: string;
+	city: string;
+	zipCode: string;
+	address: string;
+};
 
-// 	fromAddress(address)
-// 		.then((results) => {
-// 			const { lat: latitude, lng: longitude } = results[0].geometry.location;
-// 			return { latitude, longitude };
-// 		})
-// 		.catch(() => {
-// 			return { latitude: 48.864716, longitude: 2.349014 };
-// 		});
-// }
+type Organisation = {
+	id: string;
+	name: string;
+};
+
+type Location = {
+	id: string;
+	name: string;
+	description: string;
+	address: Address;
+	organisation: Organisation;
+};
 
 const Search = () => {
 	const searchParams = SearchRoute.useSearch();
@@ -48,12 +50,10 @@ const Search = () => {
 	});
 
 	const { data, error, isLoading } = useQuery({
-		queryKey: ['locations', searchParams],
+		queryKey: ['locations'],
 		queryFn: async () => {
-			const { data } = await axios.get(
-				`http://127.0.0.1:8000/api/locations/${searchParams.search}/${searchParams.address}/${searchParams.sort}`,
-			);
-			return data;
+			const { data } = await axios.get(`http://127.0.0.1:8000/api/locations`);
+			return data['hydra:member'];
 		},
 	});
 
@@ -64,8 +64,6 @@ const Search = () => {
 	if (error) {
 		return <ErrorComponent error={error} />;
 	}
-
-	console.log('data', data);
 
 	return (
 		<Flex h='100%' flex={1} direction='column'>
@@ -98,18 +96,7 @@ const Search = () => {
 					/>
 				</Grid.Col>
 				<Grid.Col span={{ base: 12, sm: 3, lg: 2 }}>
-					<Button
-						component={Link}
-						to='/search'
-						preload={false}
-						search={{
-							search: form.values.search,
-							address: form.values.address,
-							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-							// @ts-ignore
-							sort: form.values.sort,
-						}}
-					>
+					<Button component={Link} to='/search' preload={false}>
 						Rechercher
 					</Button>
 				</Grid.Col>
@@ -120,10 +107,9 @@ const Search = () => {
 			<Flex flex={1}>
 				<ScrollArea h='calc(100vh - 60px - 128px)' flex={1}>
 					<Stack px='lg' py='xl'>
-						<LocationCard />
-						<LocationCard />
-						<LocationCard />
-						<LocationCard />
+						{data.map((location: Location) => (
+							<LocationCard location={location} />
+						))}
 					</Stack>
 				</ScrollArea>
 				<Stack flex={1} bg='rgba(255,0,0,0.3)' hidden visibleFrom='md'>

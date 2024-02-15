@@ -13,7 +13,31 @@ import { useMediaQuery } from '@mantine/hooks';
 import { IconArrowRight, IconMapPin } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 
-const LocationCard = () => {
+type Address = {
+	country: string;
+	city: string;
+	zipCode: string;
+	address: string;
+};
+
+type Organisation = {
+	id: string;
+	name: string;
+};
+
+type Location = {
+	id: string;
+	name: string;
+	description: string;
+	address: Address;
+	organisation: Organisation;
+};
+
+type LocationCardProps = {
+	location: Location;
+};
+
+const LocationCard = ({ location }: LocationCardProps) => {
 	const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
 	return (
@@ -21,25 +45,26 @@ const LocationCard = () => {
 			withBorder
 			radius='md'
 			component={Link}
-			to='/search/1'
+			to={`/search/${location.id}`}
 			preload={false}
 		>
 			<Flex gap='md' align='flex-start' direction={isMobile ? 'column' : 'row'}>
 				<Image
-					src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+					src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 					w={isMobile ? '100%' : 300}
 					h={150}
 					radius='md'
 				/>
 				<Stack gap={0} flex={1} justify='flex-start' w='100%'>
 					<Text size='xs' c='dimmed' tt='uppercase' fw={600}>
-						Organisation
+						{location.organisation.name}
 					</Text>
-					<Title order={4}>Location name here</Title>
+					<Title order={4}>{location.name}</Title>
 					<Group gap='xs' mt={4}>
 						<IconMapPin size='1rem' color='gray' />
 						<Text size='sm' c='dimmed'>
-							Paris Archives, 9 Rue des Archives, 75004 Paris
+							{location.address.address}, {location.address.zipCode}{' '}
+							{location.address.city} {location.address.country}
 						</Text>
 					</Group>
 				</Stack>
@@ -48,7 +73,7 @@ const LocationCard = () => {
 			<Button
 				rightSection={<IconArrowRight size='1rem' />}
 				component={Link}
-				to='/search/1'
+				to={`/search/${location.id}`}
 				mt='md'
 			>
 				Prendre RDV

@@ -22,15 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Post(
             denormalizationContext: ['groups' => ['service:post']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
         new Patch(
             denormalizationContext: ['groups' => ['service:patch']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
     ],
 )]

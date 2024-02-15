@@ -31,14 +31,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => ['user:get:collection']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
         ),
         new GetCollection(
             uriTemplate: '/users-basic',
             normalizationContext: ['groups' => ['user:get:collection:basic']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
         ),
         new Get(
             normalizationContext: ['groups' => ['user:get']],
@@ -47,9 +43,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             uriTemplate: '/users/{id}/dashboard-statistic',
             controller: DashboardStatisticController::class,
             denormalizationContext: ['groups' => ['user:statistic']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
         new Get(
             name: 'me',
@@ -74,8 +67,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Patch(
             uriTemplate: '/users/{id}/schedule-update',
             denormalizationContext: ['groups' => ['user:patch:schedule:update']],
-            security: "is_granted('ROLE_ADMIN') or object.getId() == user.getId())
-            or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
         ),
         new Post(
             uriTemplate: '/users/{id}/upload-image',

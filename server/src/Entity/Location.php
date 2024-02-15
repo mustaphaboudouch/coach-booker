@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\File\File;
 #[ApiResource(
     operations: [
         new GetCollection(
-            normalizationContext: ['groups' => ['location:get:collection']]
+            normalizationContext: ['groups' => ['location:get:collection']],
         ),
         new Get(
             normalizationContext: ['groups' => ['location:get']]
@@ -36,30 +36,18 @@ use Symfony\Component\HttpFoundation\File\File;
         ),
         new Post(
             denormalizationContext: ['groups' => ['location:post']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
         new Patch(
             denormalizationContext: ['groups' => ['location:patch']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
         new Patch(
             uriTemplate: '/locations/{id}/users-update',
             denormalizationContext: ['groups' => ['location:patch:user']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
         ),
         new Post(
             uriTemplate: '/locations/{id}/upload-image',
             controller: LocationUploadImageController::class,
             denormalizationContext: ['groups' => ['location:upload:image']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-            ",
             defaults: ['_api_receive' => false], // Prevent API Platform from trying to deserialize the request body
             name: 'location_upload_image',
         ),

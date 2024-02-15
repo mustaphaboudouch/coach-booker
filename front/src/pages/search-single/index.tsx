@@ -109,7 +109,7 @@ const SearchSingle = () => {
 				>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -117,7 +117,7 @@ const SearchSingle = () => {
 					</Carousel.Slide>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -125,7 +125,7 @@ const SearchSingle = () => {
 					</Carousel.Slide>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -133,7 +133,7 @@ const SearchSingle = () => {
 					</Carousel.Slide>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -141,7 +141,7 @@ const SearchSingle = () => {
 					</Carousel.Slide>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -149,7 +149,7 @@ const SearchSingle = () => {
 					</Carousel.Slide>
 					<Carousel.Slide>
 						<Image
-							src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+							src='https://media.gqmagazine.fr/photos/64ef08cf07d7992232c3d5e2/16:9/w_2240,c_limit/474A07541.jpg'
 							w='100%'
 							h={200}
 							radius='md'
@@ -229,14 +229,14 @@ const SearchSingle = () => {
 					</Stack>
 				</Card>
 
-				<Card withBorder radius='md' mt='xl'>
+				{/* <Card withBorder radius='md' mt='xl'>
 					<Stack>
 						<Title order={2} size='1.5rem'>
 							Où se situe le local ?
 						</Title>
 						<Card radius='md' w='100%' h={300} bg='rgba(255,0,0,0.3)'></Card>
 					</Stack>
-				</Card>
+				</Card> */}
 			</Container>
 		</ScrollArea>
 	);

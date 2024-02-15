@@ -1,25 +1,19 @@
-import { createRoute } from '@tanstack/react-router';
+import { Link, createRoute } from '@tanstack/react-router';
 import { GuestLayoutRoute } from '../../layouts/guest-layout';
 import {
-	ActionIcon,
-	Autocomplete,
-	Card,
+	Button,
 	Container,
-	Divider,
 	Flex,
 	Group,
 	Stack,
 	Text,
-	TextInput,
 	Title,
 } from '@mantine/core';
 import {
 	Icon24Hours,
-	IconMapPin,
 	IconMoodHappy,
 	IconRun,
 	IconSearch,
-	IconTag,
 } from '@tabler/icons-react';
 
 const Home = () => {
@@ -28,37 +22,22 @@ const Home = () => {
 			<Container size='md' flex={1}>
 				<Stack gap='xl' h='100%' justify='center' ta='center' mt={-60}>
 					<Title order={1}>Réserver en ligne un RDV avec un coach.</Title>
-
 					<Text c='dimmed'>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-						maxime animi eveniet ipsa fugit aliquam quibusdam veniam dolorum?
-						Debitis, rem.
+						Choisissez un coach, un créneau et réservez en quelques clics.
+						Simple, rapide et efficace, 24h/24.
 					</Text>
 
-					<Card radius='lg' w='100%' withBorder>
-						<Flex gap='md' align='center'>
-							<Autocomplete
-								size='lg'
-								radius='md'
-								placeholder='Service'
-								data={['Service 1', 'Service 2', 'Service 3']}
-								flex={1}
-								leftSection={<IconTag size='1.3rem' />}
-							/>
-							<Divider orientation='vertical' />
-							<TextInput
-								size='lg'
-								radius='md'
-								type='search'
-								placeholder='Ville'
-								flex={1}
-								leftSection={<IconMapPin size='1.3rem' />}
-							/>
-							<ActionIcon radius='md' w={50} h={50}>
-								<IconSearch />
-							</ActionIcon>
-						</Flex>
-					</Card>
+					<Button
+						h={50}
+						leftSection={<IconSearch size='1.5rem' />}
+						component={Link}
+						to='/search'
+						preload={false}
+						radius='md'
+						size='lg'
+					>
+						Chercher un coach
+					</Button>
 
 					<Group gap='lg' justify='center'>
 						<Group gap='xs'>

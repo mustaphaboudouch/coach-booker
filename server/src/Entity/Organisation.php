@@ -28,23 +28,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         ),
         new Get(
             normalizationContext: ['groups' => ['organisation:get']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object == user.getOrganisation())
-            ",
         ),
         new Patch(
             denormalizationContext: ['groups' => ['organisation:patch']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object == user.getOrganisation())
-            ",
         ),
         new Post(),
         new Post(
             uriTemplate: '/organisations/{id}/upload-image',
             controller: OrganisationUploadImageController::class,
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object == user.getOrganisation())
-            ",
             denormalizationContext: ['groups' => ['organisation:upload:image']],
             defaults: ['_api_receive' => false], // Prevent API Platform from trying to deserialize the request body
             name: 'organisation_upload_image',

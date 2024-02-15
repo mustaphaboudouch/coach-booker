@@ -13,17 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
-#[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(),
-        new Patch(
-            denormalizationContext: ['groups' => ['appointment:patch']],
-            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object.getUser() == user)",
-        ),
-    ],
-)]
+#[ApiResource]
 class Address
 {
     #[ORM\Id]

@@ -15,24 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
-#[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getUser().getOrganisation() == user.getOrganisation())
-                or (is_granted('ROLE_ORG_COACH') and object.getUser().getOrganisation() == user.getOrganisation()))
-            ",
-        ),
-        new Patch(
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getUser().getOrganisation() == user.getOrganisation())
-                or (is_granted('ROLE_ORG_COACH') and object.getUser().getOrganisation() == user.getOrganisation()))
-            ",
-        ),
-    ],
-)]
+#[ApiResource]
 class Schedule
 {
     #[Groups(['user:get'])]
