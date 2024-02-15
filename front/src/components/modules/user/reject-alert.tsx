@@ -16,7 +16,7 @@ const RejectAlert = ({ userId }: RejectAlertProps) => {
 	const { queryClient } = UsersRoute.useRouteContext();
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
-			return axios.patch(`https://pure-wave-60095-4115169081f3.herokuapp.com//api/users/${userId}`, data);
+			return axios.patch(`https://pure-wave-60095-4115169081f3.herokuapp.com/api/users/${userId}`, data);
 		},
 		onError: (error) => {
 			console.error(error);

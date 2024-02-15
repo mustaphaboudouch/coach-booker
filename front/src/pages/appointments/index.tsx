@@ -12,7 +12,7 @@ const Appointments = () => {
 		queryKey: ['appointments'],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				'https://pure-wave-60095-4115169081f3.herokuapp.com//api/appointments',
+				'https://pure-wave-60095-4115169081f3.herokuapp.com/api/appointments',
 			);
 			return data['hydra:member'];
 		},

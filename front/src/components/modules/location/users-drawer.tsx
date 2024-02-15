@@ -59,7 +59,7 @@ const UsersDrawer = ({ location }: UsersDrawerProps) => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['users-basic'],
 		queryFn: async () => {
-			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com//api/users-basic');
+			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com/api/users-basic');
 			return data['hydra:member'];
 		},
 	});
@@ -68,7 +68,7 @@ const UsersDrawer = ({ location }: UsersDrawerProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/locations/${location.id}/users-update`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com/api/locations/${location.id}/users-update`,
 				data,
 			);
 		},

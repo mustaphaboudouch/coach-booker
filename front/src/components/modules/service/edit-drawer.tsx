@@ -51,7 +51,7 @@ const EditDrawer = ({ service }: EditDrawerProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: unknown) => {
 			return axios.patch(
-				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/services/${service.id}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com/api/services/${service.id}`,
 				data,
 			);
 		},

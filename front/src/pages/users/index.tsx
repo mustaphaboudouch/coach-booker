@@ -13,7 +13,7 @@ const Users = () => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ['users'],
 		queryFn: async () => {
-			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com//api/users');
+			const { data } = await axios.get('https://pure-wave-60095-4115169081f3.herokuapp.com/api/users');
 			return data['hydra:member'];
 		},
 	});

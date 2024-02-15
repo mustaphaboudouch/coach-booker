@@ -45,7 +45,7 @@ const Profile = () => {
 		queryKey: ['users', me?.id],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/users/${me?.id}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com/api/users/${me?.id}`,
 			);
 			return data;
 		},

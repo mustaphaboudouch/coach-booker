@@ -17,7 +17,7 @@ const DeleteAlert = ({ organisationId }: DeleteAlertProps) => {
 	const mutation = useMutation({
 		mutationFn: (data: { status: string }) => {
 			return axios.patch(
-				`https://pure-wave-60095-4115169081f3.herokuapp.com//api/organisations/${organisationId}`,
+				`https://pure-wave-60095-4115169081f3.herokuapp.com/api/organisations/${organisationId}`,
 				data,
 			);
 		},
