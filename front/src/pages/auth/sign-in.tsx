@@ -21,7 +21,7 @@ const schema = z.object({
 });
 
 const SignIn = () => {
-	const [value, setValue] = useLocalStorage({
+	const [, setValue] = useLocalStorage({
 		key: 'jwt-token',
 	});
 

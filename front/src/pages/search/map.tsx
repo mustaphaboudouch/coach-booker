@@ -12,12 +12,11 @@ const Map = ({ latitude, longitude }: MapProps) => {
 
 	return (
 		<ReactMapGL
+		style={{width:'100%',height:'100%'}}
 			latitude={lat}
 			longitude={long}
 			zoom={8}
 			mapboxAccessToken='pk.eyJ1IjoibW9zdGFwaGFib3Vkb3VjaCIsImEiOiJjbHNuN3IzODYwMTF6MmlxeXRuM2swZ3JnIn0.vjs0609beRqQhTsJRvsz1A'
-			width='100%'
-			height='100%'
 			mapStyle={'mapbox://styles/mapbox/streets-v11'}
 		>
 			Map

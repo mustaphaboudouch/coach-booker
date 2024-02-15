@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 
 const SignOutButton = () => {
 	const navigate = useNavigate();
-	const [value, setValue, removeValue] = useLocalStorage({
+	const [,, removeValue] = useLocalStorage({
 		key: 'jwt-token',
 	});
 

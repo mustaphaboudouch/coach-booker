@@ -2,6 +2,7 @@ import { Accordion, Card, Grid, Loader, Radio, Text } from '@mantine/core';
 import axios from 'axios';
 import { ErrorComponent } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
+import { UseFormReturnType } from '@mantine/form';
 
 type Slot = {
 	startTime: string;
@@ -16,7 +17,13 @@ type Days = {
 type AvailabilitiesListProps = {
 	userId: string;
 	serviceId: string;
-	form: unknown;
+	form: UseFormReturnType<{
+    time: string;
+}, (values: {
+    time: string;
+}) => {
+    time: string;
+}>;
 };
 
 const AvailabilitiesList = ({
