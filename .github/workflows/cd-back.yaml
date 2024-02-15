@@ -1,0 +1,21 @@
+## TEST NOT WORKING
+name: Deploy Back with Heroku
+
+on:
+  push:
+    branches:
+      - 'develop' ## A changer après les tests
+    paths:
+      - 'server/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "herokucoachbooker"
+          heroku_email: "dacunha.jason@gmail.com"
+          appdir: "server"
