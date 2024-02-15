@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\DashboardStatisticController;
 use App\Controller\UserUploadImageController;
 use App\Repository\UserRepository;
 use App\State\PasswordHasher;
@@ -23,6 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Vich\Uploadable]
+#[ORM\Table(name: "users")]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -34,6 +36,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         ),
         new Get(
             normalizationContext: ['groups' => ['user:get']],
+        ),
+        new Get(
+            uriTemplate: '/users/{id}/dashboard-statistic',
+            controller: DashboardStatisticController::class,
+            denormalizationContext: ['groups' => ['user:statistic']],
         ),
         new Post(
             processor: PasswordHasher::class,
@@ -81,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email]
     private ?string $email = null;
 
-    #[Groups(['user:get:collection', 'user:get', 'user:post'])]
+    #[Groups(['user:get:collection', 'user:get', 'user:post', 'user:statistic'])]
     #[ORM\Column]
     private array $roles = [];
 
@@ -199,7 +206,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER'; // guarantee every user at least has ROLE_USER
 
         return array_unique($roles);
     }
