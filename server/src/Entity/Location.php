@@ -89,7 +89,7 @@ class Location
     #[Assert\Choice(choices: ['ACTIVE', 'DELETED'])]
     private ?string $status = null;
 
-    #[Groups(['location:get', 'location:post'])]
+    #[Groups(['location:get:collection', 'location:get', 'location:post'])]
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisation $organisation = null;

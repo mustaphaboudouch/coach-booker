@@ -39,14 +39,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             normalizationContext: ['groups' => ['user:get:collection:basic']],
             security: "is_granted('ROLE_ADMIN')
                 or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
-
         ),
         new Get(
             normalizationContext: ['groups' => ['user:get']],
-            security: "is_granted('ROLE_ADMIN')
-                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
-                or (is_granted('ROLE_USER') and object.getId() == user.getId())
-            ",
         ),
         new Get(
             uriTemplate: '/users/{id}/dashboard-statistic',

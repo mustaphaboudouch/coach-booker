@@ -55,13 +55,13 @@ class Organisation
 {
     use TimestampableEntity;
 
-    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get'])]
+    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get', 'location:get:collection'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get', 'organisation:patch', 'user:post'])]
+    #[Groups(['organisation:get:collection', 'location:get', 'organisation:get', 'organisation:patch', 'user:post', 'location:get:collection'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
