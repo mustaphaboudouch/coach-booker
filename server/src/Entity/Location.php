@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Controller\LocationUploadImageController;
+use App\Controller\PublicLocationsController;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +28,11 @@ use Symfony\Component\HttpFoundation\File\File;
         ),
         new Get(
             normalizationContext: ['groups' => ['location:get']]
+        ),
+        new Get(
+            name: 'public-locations',
+            uriTemplate: '/api/locations/{search}/{address}/{sort}',
+            controller: PublicLocationsController::class,
         ),
         new Post(
             denormalizationContext: ['groups' => ['location:post']]
