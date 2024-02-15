@@ -26,10 +26,13 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => ['appointment:get']]
         ),
         new Post(
-            denormalizationContext: ['groups' => ['appointment:post']]
+            denormalizationContext: ['groups' => ['appointment:post']],
+            security: "(is_granted('ROLE_USER')",
         ),
         new Patch(
-            denormalizationContext: ['groups' => ['appointment:patch']]
+            denormalizationContext: ['groups' => ['appointment:patch']],
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object.getClient() == user)
+            or (is_granted('ROLE_USER') and object.getCoach() == user)",
         ),
     ],
 )]

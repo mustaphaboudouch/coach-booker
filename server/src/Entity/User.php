@@ -31,18 +31,30 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => ['user:get:collection']],
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
         ),
         new GetCollection(
             uriTemplate: '/users-basic',
             normalizationContext: ['groups' => ['user:get:collection:basic']],
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
+
         ),
         new Get(
             normalizationContext: ['groups' => ['user:get']],
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
+                or (is_granted('ROLE_USER') and object.getId() == user.getId())
+            ",
         ),
         new Get(
             uriTemplate: '/users/{id}/dashboard-statistic',
             controller: DashboardStatisticController::class,
             denormalizationContext: ['groups' => ['user:statistic']],
+            security: "is_granted('ROLE_ADMIN')
+                or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())
+            ",
         ),
         new Get(
             name: 'me',
@@ -58,13 +70,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(
             processor: PasswordHasher::class,
             denormalizationContext: ['groups' => ['user:post']],
+
         ),
         new Patch(
             denormalizationContext: ['groups' => ['user:patch']],
+            security: "is_granted('ROLE_ADMIN') or object.getId() == user.getId())",
         ),
         new Patch(
             uriTemplate: '/users/{id}/schedule-update',
             denormalizationContext: ['groups' => ['user:patch:schedule:update']],
+            security: "is_granted('ROLE_ADMIN') or object.getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getOrganisation() == user.getOrganisation())",
         ),
         new Post(
             uriTemplate: '/users/{id}/upload-image',
@@ -219,6 +235,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

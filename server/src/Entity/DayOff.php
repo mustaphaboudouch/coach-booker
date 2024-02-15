@@ -16,13 +16,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new GetCollection(
-            normalizationContext: ['groups' => ['dayoff:get:collection']]
+            normalizationContext: ['groups' => ['dayoff:get:collection']],
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_ORG_COACH') and object.getUser().getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getUser().getOrganisation() == user.getOrganisation())",
         ),
         new Post(
-            denormalizationContext: ['groups' => ['dayoff:post']]
+            denormalizationContext: ['groups' => ['dayoff:post']],
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_ORG_COACH') and object.getUser().getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getUser().getOrganisation() == user.getOrganisation())",
         ),
         new Patch(
-            denormalizationContext: ['groups' => ['dayoff:patch']]
+            denormalizationContext: ['groups' => ['dayoff:patch']],
+            security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_ORG_COACH') and object.getUser().getId() == user.getId())
+            or (is_granted('ROLE_ORG_ADMIN') and object.getUser().getOrganisation() == user.getOrganisation())",
         ),
     ],
 )]
