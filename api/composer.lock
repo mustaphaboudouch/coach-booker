@@ -4,7 +4,7 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "04d97642af2ed82dace44609831412b9",
+	"content-hash": "2e8a879d8c76c37621ecc3bd39ad3e1c",
 	"packages": [
 		{
 			"name": "api-platform/core",
@@ -141,7 +141,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Kévin Dunglas",
@@ -167,6 +169,131 @@
 				"source": "https://github.com/api-platform/core/tree/v3.2.0"
 			},
 			"time": "2023-10-12T10:35:19+00:00"
+		},
+		{
+			"name": "behat/transliterator",
+			"version": "v1.5.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Behat/Transliterator.git",
+				"reference": "baac5873bac3749887d28ab68e2f74db3a4408af"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Behat/Transliterator/zipball/baac5873bac3749887d28ab68e2f74db3a4408af",
+				"reference": "baac5873bac3749887d28ab68e2f74db3a4408af",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=7.2"
+			},
+			"require-dev": {
+				"chuyskywalker/rolling-curl": "^3.1",
+				"php-yaoi/php-yaoi": "^1.0",
+				"phpunit/phpunit": "^8.5.25 || ^9.5.19"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "1.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Behat\\Transliterator\\": "src/Behat/Transliterator"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"Artistic-1.0"
+			],
+			"description": "String transliterator",
+			"keywords": [
+				"i18n",
+				"slug",
+				"transliterator"
+			],
+			"support": {
+				"issues": "https://github.com/Behat/Transliterator/issues",
+				"source": "https://github.com/Behat/Transliterator/tree/v1.5.0"
+			},
+			"time": "2022-03-30T09:27:43+00:00"
+		},
+		{
+			"name": "doctrine/annotations",
+			"version": "2.0.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/doctrine/annotations.git",
+				"reference": "e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/doctrine/annotations/zipball/e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f",
+				"reference": "e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f",
+				"shasum": ""
+			},
+			"require": {
+				"doctrine/lexer": "^2 || ^3",
+				"ext-tokenizer": "*",
+				"php": "^7.2 || ^8.0",
+				"psr/cache": "^1 || ^2 || ^3"
+			},
+			"require-dev": {
+				"doctrine/cache": "^2.0",
+				"doctrine/coding-standard": "^10",
+				"phpstan/phpstan": "^1.8.0",
+				"phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+				"symfony/cache": "^5.4 || ^6",
+				"vimeo/psalm": "^4.10"
+			},
+			"suggest": {
+				"php": "PHP 8.0 or higher comes with attributes, a native replacement for annotations"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Guilherme Blanco",
+					"email": "guilhermeblanco@gmail.com"
+				},
+				{
+					"name": "Roman Borschel",
+					"email": "roman@code-factory.org"
+				},
+				{
+					"name": "Benjamin Eberlei",
+					"email": "kontakt@beberlei.de"
+				},
+				{
+					"name": "Jonathan Wage",
+					"email": "jonwage@gmail.com"
+				},
+				{
+					"name": "Johannes Schmitt",
+					"email": "schmittjoh@gmail.com"
+				}
+			],
+			"description": "Docblock Annotations Parser",
+			"homepage": "https://www.doctrine-project.org/projects/annotations.html",
+			"keywords": [
+				"annotations",
+				"docblock",
+				"parser"
+			],
+			"support": {
+				"issues": "https://github.com/doctrine/annotations/issues",
+				"source": "https://github.com/doctrine/annotations/tree/2.0.1"
+			},
+			"time": "2023-02-02T22:02:53+00:00"
 		},
 		{
 			"name": "doctrine/cache",
@@ -203,7 +330,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -292,7 +421,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -317,7 +448,12 @@
 			],
 			"description": "PHP Doctrine Collections library that adds additional functionality on top of PHP arrays.",
 			"homepage": "https://www.doctrine-project.org/projects/collections.html",
-			"keywords": ["array", "collections", "iterators", "php"],
+			"keywords": [
+				"array",
+				"collections",
+				"iterators",
+				"php"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/collections/issues",
 				"source": "https://github.com/doctrine/collections/tree/2.1.4"
@@ -373,7 +509,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -402,7 +540,11 @@
 			],
 			"description": "PHP Doctrine Common project is a library that provides additional functionality that other Doctrine projects depend on such as better reflection support, proxies and much more.",
 			"homepage": "https://www.doctrine-project.org/projects/common.html",
-			"keywords": ["common", "doctrine", "php"],
+			"keywords": [
+				"common",
+				"doctrine",
+				"php"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/common/issues",
 				"source": "https://github.com/doctrine/common/tree/3.4.3"
@@ -463,7 +605,9 @@
 			"suggest": {
 				"symfony/console": "For helpful console commands such as SQL execution and import of files."
 			},
-			"bin": ["bin/doctrine-dbal"],
+			"bin": [
+				"bin/doctrine-dbal"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
@@ -471,7 +615,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -568,7 +714,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"description": "A small layer on top of trigger_error(E_USER_DEPRECATED) or PSR-3 logging with options to disable all deprecations or selectively for packages.",
 			"homepage": "https://www.doctrine-project.org/",
 			"support": {
@@ -644,7 +792,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -665,7 +815,12 @@
 			],
 			"description": "Symfony DoctrineBundle",
 			"homepage": "https://www.doctrine-project.org",
-			"keywords": ["database", "dbal", "orm", "persistence"],
+			"keywords": [
+				"database",
+				"dbal",
+				"orm",
+				"persistence"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/DoctrineBundle/issues",
 				"source": "https://github.com/doctrine/DoctrineBundle/tree/2.10.2"
@@ -722,10 +877,14 @@
 				"psr-4": {
 					"Doctrine\\Bundle\\MigrationsBundle\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -742,7 +901,11 @@
 			],
 			"description": "Symfony DoctrineMigrationsBundle",
 			"homepage": "https://www.doctrine-project.org",
-			"keywords": ["dbal", "migrations", "schema"],
+			"keywords": [
+				"dbal",
+				"migrations",
+				"schema"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/DoctrineMigrationsBundle/issues",
 				"source": "https://github.com/doctrine/DoctrineMigrationsBundle/tree/3.2.4"
@@ -796,7 +959,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -884,7 +1049,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -975,7 +1142,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Marco Pivetta",
@@ -985,7 +1154,10 @@
 			],
 			"description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
 			"homepage": "https://www.doctrine-project.org/projects/instantiator.html",
-			"keywords": ["constructor", "instantiate"],
+			"keywords": [
+				"constructor",
+				"instantiate"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/instantiator/issues",
 				"source": "https://github.com/doctrine/instantiator/tree/2.0.0"
@@ -1038,7 +1210,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -1055,7 +1229,13 @@
 			],
 			"description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
 			"homepage": "https://www.doctrine-project.org/projects/lexer.html",
-			"keywords": ["annotations", "docblock", "lexer", "parser", "php"],
+			"keywords": [
+				"annotations",
+				"docblock",
+				"lexer",
+				"parser",
+				"php"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/lexer/issues",
 				"source": "https://github.com/doctrine/lexer/tree/2.1.0"
@@ -1124,7 +1304,9 @@
 				"doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
 				"symfony/yaml": "Allows the use of yaml for migration configuration files."
 			},
-			"bin": ["bin/doctrine-migrations"],
+			"bin": [
+				"bin/doctrine-migrations"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
@@ -1132,7 +1314,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Benjamin Eberlei",
@@ -1149,7 +1333,11 @@
 			],
 			"description": "PHP Doctrine Migrations project offer additional functionality on top of the database abstraction layer (DBAL) for versioning your database schema and easily deploying changes to it. It is a very easy to use and a powerful tool.",
 			"homepage": "https://www.doctrine-project.org/projects/migrations.html",
-			"keywords": ["database", "dbal", "migrations"],
+			"keywords": [
+				"database",
+				"dbal",
+				"migrations"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/migrations/issues",
 				"source": "https://github.com/doctrine/migrations/tree/3.6.0"
@@ -1224,7 +1412,9 @@
 				"symfony/cache": "Provides cache support for Setup Tool with doctrine/cache 2.0",
 				"symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
 			},
-			"bin": ["bin/doctrine"],
+			"bin": [
+				"bin/doctrine"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
@@ -1232,7 +1422,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -1257,7 +1449,10 @@
 			],
 			"description": "Object-Relational-Mapper for PHP",
 			"homepage": "https://www.doctrine-project.org/projects/orm.html",
-			"keywords": ["database", "orm"],
+			"keywords": [
+				"database",
+				"orm"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/orm/issues",
 				"source": "https://github.com/doctrine/orm/tree/2.16.2"
@@ -1304,7 +1499,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Guilherme Blanco",
@@ -1333,7 +1530,13 @@
 			],
 			"description": "The Doctrine Persistence project is a set of shared interfaces and functionality that the different Doctrine object mappers share.",
 			"homepage": "https://www.doctrine-project.org/projects/persistence.html",
-			"keywords": ["mapper", "object", "odm", "orm", "persistence"],
+			"keywords": [
+				"mapper",
+				"object",
+				"odm",
+				"orm",
+				"persistence"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/persistence/issues",
 				"source": "https://github.com/doctrine/persistence/tree/3.2.0"
@@ -1374,7 +1577,9 @@
 			"require-dev": {
 				"bamarni/composer-bin-plugin": "^1.4"
 			},
-			"bin": ["bin/sql-formatter"],
+			"bin": [
+				"bin/sql-formatter"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
@@ -1382,7 +1587,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Jeremy Dorn",
@@ -1392,12 +1599,142 @@
 			],
 			"description": "a PHP SQL highlighting library",
 			"homepage": "https://github.com/doctrine/sql-formatter/",
-			"keywords": ["highlight", "sql"],
+			"keywords": [
+				"highlight",
+				"sql"
+			],
 			"support": {
 				"issues": "https://github.com/doctrine/sql-formatter/issues",
 				"source": "https://github.com/doctrine/sql-formatter/tree/1.1.3"
 			},
 			"time": "2022-05-23T21:33:49+00:00"
+		},
+		{
+			"name": "gedmo/doctrine-extensions",
+			"version": "v3.14.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/doctrine-extensions/DoctrineExtensions.git",
+				"reference": "3b5b5cba476b4ae32a55ef69ef2e59d64d5893cf"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/3b5b5cba476b4ae32a55ef69ef2e59d64d5893cf",
+				"reference": "3b5b5cba476b4ae32a55ef69ef2e59d64d5893cf",
+				"shasum": ""
+			},
+			"require": {
+				"behat/transliterator": "^1.2",
+				"doctrine/annotations": "^1.13 || ^2.0",
+				"doctrine/collections": "^1.2 || ^2.0",
+				"doctrine/common": "^2.13 || ^3.0",
+				"doctrine/event-manager": "^1.2 || ^2.0",
+				"doctrine/persistence": "^2.2 || ^3.0",
+				"php": "^7.4 || ^8.0",
+				"psr/cache": "^1 || ^2 || ^3",
+				"symfony/cache": "^5.4 || ^6.0 || ^7.0",
+				"symfony/deprecation-contracts": "^2.1 || ^3.0"
+			},
+			"conflict": {
+				"doctrine/dbal": "<3.2",
+				"doctrine/mongodb-odm": "<2.3",
+				"doctrine/orm": "<2.14.0 || 2.16.0 || 2.16.1",
+				"sebastian/comparator": "<2.0"
+			},
+			"require-dev": {
+				"doctrine/cache": "^1.11 || ^2.0",
+				"doctrine/dbal": "^3.2",
+				"doctrine/doctrine-bundle": "^2.3",
+				"doctrine/mongodb-odm": "^2.3",
+				"doctrine/orm": "^2.14.0",
+				"friendsofphp/php-cs-fixer": "^3.14.0",
+				"nesbot/carbon": "^2.71 || 3.x-dev as 3.0",
+				"phpstan/phpstan": "^1.10.2",
+				"phpstan/phpstan-doctrine": "^1.0",
+				"phpstan/phpstan-phpunit": "^1.0",
+				"phpunit/phpunit": "^9.6",
+				"rector/rector": "^0.18",
+				"symfony/console": "^5.4 || ^6.0 || ^7.0",
+				"symfony/phpunit-bridge": "^6.0 || ^7.0",
+				"symfony/yaml": "^5.4 || ^6.0 || ^7.0"
+			},
+			"suggest": {
+				"doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+				"doctrine/orm": "to use the extensions with the ORM"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-main": "3.13-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Gedmo\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Gediminas Morkevicius",
+					"email": "gediminas.morkevicius@gmail.com"
+				},
+				{
+					"name": "Gustavo Falco",
+					"email": "comfortablynumb84@gmail.com"
+				},
+				{
+					"name": "David Buchmann",
+					"email": "david@liip.ch"
+				}
+			],
+			"description": "Doctrine behavioral extensions",
+			"homepage": "http://gediminasm.org/",
+			"keywords": [
+				"Blameable",
+				"behaviors",
+				"doctrine",
+				"extensions",
+				"gedmo",
+				"loggable",
+				"nestedset",
+				"odm",
+				"orm",
+				"sluggable",
+				"sortable",
+				"timestampable",
+				"translatable",
+				"tree",
+				"uploadable"
+			],
+			"support": {
+				"email": "gediminas.morkevicius@gmail.com",
+				"issues": "https://github.com/doctrine-extensions/DoctrineExtensions/issues",
+				"source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.14.0",
+				"wiki": "https://github.com/Atlantic18/DoctrineExtensions/tree/main/doc"
+			},
+			"funding": [
+				{
+					"url": "https://github.com/l3pp4rd",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/mbabker",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/phansys",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/stof",
+					"type": "github"
+				}
+			],
+			"time": "2023-12-03T09:10:34+00:00"
 		},
 		{
 			"name": "nelmio/cors-bundle",
@@ -1431,10 +1768,14 @@
 				"psr-4": {
 					"Nelmio\\CorsBundle\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nelmio",
@@ -1446,7 +1787,11 @@
 				}
 			],
 			"description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Symfony application",
-			"keywords": ["api", "cors", "crossdomain"],
+			"keywords": [
+				"api",
+				"cors",
+				"crossdomain"
+			],
 			"support": {
 				"issues": "https://github.com/nelmio/NelmioCorsBundle/issues",
 				"source": "https://github.com/nelmio/NelmioCorsBundle/tree/2.3.1"
@@ -1482,7 +1827,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Jaap van Otterdijk",
@@ -1541,7 +1888,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Mike van Riel",
@@ -1601,7 +1950,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Mike van Riel",
@@ -1646,11 +1997,15 @@
 			"type": "library",
 			"autoload": {
 				"psr-4": {
-					"PHPStan\\PhpDocParser\\": ["src/"]
+					"PHPStan\\PhpDocParser\\": [
+						"src/"
+					]
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"description": "PHPDoc parser with support for nullable, intersection and generic types",
 			"support": {
 				"issues": "https://github.com/phpstan/phpdoc-parser/issues",
@@ -1687,7 +2042,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1695,7 +2052,11 @@
 				}
 			],
 			"description": "Common interface for caching libraries",
-			"keywords": ["cache", "psr", "psr-6"],
+			"keywords": [
+				"cache",
+				"psr",
+				"psr-6"
+			],
 			"support": {
 				"source": "https://github.com/php-fig/cache/tree/3.0.0"
 			},
@@ -1725,7 +2086,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1734,7 +2097,13 @@
 			],
 			"description": "Common interface for reading the clock.",
 			"homepage": "https://github.com/php-fig/clock",
-			"keywords": ["clock", "now", "psr", "psr-20", "time"],
+			"keywords": [
+				"clock",
+				"now",
+				"psr",
+				"psr-20",
+				"time"
+			],
 			"support": {
 				"issues": "https://github.com/php-fig/clock/issues",
 				"source": "https://github.com/php-fig/clock/tree/1.0.0"
@@ -1770,7 +2139,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1821,7 +2192,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1829,7 +2202,11 @@
 				}
 			],
 			"description": "Standard interfaces for event handling.",
-			"keywords": ["events", "psr", "psr-14"],
+			"keywords": [
+				"events",
+				"psr",
+				"psr-14"
+			],
 			"support": {
 				"issues": "https://github.com/php-fig/event-dispatcher/issues",
 				"source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
@@ -1868,7 +2245,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1877,7 +2256,14 @@
 			],
 			"description": "Common interfaces for HTTP links",
 			"homepage": "https://github.com/php-fig/link",
-			"keywords": ["http", "http-link", "link", "psr", "psr-13", "rest"],
+			"keywords": [
+				"http",
+				"http-link",
+				"link",
+				"psr",
+				"psr-13",
+				"rest"
+			],
 			"support": {
 				"source": "https://github.com/php-fig/link/tree/2.0.1"
 			},
@@ -1912,7 +2298,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "PHP-FIG",
@@ -1921,11 +2309,90 @@
 			],
 			"description": "Common interface for logging libraries",
 			"homepage": "https://github.com/php-fig/log",
-			"keywords": ["log", "psr", "psr-3"],
+			"keywords": [
+				"log",
+				"psr",
+				"psr-3"
+			],
 			"support": {
 				"source": "https://github.com/php-fig/log/tree/3.0.0"
 			},
 			"time": "2021-07-14T16:46:02+00:00"
+		},
+		{
+			"name": "stof/doctrine-extensions-bundle",
+			"version": "v1.9.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/stof/StofDoctrineExtensionsBundle.git",
+				"reference": "eb677bf8aa05d741029dc4874e1884498236d531"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/eb677bf8aa05d741029dc4874e1884498236d531",
+				"reference": "eb677bf8aa05d741029dc4874e1884498236d531",
+				"shasum": ""
+			},
+			"require": {
+				"gedmo/doctrine-extensions": "^3.5.0",
+				"php": "^7.2.5 || ^8.0",
+				"symfony/cache": "^5.4 || ^6.0",
+				"symfony/config": "^5.4 || ^6.0",
+				"symfony/dependency-injection": "^5.4 || ^6.0",
+				"symfony/event-dispatcher": "^5.4 || ^6.0",
+				"symfony/http-kernel": "^5.4 || ^6.0"
+			},
+			"require-dev": {
+				"symfony/mime": "^5.4 || ^6.0",
+				"symfony/phpunit-bridge": "^v5.4 || ^6.0",
+				"symfony/security-core": "^5.4 || ^6.0"
+			},
+			"suggest": {
+				"doctrine/doctrine-bundle": "to use the ORM extensions",
+				"doctrine/mongodb-odm-bundle": "to use the MongoDB ODM extensions",
+				"symfony/mime": "To use the Mime component integration for Uploadable"
+			},
+			"type": "symfony-bundle",
+			"extra": {
+				"branch-alias": {
+					"dev-main": "1.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Stof\\DoctrineExtensionsBundle\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Christophe Coevoet",
+					"email": "stof@notk.org"
+				}
+			],
+			"description": "Integration of the gedmo/doctrine-extensions with Symfony",
+			"homepage": "https://github.com/stof/StofDoctrineExtensionsBundle",
+			"keywords": [
+				"behaviors",
+				"doctrine2",
+				"extensions",
+				"gedmo",
+				"loggable",
+				"nestedset",
+				"sluggable",
+				"sortable",
+				"timestampable",
+				"translatable",
+				"tree"
+			],
+			"support": {
+				"issues": "https://github.com/stof/StofDoctrineExtensionsBundle/issues",
+				"source": "https://github.com/stof/StofDoctrineExtensionsBundle/tree/v1.9.0"
+			},
+			"time": "2023-08-31T08:08:51+00:00"
 		},
 		{
 			"name": "symfony/asset",
@@ -1957,10 +2424,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Asset\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2042,11 +2513,17 @@
 				"psr-4": {
 					"Symfony\\Component\\Cache\\": ""
 				},
-				"classmap": ["Traits/ValueWrapper.php"],
-				"exclude-from-classmap": ["/Tests/"]
+				"classmap": [
+					"Traits/ValueWrapper.php"
+				],
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -2059,7 +2536,10 @@
 			],
 			"description": "Provides extended PSR-6, PSR-16 (and tags) implementations",
 			"homepage": "https://symfony.com",
-			"keywords": ["caching", "psr6"],
+			"keywords": [
+				"caching",
+				"psr6"
+			],
 			"support": {
 				"source": "https://github.com/symfony/cache/tree/v6.3.5"
 			},
@@ -2113,7 +2593,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -2176,14 +2658,20 @@
 			},
 			"type": "library",
 			"autoload": {
-				"files": ["Resources/now.php"],
+				"files": [
+					"Resources/now.php"
+				],
 				"psr-4": {
 					"Symfony\\Component\\Clock\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -2196,7 +2684,11 @@
 			],
 			"description": "Decouples applications from the system clock",
 			"homepage": "https://symfony.com",
-			"keywords": ["clock", "psr20", "time"],
+			"keywords": [
+				"clock",
+				"psr20",
+				"time"
+			],
 			"support": {
 				"source": "https://github.com/symfony/clock/tree/v6.3.4"
 			},
@@ -2252,10 +2744,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Config\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2332,10 +2828,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Console\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2348,7 +2848,12 @@
 			],
 			"description": "Eases the creation of beautiful and testable command line interfaces",
 			"homepage": "https://symfony.com",
-			"keywords": ["cli", "command-line", "console", "terminal"],
+			"keywords": [
+				"cli",
+				"command-line",
+				"console",
+				"terminal"
+			],
 			"support": {
 				"source": "https://github.com/symfony/console/tree/v6.3.4"
 			},
@@ -2410,10 +2915,14 @@
 				"psr-4": {
 					"Symfony\\Component\\DependencyInjection\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2473,10 +2982,14 @@
 				}
 			},
 			"autoload": {
-				"files": ["function.php"]
+				"files": [
+					"function.php"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -2579,10 +3092,14 @@
 				"psr-4": {
 					"Symfony\\Bridge\\Doctrine\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2644,10 +3161,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Dotenv\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2660,7 +3181,11 @@
 			],
 			"description": "Registers environment variables from a .env file",
 			"homepage": "https://symfony.com",
-			"keywords": ["dotenv", "env", "environment"],
+			"keywords": [
+				"dotenv",
+				"env",
+				"environment"
+			],
 			"support": {
 				"source": "https://github.com/symfony/dotenv/tree/v6.3.0"
 			},
@@ -2707,16 +3232,22 @@
 				"symfony/http-kernel": "^5.4|^6.0",
 				"symfony/serializer": "^5.4|^6.0"
 			},
-			"bin": ["Resources/bin/patch-type-declarations"],
+			"bin": [
+				"Resources/bin/patch-type-declarations"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
 					"Symfony\\Component\\ErrorHandler\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2789,10 +3320,14 @@
 				"psr-4": {
 					"Symfony\\Component\\EventDispatcher\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2858,7 +3393,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -2923,10 +3460,14 @@
 				"psr-4": {
 					"Symfony\\Component\\ExpressionLanguage\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -2982,10 +3523,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Filesystem\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3042,10 +3587,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Finder\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3112,7 +3661,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3245,10 +3796,14 @@
 				"psr-4": {
 					"Symfony\\Bundle\\FrameworkBundle\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3318,10 +3873,14 @@
 				"psr-4": {
 					"Symfony\\Component\\HttpFoundation\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3427,10 +3986,14 @@
 				"psr-4": {
 					"Symfony\\Component\\HttpKernel\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3491,10 +4054,14 @@
 				"psr-4": {
 					"Symfony\\Component\\PasswordHasher\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Robin Chalas",
@@ -3507,7 +4074,10 @@
 			],
 			"description": "Provides password hashing utilities",
 			"homepage": "https://symfony.com",
-			"keywords": ["hashing", "password"],
+			"keywords": [
+				"hashing",
+				"password"
+			],
 			"support": {
 				"source": "https://github.com/symfony/password-hasher/tree/v6.3.5"
 			},
@@ -3558,13 +4128,17 @@
 				}
 			},
 			"autoload": {
-				"files": ["bootstrap.php"],
+				"files": [
+					"bootstrap.php"
+				],
 				"psr-4": {
 					"Symfony\\Polyfill\\Intl\\Grapheme\\": ""
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -3635,14 +4209,20 @@
 				}
 			},
 			"autoload": {
-				"files": ["bootstrap.php"],
+				"files": [
+					"bootstrap.php"
+				],
 				"psr-4": {
 					"Symfony\\Polyfill\\Intl\\Normalizer\\": ""
 				},
-				"classmap": ["Resources/stubs"]
+				"classmap": [
+					"Resources/stubs"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -3716,13 +4296,17 @@
 				}
 			},
 			"autoload": {
-				"files": ["bootstrap.php"],
+				"files": [
+					"bootstrap.php"
+				],
 				"psr-4": {
 					"Symfony\\Polyfill\\Mbstring\\": ""
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -3735,7 +4319,13 @@
 			],
 			"description": "Symfony polyfill for the Mbstring extension",
 			"homepage": "https://symfony.com",
-			"keywords": ["compatibility", "mbstring", "polyfill", "portable", "shim"],
+			"keywords": [
+				"compatibility",
+				"mbstring",
+				"polyfill",
+				"portable",
+				"shim"
+			],
 			"support": {
 				"source": "https://github.com/symfony/polyfill-mbstring/tree/v1.28.0"
 			},
@@ -3784,14 +4374,20 @@
 				}
 			},
 			"autoload": {
-				"files": ["bootstrap.php"],
+				"files": [
+					"bootstrap.php"
+				],
 				"psr-4": {
 					"Symfony\\Polyfill\\Php83\\": ""
 				},
-				"classmap": ["Resources/stubs"]
+				"classmap": [
+					"Resources/stubs"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -3804,7 +4400,12 @@
 			],
 			"description": "Symfony polyfill backporting some PHP 8.3+ features to lower PHP versions",
 			"homepage": "https://symfony.com",
-			"keywords": ["compatibility", "polyfill", "portable", "shim"],
+			"keywords": [
+				"compatibility",
+				"polyfill",
+				"portable",
+				"shim"
+			],
 			"support": {
 				"source": "https://github.com/symfony/polyfill-php83/tree/v1.28.0"
 			},
@@ -3851,10 +4452,14 @@
 				"psr-4": {
 					"Symfony\\Component\\PropertyAccess\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -3933,10 +4538,14 @@
 				"psr-4": {
 					"Symfony\\Component\\PropertyInfo\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Kévin Dunglas",
@@ -4014,10 +4623,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Routing\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4030,7 +4643,12 @@
 			],
 			"description": "Maps an HTTP request to a set of configuration variables",
 			"homepage": "https://symfony.com",
-			"keywords": ["router", "routing", "uri", "url"],
+			"keywords": [
+				"router",
+				"routing",
+				"uri",
+				"url"
+			],
 			"support": {
 				"source": "https://github.com/symfony/routing/tree/v6.3.5"
 			},
@@ -4087,10 +4705,14 @@
 					"Symfony\\Component\\Runtime\\": "",
 					"Symfony\\Runtime\\Symfony\\Component\\": "Internal/"
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -4103,7 +4725,9 @@
 			],
 			"description": "Enables decoupling PHP applications from global state",
 			"homepage": "https://symfony.com",
-			"keywords": ["runtime"],
+			"keywords": [
+				"runtime"
+			],
 			"support": {
 				"source": "https://github.com/symfony/runtime/tree/v6.3.2"
 			},
@@ -4194,10 +4818,14 @@
 				"psr-4": {
 					"Symfony\\Bundle\\SecurityBundle\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4275,10 +4903,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Security\\Core\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4339,10 +4971,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Security\\Csrf\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4422,10 +5058,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Security\\Http\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4512,10 +5152,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Serializer\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4582,10 +5226,14 @@
 				"psr-4": {
 					"Symfony\\Contracts\\Service\\": ""
 				},
-				"exclude-from-classmap": ["/Test/"]
+				"exclude-from-classmap": [
+					"/Test/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -4648,10 +5296,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Stopwatch\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4716,14 +5368,20 @@
 			},
 			"type": "library",
 			"autoload": {
-				"files": ["Resources/functions.php"],
+				"files": [
+					"Resources/functions.php"
+				],
 				"psr-4": {
 					"Symfony\\Component\\String\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -4736,7 +5394,14 @@
 			],
 			"description": "Provides an object-oriented API to strings and deals with bytes, UTF-8 code points and grapheme clusters in a unified way",
 			"homepage": "https://symfony.com",
-			"keywords": ["grapheme", "i18n", "string", "unicode", "utf-8", "utf8"],
+			"keywords": [
+				"grapheme",
+				"i18n",
+				"string",
+				"unicode",
+				"utf-8",
+				"utf8"
+			],
 			"support": {
 				"source": "https://github.com/symfony/string/tree/v6.3.5"
 			},
@@ -4787,10 +5452,14 @@
 				"psr-4": {
 					"Symfony\\Contracts\\Translation\\": ""
 				},
-				"exclude-from-classmap": ["/Test/"]
+				"exclude-from-classmap": [
+					"/Test/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -4899,10 +5568,14 @@
 				"psr-4": {
 					"Symfony\\Bridge\\Twig\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -4980,10 +5653,14 @@
 				"psr-4": {
 					"Symfony\\Bundle\\TwigBundle\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -5072,10 +5749,14 @@
 				"psr-4": {
 					"Symfony\\Component\\Validator\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -5137,17 +5818,25 @@
 				"symfony/uid": "^5.4|^6.0",
 				"twig/twig": "^2.13|^3.0.4"
 			},
-			"bin": ["Resources/bin/var-dump-server"],
+			"bin": [
+				"Resources/bin/var-dump-server"
+			],
 			"type": "library",
 			"autoload": {
-				"files": ["Resources/functions/dump.php"],
+				"files": [
+					"Resources/functions/dump.php"
+				],
 				"psr-4": {
 					"Symfony\\Component\\VarDumper\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -5160,7 +5849,10 @@
 			],
 			"description": "Provides mechanisms for walking through any arbitrary PHP variable",
 			"homepage": "https://symfony.com",
-			"keywords": ["debug", "dump"],
+			"keywords": [
+				"debug",
+				"dump"
+			],
 			"support": {
 				"source": "https://github.com/symfony/var-dumper/tree/v6.3.5"
 			},
@@ -5205,10 +5897,14 @@
 				"psr-4": {
 					"Symfony\\Component\\VarExporter\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Nicolas Grekas",
@@ -5282,10 +5978,14 @@
 				"psr-4": {
 					"Symfony\\Component\\WebLink\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Kévin Dunglas",
@@ -5354,16 +6054,22 @@
 			"require-dev": {
 				"symfony/console": "^5.4|^6.0"
 			},
-			"bin": ["Resources/bin/yaml-lint"],
+			"bin": [
+				"Resources/bin/yaml-lint"
+			],
 			"type": "library",
 			"autoload": {
 				"psr-4": {
 					"Symfony\\Component\\Yaml\\": ""
 				},
-				"exclude-from-classmap": ["/Tests/"]
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -5425,7 +6131,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["BSD-3-Clause"],
+			"license": [
+				"BSD-3-Clause"
+			],
 			"authors": [
 				{
 					"name": "Fabien Potencier",
@@ -5445,7 +6153,9 @@
 			],
 			"description": "Twig, the flexible, fast, and secure template language for PHP",
 			"homepage": "https://twig.symfony.com",
-			"keywords": ["templating"],
+			"keywords": [
+				"templating"
+			],
 			"support": {
 				"issues": "https://github.com/twigphp/Twig/issues",
 				"source": "https://github.com/twigphp/Twig/tree/v3.7.1"
@@ -5499,7 +6209,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "Bernhard Schussek",
@@ -5507,7 +6219,11 @@
 				}
 			],
 			"description": "Assertions to validate method input/output with nice error messages.",
-			"keywords": ["assert", "check", "validate"],
+			"keywords": [
+				"assert",
+				"check",
+				"validate"
+			],
 			"support": {
 				"issues": "https://github.com/webmozarts/assert/issues",
 				"source": "https://github.com/webmozarts/assert/tree/1.11.0"
@@ -5546,7 +6262,9 @@
 				}
 			},
 			"notification-url": "https://packagist.org/downloads/",
-			"license": ["MIT"],
+			"license": [
+				"MIT"
+			],
 			"authors": [
 				{
 					"name": "William Durand",
@@ -5555,7 +6273,13 @@
 			],
 			"description": "Content Negotiation tools for PHP provided as a standalone library.",
 			"homepage": "http://williamdurand.fr/Negotiation/",
-			"keywords": ["accept", "content", "format", "header", "negotiation"],
+			"keywords": [
+				"accept",
+				"content",
+				"format",
+				"header",
+				"negotiation"
+			],
 			"support": {
 				"issues": "https://github.com/willdurand/Negotiation/issues",
 				"source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
@@ -5563,7 +6287,217 @@
 			"time": "2022-01-30T20:08:53+00:00"
 		}
 	],
-	"packages-dev": [],
+	"packages-dev": [
+		{
+			"name": "nikic/php-parser",
+			"version": "v4.17.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nikic/PHP-Parser.git",
+				"reference": "a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d",
+				"reference": "a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d",
+				"shasum": ""
+			},
+			"require": {
+				"ext-tokenizer": "*",
+				"php": ">=7.0"
+			},
+			"require-dev": {
+				"ircmaxell/php-yacc": "^0.0.7",
+				"phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
+			},
+			"bin": [
+				"bin/php-parse"
+			],
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "4.9-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"PhpParser\\": "lib/PhpParser"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause"
+			],
+			"authors": [
+				{
+					"name": "Nikita Popov"
+				}
+			],
+			"description": "A PHP parser written in PHP",
+			"keywords": [
+				"parser",
+				"php"
+			],
+			"support": {
+				"issues": "https://github.com/nikic/PHP-Parser/issues",
+				"source": "https://github.com/nikic/PHP-Parser/tree/v4.17.1"
+			},
+			"time": "2023-08-13T19:53:39+00:00"
+		},
+		{
+			"name": "symfony/maker-bundle",
+			"version": "v1.52.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/symfony/maker-bundle.git",
+				"reference": "112f9466c94a46ca33dc441eee59a12cd1790757"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/symfony/maker-bundle/zipball/112f9466c94a46ca33dc441eee59a12cd1790757",
+				"reference": "112f9466c94a46ca33dc441eee59a12cd1790757",
+				"shasum": ""
+			},
+			"require": {
+				"doctrine/inflector": "^2.0",
+				"nikic/php-parser": "^4.11",
+				"php": ">=8.1",
+				"symfony/config": "^6.3|^7.0",
+				"symfony/console": "^6.3|^7.0",
+				"symfony/dependency-injection": "^6.3|^7.0",
+				"symfony/deprecation-contracts": "^2.2|^3",
+				"symfony/filesystem": "^6.3|^7.0",
+				"symfony/finder": "^6.3|^7.0",
+				"symfony/framework-bundle": "^6.3|^7.0",
+				"symfony/http-kernel": "^6.3|^7.0",
+				"symfony/process": "^6.3|^7.0"
+			},
+			"conflict": {
+				"doctrine/doctrine-bundle": "<2.4",
+				"doctrine/orm": "<2.10"
+			},
+			"require-dev": {
+				"composer/semver": "^3.0",
+				"doctrine/doctrine-bundle": "^2.5.0",
+				"doctrine/orm": "^2.10.0",
+				"symfony/http-client": "^6.3|^7.0",
+				"symfony/phpunit-bridge": "^6.3|^7.0",
+				"symfony/security-core": "^6.3|^7.0",
+				"symfony/yaml": "^6.3|^7.0",
+				"twig/twig": "^2.0|^3.0"
+			},
+			"type": "symfony-bundle",
+			"extra": {
+				"branch-alias": {
+					"dev-main": "1.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Symfony\\Bundle\\MakerBundle\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Symfony Community",
+					"homepage": "https://symfony.com/contributors"
+				}
+			],
+			"description": "Symfony Maker helps you create empty commands, controllers, form classes, tests and more so you can forget about writing boilerplate code.",
+			"homepage": "https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html",
+			"keywords": [
+				"code generator",
+				"dev",
+				"generator",
+				"scaffold",
+				"scaffolding"
+			],
+			"support": {
+				"issues": "https://github.com/symfony/maker-bundle/issues",
+				"source": "https://github.com/symfony/maker-bundle/tree/v1.52.0"
+			},
+			"funding": [
+				{
+					"url": "https://symfony.com/sponsor",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/fabpot",
+					"type": "github"
+				},
+				{
+					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+					"type": "tidelift"
+				}
+			],
+			"time": "2023-10-31T18:23:49+00:00"
+		},
+		{
+			"name": "symfony/process",
+			"version": "v6.3.4",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/symfony/process.git",
+				"reference": "0b5c29118f2e980d455d2e34a5659f4579847c54"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/symfony/process/zipball/0b5c29118f2e980d455d2e34a5659f4579847c54",
+				"reference": "0b5c29118f2e980d455d2e34a5659f4579847c54",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=8.1"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Symfony\\Component\\Process\\": ""
+				},
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Fabien Potencier",
+					"email": "fabien@symfony.com"
+				},
+				{
+					"name": "Symfony Community",
+					"homepage": "https://symfony.com/contributors"
+				}
+			],
+			"description": "Executes commands in sub-processes",
+			"homepage": "https://symfony.com",
+			"support": {
+				"source": "https://github.com/symfony/process/tree/v6.3.4"
+			},
+			"funding": [
+				{
+					"url": "https://symfony.com/sponsor",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/fabpot",
+					"type": "github"
+				},
+				{
+					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+					"type": "tidelift"
+				}
+			],
+			"time": "2023-08-07T10:39:22+00:00"
+		}
+	],
 	"aliases": [],
 	"minimum-stability": "stable",
 	"stability-flags": [],
@@ -5575,5 +6509,5 @@
 		"ext-iconv": "*"
 	},
 	"platform-dev": [],
-	"plugin-api-version": "2.3.0"
+	"plugin-api-version": "2.6.0"
 }
