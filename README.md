@@ -10,6 +10,9 @@
      Streamlined appointment scheduling system designed specifically for sports enthusiasts and athletes seeking personalized coaching sessions using API Platform and ReactJS 
   </p>
   <br />
+    <a href="https://main--velvety-gumption-38351d.netlify.app/">
+      View demo »
+    </a>
 </div>
 
 ## Project installation
