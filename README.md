@@ -8,11 +8,12 @@
   <h3 align="center">Challenge Project - Coach Booker</h3>
   <p align="center">
      Streamlined appointment scheduling system designed specifically for sports enthusiasts and athletes seeking personalized coaching sessions using API Platform and ReactJS 
-  </p>
   <br />
     <a href="https://front-five-sooty.vercel.app/">
       View demo »
     </a>
+    </p>
+  <br />
 </div>
 
 ## Project installation
