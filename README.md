@@ -7,7 +7,7 @@
   </a>
   <h3 align="center">Challenge Project - Coach Booker</h3>
   <p align="center">
-     Streamlined appointment scheduling system designed specifically for sports enthusiasts and athletes seeking personalized coaching sessions using API Platform and React. 
+     Streamlined appointment scheduling system designed specifically for sports enthusiasts and athletes seeking personalized coaching sessions using API Platform and ReactJS 
   </p>
   <br />
 </div>
